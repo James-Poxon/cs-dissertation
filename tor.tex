@@ -1,55 +1,13 @@
 %!TeX root=TermsOfReference.tex
 
 \section{Background}
-For your project dissertation you need to write a \emph{Terms of Reference
-(ToR)} document, and a project report.
-This document demonstrates the structure of a proposed Terms of Reference document written in \LaTeX.
+Whilst I was on a year-long placement provided as part of a sandwich course at my university, I had the chance to work in an IT risk department at a reputable enterprise in Newcastle Upon Tyne. whilst working here I witnessed first hand, infrastructure and operations departments using virtualisation for much of the internally and externally facing server infrastructure, in what was an unwieldy and cumbrous use of scripts to update and install patches and dependencies across a multitude of systems. This resulted in a number of incidents where systems had to be pulled down in order to update the Operating Systems of individual virtual machines. These methods often caused unnecessary down time for systems, resulting in substantial risk and for the business.
 
-\begin{quotation}
-This should describe the ``context'' of the proposed project and answer the
-question, ``Why this project?'', both from your own perspective as a student
-undertaking a final year computing project, and that of any client.  It should
-show what makes this proposal a worthwhile computing final year project.
-\emph{It must make clear both the application area or area of investigation
-and the computing aspects of your work}.
-\end{quotation}
+In recent years there has been research into the use of containers instead of virtual machines for various operations across computing industries (\citep{watanda19}), the argument for this shift being the benefit of a more lightweight and efficient system, that is easier to keep up to date. Whilst this research has claim in displaying the benefits of containerisation, much of the server infrastructure of enterprise remains reliant on Virtualisation, not Containerisation.
 
-\LaTeX\ and its companion \BibTeX\ are a good pair of tools for writing your
-documentation.  They have been in use in computer science and related fields
-since the 1970s, I have been using them since the mid 1980s, they are still in
-wide use and the ecosystem is continuously updated.
+I have also had the opportunity to partake in gatherings held by CoTech, a network of tech co-operatives that meet semi-regularly to discuss various tech related topics. Whilst I was there, it was discussed that a large portion of these small enterprises used Docker, a system for packaging and deploying containers, to develop applications for their clients.
 
-They are a system of markup languages, like HTML or Markdown; which gives
-them a steep learning curve initially.  However as they are all just text
-files they can be worked on with any editor, can be logged into github or
-other revision systems, in effect you can treat the files as `\emph{code}'.
-
-Don't forget to reference background material.  \BibTeX\ makes this simple.
-You can have one or more \path{.bib} files, these are  easy to populate from
-academic search tools, such as Google-scholar, and the Library's search
-facilities.  A bibliography file looks something like figure
-\ref{bibtex-sample}.  In the text use the label in a citation command
-\mintinline{tex}{\citep[pages 2--4]{k+r}} the toolset puts the right form of citation
-	\citep[pages 2--4]{k+r} into the text.
-
-
-\begin{figure}
-\begin{tcolorbox}
-\begin{minted}{bibtex}
-@book{k+r,
-	Author = {Brian Kerngihan and Denis Ritche},
-	Edition = {Second},
-	Publisher = {Prentice Hall},
-	Title = {The C Programming Language},
-	Year = 1988
-}
-\end{minted}
-\end{tcolorbox}
-\caption{Sample \BibTeX\ content}
-\label{bibtex-sample}
-\end{figure}
-
-Where you want the bibliography to go use the \mintinline{tex}{\bibliography{c,unix}} command, with a comma separated list of \path{.bib} files (without the extension).
+There is research that shows other applications of this 
 
 \section{Proposed Work}
 \label{proposed}
@@ -101,7 +59,7 @@ Here you set out the likely chapters you will have in your report.  Usually each
 
 \paragraph{Introduction}  Sets out the background and motivation for the project.  Summarises the work done, the results, the conclusions, and the recommendations for future work.  It is a one chapter summary of the \emph{entire} project.
 
-\paragraph{Defining the problem}  Objective \ref{understand-problem} requires a precise definition of the problem you are solving.  Don't forget to reference good source material \citep{henning_schulzrinne} and \citep{talbot2013}.  See section \ref{proposed}.
+\paragraph{Defining the problem}  Objective \ref{understand-problem} requires a precise definition of the problem you are solving.  Don't forget to reference good source material  See section \ref{proposed}.
 
 \paragraph{Possible Solutions} Discuss the possible solutions, compare the
 alternatives, and select the one to use for the  implementation.
