@@ -13,13 +13,23 @@ There is historical research that compares virtualisation and containerisation f
 
 \section{Proposed Work}
 \label{proposed}
-I plan to do similar work to the studies I have already mentioned \citep{joy15}, \citep{dua14}, but instead focus this work on my own context and my own interest in Operating Systems and Server Infrastructure. I have experience with running headless servers on virtual machines already, through the Advanced Operating Systems module I did in my second year of study at Northumbria University. I plan to use Linux (ubuntu server) as the base operating system for my virtual machines, and plan to host a full working topology of servers, including a DNS architecture with primary and secondary servers, a web-server architecture that includes HTTP (Apache) servers, NFS servers and MySQL servers. The idea behind this is to create as realistic a topology as possible, and to ensure a decent level of communication and work between the individual servers.
+I plan to do similar work to the studies I have already mentioned \citep{joy15}, \citep{dua14}, but instead focus this work on my own context and my own interest in Operating Systems and Server Infrastructure. I have experience with running headless servers on virtual machines already, through the Advanced Operating Systems module I did in my second year of study at Northumbria University. 
+
+It is important to set a baseline system here, and to best reflect a realistic topology, I will use LAMP (Linux + Apache + MySQL + PHP). I have experience with Ubuntu server, so I will use this version of Linux as the base operating system for my virtual machines, and plan to host a full working topology of servers, including a DNS architecture, a web-server architecture that includes HTTP (Apache) servers, NFS servers and MySQL servers. The reasoning for doing this is to create as realistic a topology as possible, and to ensure a somewhat realistic level of network traffic so that meaningful data can be captured.
+
+I will also need to set a standard for measurement to ensure that my data is meaningful and uses the scientific method. I plant to use tools such as iPerf3 (for network performance) and Sysbench (for hardware performance) across a number of servers. It is important to measure both network and hardware performance (CPU, Memory, Disk, etc) to ensure that described  benefits are achieved for the system as a whole. iPerf is an industry standard tool for measuring network performance on Linux systems, whilst Sysbench is a full benchmarking suite for linux that will let me benchmark the CPU, file IO, and importantly, MySQL performance (allowing direct measurement of database performance on the machine that will be hosting the previously mentioned MySQL database. Whilst I have mentioned these benchmarking tools, it is possible that they could have problems with integrating with certain applications or environments, in this case, there is a number of other standard benchmark utilities (Phoronix Test Suite, KDiskMark, UnixBench, etc) available that should give me the flexibility to create measurements. Whilst these utilities all have differing overheads within them (meaning they will use up varying resources to run the benchmark), as long as I use the same benchmark across the same machines I am comparing, this overhead shouldn't effect the measurable performance difference between these machines.
 
 \section{Aims and Objectives}
-There should only be one or two aims
+
 \subsection{Aims}
 \begin{quote}
-	To show how \LaTeX\ and tools can be used to write a dissertation
+
+To compare and contrast the performance difference between using virtualisation or containerisation for running headless servers.
+%analysis section Chapters: what is network infrastructure I want to model (analysis chapter), design work of the two implementations. Could include creation/justification of benchmark (made one or found one)\
+
+%Synthesis chapters: Build the systems, run and gather the data, analyse the data.
+
+%Lift sections from handbook for the evaluation.
 \end{quote}
 
 \subsection{Objectives}
@@ -40,12 +50,15 @@ The \textbf{enumerate} environment is useful here for generating a numbered list
 \section{Skills}
 This is where you can cover the skills you have relevant to the project and the new skills you are going to acquire during the project.
 \begin{enumerate}
-	\item Programming in C, see module KFxxx
-	\item Hardware Design
+	\item Advanced Operating Systems 1, see module KF5004.
+	\item Computer Networking Experience.
+	\item Computer Technology, see module KF4004.
+	\item 
+	\item
 \end{enumerate}
 
 \section{Resources}
-This is an important section, it lists the hardware and software you are going to need for the project.
+I will require access to a number of 
 
 \subsection{Hardware}
 For Hardware this is more critical, as we need to identify any hardware we have, or that you are going to buy.  We do have an ordering mechanism in the Department, but time and budget are critical constraints here.
