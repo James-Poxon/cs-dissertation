@@ -17,14 +17,18 @@ I plan to do similar work to the studies I have already mentioned \citep{joy15},
 
 It is important to set a baseline system here, and to best reflect a realistic topology, I will use LAMP (Linux + Apache + MySQL + PHP). I have experience with Ubuntu server, so I will use this version of Linux as the base operating system for my virtual machines, and plan to host a full working topology of servers, including a DNS architecture, a web-server architecture that includes HTTP (Apache) servers, NFS servers and MySQL servers. The reasoning for doing this is to create as realistic a topology as possible, and to ensure a somewhat realistic level of network traffic so that meaningful data can be captured.
 
+For the virtual machines, I will use the virtual machine infrastructure available to me through the university, and for the container infrastructure, I plan on using Docker. This is because Docker is a popular choice among app developers, and is supposed to make container deployment easy. Though, as I have never worked with containers before, if Docker fails to be a good way of providing containers for web-servers, then there are a number of other ways to deploy containers, such as LXC, that I could turn to as a contingency.
+
 I will also need to set a standard for measurement to ensure that my data is meaningful and uses the scientific method. I plant to use tools such as iPerf3 (for network performance) and Sysbench (for hardware performance) across a number of servers. It is important to measure both network and hardware performance (CPU, Memory, Disk, etc) to ensure that described  benefits are achieved for the system as a whole. iPerf is an industry standard tool for measuring network performance on Linux systems, whilst Sysbench is a full benchmarking suite for linux that will let me benchmark the CPU, file IO, and importantly, MySQL performance (allowing direct measurement of database performance on the machine that will be hosting the previously mentioned MySQL database. Whilst I have mentioned these benchmarking tools, it is possible that they could have problems with integrating with certain applications or environments, in this case, there is a number of other standard benchmark utilities (Phoronix Test Suite, KDiskMark, UnixBench, etc) available that should give me the flexibility to create measurements. Whilst these utilities all have differing overheads within them (meaning they will use up varying resources to run the benchmark), as long as I use the same benchmark across the same machines I am comparing, this overhead shouldn't effect the measurable performance difference between these machines.
+
+Once data is collected, I will do a comparative analysis of the data to determine if there is a clear improvement as previous research suggests, and if this difference is enough to justify a change in the current best-practice use of virtualisation.
 
 \section{Aims and Objectives}
 
 \subsection{Aims}
 \begin{quote}
 
-To compare and contrast the performance difference between using virtualisation or containerisation for running headless servers.
+To compare and contrast the performance difference and hardware impact between virtualisation and containerisation when running headless servers.
 %analysis section Chapters: what is network infrastructure I want to model (analysis chapter), design work of the two implementations. Could include creation/justification of benchmark (made one or found one)\
 
 %Synthesis chapters: Build the systems, run and gather the data, analyse the data.
@@ -35,16 +39,17 @@ To compare and contrast the performance difference between using virtualisation 
 \subsection{Objectives}
 Your objective list is a series of measurable objectives, can you tick each one off as \emph{done}?  I usually expect between 8 and 12 objectives
 
-The \textbf{enumerate} environment is useful here for generating a numbered list.   You can put \mintinline{tex}{\label{}} commands in with a keyword \mintinline{tex}{\label{understand-problem}} and then refer to the label with a \mintinline{tex}{\ref{understand-problem}} command, it puts the number of the objective in the text
-\begin{tcblisting}{ }
-	See objective \ref{understand-problem}
-\end{tcblisting}
 \begin{enumerate}
-	\item \textbf{Classify the problem domain}\label{understand-problem}  this is where you develop an understanding of the nature of the problem/project
-	\item \textbf{Identify Techniques to solve}  What Algorithms are you to use, how is a database structured,
-	\item \textbf{Select tools to use}  What languages, software, hardware; are you using?
-	\item \textbf{Design the system to be build}\label{write-code}  Its requirements, the \textbf{test plan}, the architecture (Layer model/Model-View-Controller)
-	\item \textbf{Build the system}  I'd include testing here, as the result is a \emph{working wywtem}
+	\item \textbf{Explain the problem domain that encompasses current practices in virtualisation.}
+	\item \textbf{Explanation of the two different methods in practice.}
+	\item \textbf{Determine the software and hardware to be used.}
+	\item \textbf{Design the network infrastructure to be built.}
+	\item \textbf{Build the network topology on both the virtual machines and containers.}
+	\item \textbf{Determine a method to scientifically evaluate and determine performance of both systems.}
+	\item \textbf{Accurately measure performance of the two systems.}
+	\item \textbf{Compare and contrast the findings between the findings for both systems to determine improvements or failings.}
+	\item \textbf{Create a recommendation regarding the real-world implementation of containerisation in this use case.}
+
 \end{enumerate}
 
 \section{Skills}
@@ -53,21 +58,25 @@ This is where you can cover the skills you have relevant to the project and the 
 	\item Advanced Operating Systems 1, see module KF5004.
 	\item Computer Networking Experience.
 	\item Computer Technology, see module KF4004.
-	\item 
-	\item
+	\item Virtual machine configuration.
+	\item LAMP topology experience.
+	\item Docker configuration.
 \end{enumerate}
 
 \section{Resources}
-I will require access to a number of 
+I will require access to Virtual Machine infrastructure in order to do build my topology and compare virtual machine performance.
+I will also require access to a machine that has the same hardware and system resources as those shared by the virtual machines, as I will need to perform my containerisation tests on the same hardware in order to effectively control that variable.
 
 \subsection{Hardware}
-For Hardware this is more critical, as we need to identify any hardware we have, or that you are going to buy.  We do have an ordering mechanism in the Department, but time and budget are critical constraints here.
+I shouldn't require any hardware as long as I can get remote access to the virtual machine infrastructure in a way that allows me to use the same resources for containerisation (as mentioned above).
+
+As contingency, if I cant access this infrastructure, I will still need some way of creating and managing virtualisation. This might be possible on my own hardware, though I'd rather use university infrastructure as this should be more reliable and accessible.
 
 \subsection{Software}
-In the case of software, there isn't usually an issue, unless you're needing huge amounts of run-time (we don't have a super-computer handy).
+I will need to install Docker, and will need access to benchmarking suites, but these are free and/or open-source.
 
 \section{Structure and Contents of the Report}
-Here you set out the likely chapters you will have in your report.  Usually each objective lends itself to one or more chapters.  You can refer back to the objectives set.
+Below I will set out the chapters that I will most likely have in my final report.
 \subsection{Report Structure}
 
 \paragraph{Introduction}  Sets out the background and motivation for the project.  Summarises the work done, the results, the conclusions, and the recommendations for future work.  It is a one chapter summary of the \emph{entire} project.
