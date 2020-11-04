@@ -29,11 +29,7 @@ Once data is collected, I will do a comparative analysis of the data to determin
 \begin{quote}
 
 To compare and contrast the performance difference and hardware impact between virtualisation and containerisation when running headless servers.
-%analysis section Chapters: what is network infrastructure I want to model (analysis chapter), design work of the two implementations. Could include creation/justification of benchmark (made one or found one)\
 
-%Synthesis chapters: Build the systems, run and gather the data, analyse the data.
-
-%Lift sections from handbook for the evaluation.
 \end{quote}
 
 \subsection{Objectives}
@@ -44,6 +40,7 @@ Your objective list is a series of measurable objectives, can you tick each one 
 	\item \textbf{Explanation of the two different methods in practice.}
 	\item \textbf{Determine the software and hardware to be used.}
 	\item \textbf{Design the network infrastructure to be built.}
+	\item \textbf{Learn how to implement and utilise containers using Docker.}
 	\item \textbf{Build the network topology on both the virtual machines and containers.}
 	\item \textbf{Determine a method to scientifically evaluate and determine performance of both systems.}
 	\item \textbf{Accurately measure performance of the two systems.}
@@ -79,41 +76,103 @@ I will need to install Docker, and will need access to benchmarking suites, but 
 Below I will set out the chapters that I will most likely have in my final report.
 \subsection{Report Structure}
 
-\paragraph{Introduction}  Sets out the background and motivation for the project.  Summarises the work done, the results, the conclusions, and the recommendations for future work.  It is a one chapter summary of the \emph{entire} project.
+\paragraph{Abstract \& Introduction}  Here I will set out the background for my project and the reasoning behind the work I will be doing. The Abstract will also summarise the work that has been done along with my findings, subsequent recommendations and conclusions.
 
-\paragraph{Defining the problem}  Objective \ref{understand-problem} requires a precise definition of the problem you are solving.  Don't forget to reference good source material  See section \ref{proposed}.
+\paragraph{What is virtualisation \& containerisation} An introduction to virtualisation and its current context and usage in today's world of computing. An introduction to containerisation, what it is, how it works, and how it differs to virtualisation. This will form part of my literature review.
 
-\paragraph{Possible Solutions} Discuss the possible solutions, compare the
-alternatives, and select the one to use for the  implementation.
+\paragraph{Current uses of virtualisation} An explanation of modern uses of virtual machines. I will emphasis virtual servers here, and the reasons they are used.
+
+\paragraph{Current uses of containerisation.} An explanation of modern usage of containers. I will emphasise application development and other, non-main-sever applications here.
+
+\paragraph{Application of containerisation to server infrastructure} Introduce the idea of applying containers to the area I study, with the use-case of server infrastructure. Explain what the implications of this could be. Set out a detailed definition of the problem I want to solve/test. Brief explanation of how this could be designed, with reference to other similar studies.
+
+\paragraph{Network Infrastructure Design} Here I will lay out the infrastructure that I want to implement for my testing and my reasoning for this, along with references \hyperref[proposed]{(see proposed work)}.
+
+\paragraph{How to test and measure the system} Justify the creation or use of a particular set of benchmarks that I will use against the system for testing. I will also explain here how I will measure and evaluate the two systems.
+
+\paragraph{Building the Virtual System} Here I will build the virtual system to work with the topology laid out in the infrastructure chapter. I will make sure to explain how to do it. I will also provide evidence of the system working.
+
+\paragraph{Building the Container System} Similar to the previous chapter, I will build the container based system following the topology laid out in the infrastructure design section. I will explain how this is done. (ie, using Docker). \hyperref[proposed]{(see proposed work)}. As per the previous chapter, I will provide evidence of this working in practice.
+
+\paragraph{Testing and gathering data} Here I will create a test plan for running benchmarks across the parallel servers in order to compare the like for like running of both systems.
+
+\paragraph{Analysis \& Comparison} I will briefly explain how the data shown was required as an introduction to what the data shows. This is where I will explain in detail the actual results, and what they mean, I won't infer here.
+
+\paragraph{Evaluation of the system} A technical evaluation of the system I created. I will highlight and strengths, and failings in my ability to meet the requirements of my implementation. I will also ensure to evidence this accordingly.
+
+\paragraph{Evaluation of the project process} Here I will evaluate my own learning, and explain what I would do differently about my approach, should I go on to do the same, or a similar, project in the future. My objectives should be assessed as per the marking scheme laid out in the project handbook.
+
+\paragraph{Conclusion and Recommendations} I will first create a balanced conclusion, considering the main points mentioned in my evaluation sections. This should cover the direction the work went in, presenting key findings as a way of getting my opinion on the project across. I will present my opinions on the usage of containers in practical setting (ie, whether I think they should be used instead of virtualisation; where they would/could be used) Furthermore, as my work should have practical implications on enterprise and organisations that use virtualisation, I will aim to create recommendations of further work in order to push this area further in the future.
+
+%analysis section Chapters: what is network infrastructure I want to model (analysis chapter), design work of the two implementations. Could include creation/justification of benchmark (made one or found one)
+
+%Synthesis chapters: Build the systems, run and gather the data, analyse the data.
+
+%Lift sections from handbook for the evaluation.
 
 \subsection{List of Appendices}
-What Appendices you will include.  A copy of the TOR should be the first, followed by the Ethics form and the Risk Assessment.
+My appendices will first include my TOR, Ethics form and Risk Assessment.
 
-Others might include design documentation, code listings, tables of results (if too large to include in the main text).
+Some of the network design documentation may be included if too large for the main body, along with the configurations from the various servers.
+
+I should also include the full and direct results of my benchmarks, as these will almost certainly be too large to display in my main text. (I will instead pull the direct numbers from the benchmarks and reference to the related Appendix).
+
+%What Appendices you will include.  A copy of the TOR should be the first, followed by the Ethics form and the Risk Assessment.
+
+%Others might include design documentation, code listings, tables of results (if too large to include in the main text).
+
+
 
 \section{Marking Scheme}
 The marking scheme sets out what criteria we are going to use for the project.
 
-\paragraph{Project Type} General Computing or Software Engineering projects
+\paragraph{Project Type} General Computing.
 
-\paragraph{Project Report}  State which chapters constitute the \emph{Analysis}, the \emph{Synthesis}, and the \emph{Evaluation}.  This help me when marking to know when to stop reading one section and put a mark down for it.
+\paragraph{Project Report}
+\emph{Analysis Chapters}
+\begin{itemize}
+	\item What is virtualisation \& containerisation.
+	\item Current uses of virtualisation.
+	\item Current uses of containerisation.
+	\item Application of containerisation to server infrastructure.
+\end{itemize}
 
-\paragraph{Product}  List the deliverables that make up the \emph{Product}.  Code, design, requirements specifications, test plans, etc.
+\emph{Synthesis Chapters}
+\begin{itemize}
+	\item Network Infrastructure Design.
+	\item How to test and measure the system.
+	\item Building the Virtual System.
+	\item Testing and gathering data.
+	\item Analysis \& Comparison.
+\end{itemize}
 
-For the \emph{Fitness for Purpose} and \emph{Build Quality}  list the critera used to asses the product by
+\emph{Evaluation Chapters}
+\begin{itemize}
+	\item Evaluation of the system.
+	\item Evaluation of the project process.
+	\item Conclusion and Recommendations.
+\end{itemize}
+
+\paragraph{Product} The 'product' includes the Network Infrastructure design, the configurations across both systems, the virtual system and the container system themselves.
+
+% List the deliverables that make up the 'Product'.  Code, design, requirements specifications, test plans, etc.
+
+%For the 'Fitness for Purpose' and 'Build Quality'  list the criteria used to asses the product by.
 
 \subparagraph{Fitness for Purpose}~
 \begin{itemize}
-	\item meet requirements identified
-	\item other appropriate measures
+	\item Meet requirements identified.
+	\item Application to real world infrastructure.
+	\item Whether the headless servers can communicate effectively on both systems.
+	\item Whether both systems achieved the same goals and outcomes. They should have the same logical topology.
 \end{itemize}
 
 \subparagraph{Build Quality}~
 \begin{itemize}
-	\item Requirements specification and analysis
-	\item Design Specification
-	\item Code quality
-	\item Test plan and Results
+	\item Requirements specification and analysis.
+	\item Quality of the infrastructure design.
+	\item Configuration quality.
+	\item Benchmarking plan quality.
 \end{itemize}
 
 \clearpage
