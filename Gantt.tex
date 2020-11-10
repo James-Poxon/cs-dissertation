@@ -32,6 +32,7 @@ ms/.style={inline,
 % Highlight Smesters and Vactions
 \ganttgroup[region=blue!20]{Semester 1}{21/9/20}{22/1/21}
 \ganttgroup[region=blue!50]{Semester 2}{18/1/21}{28/5/21}\\
+
 \ganttgroup[region=red!50]{Christmas}{21/12/20}{8/1/21}
 \ganttgroup[region=green!25]{Easter}{29/3/21}{16/4/21}\\
 
@@ -39,17 +40,60 @@ ms/.style={inline,
 \ganttmilestone[ms=left]{PID}{12/10/20}
 \ganttmilestone[ms=left]{final \bfseries TOR}{16/11/20}
 \ganttmilestone[ms=right]{Draft Analysis}{30/11/20}
+\ganttmilestone[ms=left]{Viva}{21/5/21}
+\ganttmilestone[ms=left]{Project Work Finished}{22/3/21}
 \ganttmilestone[ms=left,milestone/.append style={fill=red}]{\bfseries Submit}{29/4/21}
 \ganttnewline[thick]
 
 % --Tasks go here
-% put in a title, a start date, end date...
+
+
 \ganttbar{TOR}{28/9/20}{26/10/20}
 \ganttbar[inline]{\emph{revise}}{28/10/20}{16/11/20}\\
-\ganttbar{Analysis}{30/9/20}{24/11/20}\\
-\ganttbar{Design}{31/10/20}{19/1/21}
-% Note how you can refer to labels set in the objectives list!
-\ganttmilestone[ms=right]{Build complete (Obj \ref{write-code})}{18/1/20}\\
-\ganttbar{Exploration}{22/10/19}{15/1/20}
+
+%Analysis
+\ganttbar{Analysis}{10/11/20}{30/11/20}
+\ganttbar[inline]{\emph{research}}{10/10/20}{8/11/20}
+\ganttbar{} {2/12/20}{8/12/20}\\
+\ganttmilestone[ms=left]{Problem Domain (Obj \ref{itm:problemdomain})}{17/11/20}
+\ganttmilestone[ms=right]{Methods Explained (Obj \ref{itm:explainmethods})}{26/11/20}\\
+\ganttmilestone[ms=right]{Revise}{4/12/20}\\
+
+%Design
+\ganttbar{Design}{31/10/20}{/1/21}\\
+\ganttmilestone[ms=left]{Hardware and Software (Obj \ref{itm:softwarehardware})}{1/12/20}
+\ganttmilestone[ms=right]{ Network Infrastructure (Obj \ref{itm:infrastructure})}{14/12/20}\\
+
+%Learning
+\ganttbar{Learning}{22/10/19}{15/1/20}
+\ganttbar[inline]{\emph{learn}}{25/11/20}{10/12/20}\\
+\ganttmilestone[ms=right]{Learned Docker (Obj \ref{itm:learndocker})}{8/12/20}\\
+
+%Synthesis
+\ganttbar{Synthesis}{18/1/19}{18/1/19}
+\ganttbar[inline]{\emph{build}}{18/1/21}{30/2/21}
+\ganttbar[inline]{\emph{testing}}{2/3/21}{18/3/21}\\
+
+\ganttmilestone[ms=left]{Virtual Machine Built (Obj \ref{itm:buildvirtual})}{1/2/21}
+\ganttmilestone[ms=right]{Container System Built (Obj \ref{itm:buildcontainer})}{24/2/21}\\
+\ganttmilestone[ms=right]{Determine benchmarks (Obj \ref{itm:determinemethod})}{5/3/21}\\
+\ganttmilestone[ms=right]{Make Measurements (Obj \ref{itm:measure})}{15/3/21}\\
+
+%Evaluation
+\ganttbar{Evaluation}{18/03/21}{8/04/21}\\
+\ganttmilestone[ms=right]{Make comparisons (Obj \ref{itm:comparison})}{25/3/21}\\
+
+%Conclusion
+\ganttbar{Conclusion}{1/04/21}{17/04/21}\\
+\ganttmilestone[ms=left]{Make recommendation (Obj \ref{itm:conclusion})}{12/4/21}\\
+
+%Abstract
+\ganttbar{Abstract}{16/04/21}{20/04/21}\\
+
+%Vivas
+\ganttbar{Vivas}{3/5/21}{21/5/21}
+\ganttbar[inline]{\emph{prep}}{18/4/21}{1/5/21}\\
+
+
 \end{ganttchart}
 
