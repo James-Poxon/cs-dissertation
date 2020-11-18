@@ -36,14 +36,17 @@
 \include{titlepage}
 \include{declaration}
 \include{acknowledgements}
-\include{abstract}
+\include{AbstractAndIntroduction/abstract}
 \tableofcontents
 
 \mainmatter
-\include{introduction}
+\include{AbstractAndIntroduction/introduction}
+
 \part{Analysis}
-\include{literature}
-\include{tools}
+\include{Analysis/1.WhatIsVirtualisationContainerisation}
+\include{Analysis/2.CurrentUsesVirtualisation}
+\include{Analysis/3.CurrentUsesContainerisation}
+\include{Analysis/4.ApplicationContainerisationServer}
 
 \part{Synthesis}
 \include{texnical}
@@ -52,13 +55,13 @@
 
 
 \bibliographystyle{plainnat}
-\bibliography{c,unix,writing,latex}
+\bibliography{TermsOfReference/tor, analysis/analysis}
 
 \part{Appendices}
 \appendix
 
 \chapter{Terms of Reference}
-\input{tor} %<- note use of \input{} not \include{}
+\input{TermsOfReference/tor} %<- note use of \input{} not \include{}
 
 \section{Ethics Form}
 If you scan the Ethics form on one of the multifunction printers, you can get a pdf copy.  This can then be included with the \LaTeX\ command
