@@ -1,0 +1,50 @@
+%!TeX root=../Dissertation.tex
+%!TeX bibfile=./analysis.bib
+
+\chapter{Review of Virtualisation and what it does}
+
+\section{Terminology \& Definitions}
+
+\subsection{Virtualisation}
+Virtualisation as a term originated in the 1960s when IBM workers began work on a project that would allow an IBM model-40 computer to segregate off its memory and allow up to 15 users to use the computer independently at once \citep{Lindquist1966}. Each user would see their own abstract Operating System, separate from the others. Whilst virtualisation has continued in its development from this point onwards, the core functionality and architecture behind Hardware Virtualisation, remain much the same.
+
+Each of these individual logical (as opposed to physical) devices is called a `virtual machine'.
+
+\subsection{Hardware Virtualisation}
+\label{subsec:HardwareVirtualisation}
+There are a number of different types of virtualisation, which can open the scope for what can and can not be technically classed as a virtual machine. For the purpose of this report the term `virtualisation' will refer to specifically `hardware based virtualisation', whereby a `virtual machine' is an operating system running on top of another operating system, with the virtualisation task itself being controlled by a `hypervisor' (This is explained in more detail in the next subsection: \ref{subsec:hypervisor}) .
+
+This is an important definition, as often times containerisation (subsection \ref{sec:containerisation}) can be viewed as a distinguished \emph{form} of virtualisation, so for the purposes of this report, the two definitions must be distinguished as separate things, much like in the report ``Autonomic Orchestration of Containers: Problem Definition and Research Challenges'' \citep{casalicchio2016}, whereby a clear defined difference between Hardware Virtualisation and Containers is made.
+
+\subsection{Hypervisor}
+\label{subsec:hypervisor}
+Hardware Virtualisation relies on an underlying software that runs on the already existing OS in order to manage each instance/OS. This software can have a number of different names depending on the origin of the work, and the context. In early work on virtualisation, this software was often referred to simply as a ``control program'' \citep{creasy1981}, but for the purposes of this research, this software will be referred to as a `Hypervisor'.
+
+Hypervisor is often times the preferred term in practical settings, such as in VMware's online Glossary \citep{vmwareHypervisor}, where the software that controls a virtual machine is defined as such.
+
+\section{The workings of virtualisation}
+Virtualisation works
+
+
+\chapter{Review of Containerisation and what it does}
+\section{Terminology \& Definitions}
+
+\subsection{Containerisation}
+\label{subsec:containerisation}
+Containerisation has become the de-facto term to describe what could also be described as OS-level virtualisation. For the purposes of this report, I will be referring to this technology only as Containerisation, and each individual instance as a container (instead of virtual machine). This is the same approach towards defining containers as taken by Dua et al \citep{dua14} when they have made their own distinction between Containers and Virtual Machines.
+
+\subsection{Container Engine}
+What a hypervisor is to a virtual machine, a container engine is to a container. Essentially, a container engine sits on the base operating system, much the same as a hypervisor. Where a difference is found however, is in the way it interacts with the base operating system.
+
+Whilst a hypervisor works by running a full operating system on top of the existing one, a container engine works by redistributing 
+
+\section{Docker}
+
+
+
+\chapter{Define the system that is going to be built}
+
+
+
+\chapter{How will the system be measured}
+%Define what I will be evaluating. Talk about benchmarks.
