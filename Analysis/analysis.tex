@@ -41,6 +41,13 @@ Whilst a hypervisor works by running a full operating system on top of the exist
 \section{Developments in containerisation technology}
 
 \subsection{Docker}
+A now ever more popular implementation of container technology is a software known as Docker. This software is primarily used (and aimed at) app developers, who can use the platform to quickly create and deploy applications for businesses. The use of containers is supposed to make managing these applications much easier, and ensures compatibility along the whole development process.
+Datanyze (a technology market usage group) report that Docker is currently the second most used Containerisation platform, with 25.34\% market share in Containerisation \citep{datanyze}. 
+
+Docker's Container engine is aptly named Docker Engine, and utilises a client-server architecture \citep{DockerArchitecture}. The server portion of the Docker System is known as the `docker daemon', the Client uses a command line interface to interact with one or more docker daemons. The client and daemon communicate using a 'REST API' \citep{DockerArchitecture}. REST (Representational State Transfer) provides an architecture for web services \citep{W3Architecture2004} that allows them to communicate. The protocols within REST are stateless, this means there is no set `state' or session control within the protocol. REST API being used as the communication method between the Docker Daemon and the Client means that each command sent to a daemon can be understood as it is, without the need for any outside context to the command being sent.
+
+The Docker Daemon manages Docker the various `Objects' \citep{DockerArchitecture} required for a full Docker system. These include the containers, the images (Docker images are the instruction sets for Docker containers, not to be confused with OS images) and the Registry, which acts as a storage for the Docker images.
+
 
 
 
@@ -49,4 +56,4 @@ Whilst a hypervisor works by running a full operating system on top of the exist
 
 
 \chapter{How will the system be measured}
-%Define what I will be evaluating. Talk about benchmarks.
+%Talk about benchmarks.
