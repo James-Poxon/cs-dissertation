@@ -52,28 +52,29 @@ ms/.style={inline,
 \ganttbar[inline]{\emph{revise}}{28/10/20}{16/11/20}\\
 
 %Analysis
-\ganttbar{Analysis}{10/11/20}{30/11/20}
+\ganttbar{Analysis}{10/11/15}{30/11/15}
 \ganttbar[inline]{\emph{research}}{10/10/20}{8/11/20}
-\ganttbar{} {2/12/20}{8/12/20}\\
+\ganttbar[inline]{\emph{Revise}} {2/12/20}{14/12/20}\\
+\ganttbar[inline]{\emph{Virtualisation}}{10/11/20}{20/11/20}\\  %Not sure if these can be made to sit on one line whilst still being comprehensible.
+\ganttbar[inline]{\emph{Containerisation}}{20/11/20}{30/11/20}\\
 \ganttmilestone[ms=left]{Problem Domain (Obj \ref{itm:problemdomain})}{17/11/20}
 \ganttmilestone[ms=right]{Methods Explained (Obj \ref{itm:explainmethods})}{26/11/20}\\
-\ganttmilestone[ms=left]{Explain Virtualisation}{10/11/20}
-\ganttmilestone[ms=right]{Explain Containerisation}{25/11/20}\\
-\ganttmilestone[ms=right]{Revise Analysis}{4/12/20}\\
+
+
 
 
 %Design
-\ganttbar{Design}{31/10/20}{1/1/21}\\
 
-\ganttmilestone[ms=left]{Hardware and Software (Obj \ref{itm:softwarehardware})}{1/12/20}
-\ganttmilestone[ms=right]{ Network Infrastructure (Obj \ref{itm:infrastructure})}{14/12/20}\\
-
-\ganttbar{}{14/12/20}{1/1/21}\\
-\ganttmilestone[ms=left]{Determine Benchmarks}{20/12/20}\\
+\ganttbar{Design}{31/10/20}{1/1/21}
+\ganttbar[inline]{\emph{Hardware}} {31/10/20}{15/11/20}
+\ganttbar[inline]{\emph{Software}} {15/11/20}{1/12/20}
+\ganttbar[inline]{\emph{Benchmark design}} {2/12/20}{1/1/21}\\
+\ganttmilestone[ms=left]{Determine benchmarks (Obj \ref{itm:determinemethod})}{29/12/20}\\
 
 
 %Learning
 \ganttbar{Learning}{10/11/20}{10/12/20}
+\ganttbar[inline]{\emph{Learn Docker}}{10/11/20}{10/12/20}
 \ganttbar[inline]{\emph{Troubleshooting}}{1/2/21}{8/3/21}\\
 \ganttmilestone[ms=right]{Learn about network benchmarks}{4/12/20}\\
 \ganttmilestone[ms=right]{Learned Docker (Obj \ref{itm:learndocker})}{8/12/20}\\
@@ -82,27 +83,32 @@ ms/.style={inline,
 \ganttmilestone[ms=left]{Benchmark Virtual Machines}{2/3/21}
 \ganttmilestone[ms=right]{Benchmark Containers}{8/3/21}\\
 \ganttbar{Synthesis}{18/1/19}{18/1/19}
-\ganttbar[inline]{\emph{build}}{18/1/21}{30/2/21}
-\ganttbar[inline]{\emph{testing}}{2/3/21}{18/3/21}\\
+\ganttbar[inline]{\emph{Build VMs}}{18/1/21}{1/2/21}
+\ganttbar[inline]{\emph{Build Containers}}{1/2/21}{30/2/21}
+\ganttbar[inline]{\emph{Benchmarking}}{2/3/21}{18/3/21}\\
 
 \ganttmilestone[ms=left]{Virtual Machine Built (Obj \ref{itm:buildvirtual})}{1/2/21}
-\ganttmilestone[ms=right]{Container System Built (Obj \ref{itm:buildcontainer})}{24/2/21}\\
-\ganttmilestone[ms=right]{Determine benchmarks (Obj \ref{itm:determinemethod})}{5/3/21}\\
+\ganttmilestone[ms=right]{Container System Built (Obj \ref{itm:buildcontainer})}{28/2/21}\\
 \ganttmilestone[ms=right]{Make Measurements (Obj \ref{itm:measure})}{15/3/21}\\
 
 %Evaluation
-\ganttbar{Evaluation}{18/03/21}{8/04/21}\\
+\ganttbar{Evaluation}{30/02/21}{8/04/21}
+\ganttbar[inline]{\emph{Evaluate}}{2/3/21}{18/3/21}
+\ganttbar[inline]{\emph{Comparisons}}{18/3/21}{8/04/21}\\
 \ganttmilestone[ms=right]{Make comparisons (Obj \ref{itm:comparison})}{25/3/21}\\
 
 %Conclusion
-\ganttbar{Conclusion}{1/04/21}{17/04/21}\\
-\ganttmilestone[ms=left]{Make recommendation (Obj \ref{itm:conclusion})}{12/4/21}\\
+\ganttbar{Conclusion}{15/03/21}{17/04/21}
+\ganttbar[inline]{\emph{Conclusions}}{15/03/21}{1/04/21}
+\ganttbar[inline]{\emph{Introduction}}{1/04/21}{17/04/21}\\
+\ganttmilestone[ms=left]{Make recommendation (Obj \ref{itm:conclusion})}{25/3/21}\\
 
 %Abstract
 \ganttbar{Abstract}{16/04/21}{20/04/21}\\
 
 %Vivas
 \ganttbar{Vivas}{3/5/21}{21/5/21}
+\ganttbar[inline]{\emph{Do Viva}}{3/5/21}{21/5/21}
 \ganttbar[inline]{\emph{prep}}{18/4/21}{1/5/21}\\
 
 
