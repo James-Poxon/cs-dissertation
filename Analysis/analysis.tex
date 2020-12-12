@@ -34,9 +34,10 @@ Virtualisation works
 Containerisation has become the de-facto term to describe what could also be described as OS-level virtualisation. For the purposes of this report, I will be referring to this technology only as Containerisation, and each individual instance as a container (instead of virtual machine). This is the same approach towards defining containers as taken by Dua et al \citep{dua14} when they have made their own distinction between Containers and Virtual Machines.
 
 \subsection{Container Engine}
-What a hypervisor is to a virtual machine, a container engine is to a container. Essentially, a container engine sits on the base operating system, much the same as a hypervisor. Where a difference is found however, is in the way it interacts with the base operating system.
+\label{Container Engine}
+What a hypervisor is to a virtual machine, a container engine is to a container. A container engine sits on the base operating system, much the same as a hypervisor. Where a difference is found however, is in the way it interacts with the base operating system.
 
-Whilst a hypervisor works by running a full operating system on top of the existing one, a container engine works without that upper operating system by using the base operating system as the OS component for each container. Segregation of containers and resource allocation is also managed by the container engine.
+Whilst a hypervisor works by running a full operating system on top of the existing one, a container engine works without that upper operating system by using the base operating system as the OS component for each container. Segregation of containers and resource allocation is simply managed by the container engine, so that each container is allocated resources. This can be done dynamically or be static, depending on the use-case.
 
 \section{Developments in containerisation technology}
 
@@ -44,14 +45,35 @@ Whilst a hypervisor works by running a full operating system on top of the exist
 A now ever more popular implementation of container technology is a software known as Docker. This software is primarily used (and aimed at) app developers, who can use the platform to quickly create and deploy applications for businesses. The use of containers is supposed to make managing these applications much easier, and ensures compatibility along the whole development process.
 Datanyze (a technology market usage group) report that Docker is currently the second most used Containerisation platform, with 25.34\% market share in Containerisation \citep{datanyze}. 
 
-Docker's Container engine is aptly named Docker Engine, and utilises a client-server architecture \citep{DockerArchitecture}. The server portion of the Docker System is known as the `docker daemon', the Client uses a command line interface to interact with one or more docker daemons. The client and daemon communicate using a 'REST API' \citep{DockerArchitecture}. REST (Representational State Transfer) provides an architecture for web services \citep{W3Architecture2004} that allows them to communicate. The protocols within REST are stateless, this means there is no set `state' or session control within the protocol. REST API being used as the communication method between the Docker Daemon and the Client means that each command sent to a daemon can be understood as it is, without the need for any outside context to the command being sent.
+Docker's Container engine is aptly named Docker Engine, and utilises a client-server architecture \citep[Section: Docker architecture]{DockerOverview}. The server portion of the Docker System is known as the `docker daemon', the Client uses a command line interface to interact with one or more docker daemons. The client and daemon communicate using a `REST API' \citep[Section: The Docker daemon]{DockerOverview}. REST (Representational State Transfer) provides an architecture for web services \citep{W3Architecture2004} that allows them to communicate. The protocols within REST are stateless, this means there is no set `state' or session control within the protocol. REST API being used as the communication method between the Docker Daemon and the Client means that each command sent to a daemon can be understood as it is, without the need for any outside context to the command being sent.
 
-The Docker Daemon manages Docker the various `Objects' \citep{DockerArchitecture} required for a full Docker system. \footnote{This is a footnote} These include the containers, the images (Docker images are the instruction sets for Docker containers, not to be confused with OS images) and the Registry, which acts as a storage for the Docker images.
-
-
-\chapter{Define the system that is going to be built}
+The Docker Daemon manages Docker the various `Objects' \citep[Section: Docker objects]{DockerOverview} required for a full Docker system. These include the containers, the images (Docker images are the instruction sets for Docker containers, not to be confused with OS images) and the Registry, which acts as a storage for the Docker images.
 
 
+\chapter{System design and definition}
+\subsection{Maintaining scientific method}
+To ensure that results are scientific, variables must be controlled between both of the systems. The first step in this, is ensuring that the topology and configurations for both systems are the same. This can be done by copying the configuration files from one system to the other, ensuring that the system works in the same way for both systems. As the underlying operating system should be a version of Linux for both the virtual machine and the Docker system, this should be relatively easy.
+
+To further ensure that variables are controlled, we need to ensure that the same benchmarks are maintained throughout the testing process, when being used on the \emph{same part of the system}. This means that if one benchmark is used to measure, for example, network latency on a web-server, then the same benchmark should be used to measure the network latency on that same web-server on the mirrored system. It may be necessary to use different benchmarks across the whole system, but this is acceptable as long as all testing is done to a parallel across both systems. The benchmarks to be used will be discussed in more detail in subsection \ref{sub:Benchmarking} (Benchmarking).
+
+\subsection{LAMP System}
+In order to make sure that the system is as accurate tom a real-world system as possible, a full LAMP topology will need to be implemented for both the Docker system and the Virtual Machine system. LAMP is the acronym of Linux, Apache, MySQL and PHP, whilst this can technically be run on one system, it is common to separate various functions out onto different logical machines, this generally makes management of these systems easier, and often more streamlined.
+
+\subsection{Benchmarking}
+\label{sub:Benchmarking}
+Benchmarking software and tools are designed to create a standard output measurement for performance of a computer-based system\citep{fleming1986}.
+
+There are a great number of benchmarking tools available to me for this research, but generally these can be split in discussion along lines of what exactly they are designed to measure. The main split for this research, being the measuring of base compute performance, and of network performance.
+
+\subsubsection{Base Computing Performance}
+Base computing performance in this case relates to the performance as a result of the computers ability to process information, and at what rate. Whilst this is tied directly to the processor, RAM, and other hardware, the Operating system itself can also have a large affect on the performance of a system, as it will always take up an amount of utilisation over time. This effect is known as `operating system overhead'. Based on previous research on containers and virtual machines it can be hypothesised that the total Operating System overhead for a container-based system will be smaller than that of Virtual Machines \emph{(when using the same operating system)}. This is simply due to the way that containers utilise one OS for their function (as discussed in subsection \ref{Container Engine}).
+
+
+\subsection{DNS}
+
+\subsection{Webserver}
+
+\subsection{Intranet}
 
 \chapter{How will the system be measured}
 %Talk about benchmarks.
