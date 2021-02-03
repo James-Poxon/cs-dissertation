@@ -5,6 +5,7 @@
 
 
 \chapter{Review of Virtualisation}
+\label{chap:virtualisationReview}
 
 \section{Terminology \& Definitions}
 
@@ -35,7 +36,7 @@ Virtualisation works
 
 
 \chapter{Review of Containerisation}
-
+\label{chap:containerisationReview}
 
 \section{Terminology \& Definitions}
 
@@ -82,6 +83,7 @@ To ensure that results are scientific, variables must be controlled between both
 
 To further ensure that variables are controlled, we need to ensure that the same benchmarks are maintained throughout the testing process, when being used on the \emph{same part of the system}. This means that if one benchmark is used to measure, for example, network latency on a web-server, then the same benchmark should be used to measure the network latency on that same web-server on the mirrored system. It may be necessary to use different benchmarks across the whole system, but this is acceptable as long as all testing is done to a parallel across both systems. The benchmarks to be used will be discussed in more detail in subsection \ref{sub:Benchmarking} (Benchmarking).
 
+
 \subsection{LAMP System}
 I will need to make sure that the test system is as accurate to a real-world system as possible. To do this I will be employing a LAMP topology for both the Docker system and the Virtual Machine system. LAMP is the acronym for Linux, Apache, MySQL and PHP. Whilst this can technically be run all on one system, it is common to separate various functions out onto different machines (logically or physically), this generally makes management of these systems easier.
 
@@ -91,19 +93,21 @@ For the linux section of the LAMP topology, I will be employing Ubunutu Server a
 \label{sub:Benchmarking}
 Benchmarking software and tools are designed to create a standard output measurement for performance of a computer-based system\citep{fleming1986}.
 
-There are a  number of benchmarking tools available, but for this research these can be split in discussion along lines of what they are designed to measure. That being said, the main split for this research is the measuring of base compute performance, and of network performance.
+There are a  number of benchmarking tools available, but for this research these can be split in discussion along lines of what they are designed to measure. That being said, the main split for this research is the measuring of computing performance, and of network performance.
 
-\subsubsection{Base Computing Performance}
-Base computing performance in this case relates to the performance as a result of the computers ability to process information, and at what rate. Whilst this is tied directly to the processor, RAM, and other hardware, the overhead of the Operating system can affect these components and as a result, have a large affect on the performance of a system. This effect is known as `operating system overhead'. Based on previous research on containers and virtual machines it can be hypothesised that in this research, the total Operating System overhead for a container-based system will be smaller than that of Virtual Machines \emph{(when using the same operating system)}. This is due to the way that containers utilise one OS for their function (as discussed in subsection \ref{Container Engine}).
+\subsubsection{Computing Performance}
+Computing performance in this case relates to the performance as a result of the computers ability to process information, and at what rate. Whilst this is tied directly to the processor, RAM, and other hardware, the overhead of the Operating system can affect these components and as a result, have a large affect on the performance of a system. This effect is known as `operating system overhead'. Based on previous research on containers and virtual machines it can be hypothesised that in this research, the total Operating System overhead for a container-based system will be smaller than that of Virtual Machines \emph{(when using the same operating system)}. This is due to the way that containers utilise one OS for their function (as discussed in subsection \ref{Container Engine}).
 
 \subsubsection{Network Performance}
-Further to the Base Computing Performance; Networking Performance is the measured performance on the network between various nodes. These nodes are the servers, clients and other infrastructure that are configured to receive and send traffic on a network. One of the best ways to measure network performance is delay. Network delay can be split into a number of different types of delay:
+Further to the Computing Performance; Networking Performance is the measured performance on the network between various nodes. These nodes are the servers, clients and other infrastructure that are configured to receive and send traffic on a network. One of the best ways to measure network performance is delay. Compute performance may change the network delay in some areas, but not all. To explore this, we should further break network delay into its four main components:
 \begin{itemize}
-  \item Processing Delay: The amount of time it takes for a node (router, server, client, etc) to process the header of a packet. This can be affected by 
-  \item Queing Delay
-  \item Transmission Delay: The amount of time it takes for a node to 'push' packets (bit by bit) onto the line \citep{chen2005}. %this reference doesn't seem to work properly. Need to fix. 
-  \item Propogation Delay
+  \item Processing Delay: The amount of time it takes for a node (router, server, client, etc) to process the header of a packet. This is usually affected by the CPU performance, which is linked to the compute performance as discussed previously.
+  \item Queing Delay: Queing Delay is the amount of time spent after being processed or produced by the node, and then actually being pushed onto the line \citep{QueuingDelay}. This is called queing delay, as this delay is most usually due to other data already being pushed out onto the line. As a result, our data is waiting in a 'queue' behind other data, waiting to be pushed onto the line. This is affected by the amount of traffic being sent from a node, along with the speed at which the node can process mutliple packets. This does tie in with Computing performance.
+  \item Transmission Delay: The amount of time it takes for a node to 'push' packets (bit by bit) onto the line \citep[Chapter 7]{chen2005}. This delay is a result of the bandwidth on a line, and as a result, the change in transmission delay between virtualisation and containerisation can't be hypothesised. This is due to differences in the way that both methods manage network traffic. There is no physical line between the servers, so differences in bandwidth are entirely down to the relevant solutution (Containerisation, or virtualisation).
+  \item Propogation Delay: 
 \end{itemize}
+
+We can see from exploring these various types of delay on the network, that network delay can be directly tied to Computing Performance in \emph{some} areas. As a result of this, it could be expected that the changes to overhead, and the possibility of streamlining processes as discussed in chapters \ref{chap:virtualisationReview} and \ref{chap:containerisationReview}
 
 %Find a reference for each of the above^
 
