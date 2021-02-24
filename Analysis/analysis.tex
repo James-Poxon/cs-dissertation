@@ -86,9 +86,10 @@ To further ensure that variables are controlled, we need to ensure that the same
 
 
 \section{LAMP System}
+\ref{sec:LAMPsystem}
 I will need to make sure that the test system is as accurate to a real-world system as possible. To do this I will be employing a LAMP topology for both the Docker system and the Virtual Machine system. LAMP is the acronym for Linux, Apache, MySQL and PHP. Whilst this can technically be run all on one system, it is common to separate various functions out onto different machines (logically or physically), this generally makes management of these systems easier.
 
-For the linux section of the LAMP topology, I will be employing Ubunutu Server as it is headless which resulting in a lower overhead, and because I personally familiar with Ubuntu as an operating system. Using Ubuntu is also good as an example, as it is a widely available and utilised operating system among those that run linux servers. Ubuntu even has its own images stored officially on Docker hub, which is updated regularly to stay in line with Ubuntu's Long Term Service version \citep{ubuntuDocker}. Some of the images hosted on Docker Hub by Ubuntu \citep{ubuntuDockerProfile} are already configured to contain some of the parts required for the depolyment, such as Apache2 and MySQL. These may be useful when I come to implement my own Docker setup, though for the sake of ensuring a fair-test, I may instead push images to docker that use the exact setup used by my virtual-machine testing. This could remove a possible source of extraneous variables from the testing.
+For the linux section of the LAMP topology, I will be employing Ubunutu Server as it is headless which resulting in a lower overhead, and because Ubuntu is one of the most widely used linux operating systems for website infrastructure as of 2021 \citep{w3techUbuntu}. Ubuntu even has its own images stored officially on Docker hub, which is updated regularly to stay in line with Ubuntu's Long Term Service version \citep{ubuntuDocker}. Some of the images hosted on Docker Hub by Ubuntu \citep{ubuntuDockerProfile} are already configured to contain some of the parts required for the depolyment, such as Apache2 and MySQL. These may be useful when implementing a Docker setup in the synthesis of this report, though for the sake of ensuring a fair-test, I may instead push images to docker that use the exact setup used by my virtual-machine testing. This could remove a possible source of extraneous variables from the testing.
 
 \section{Benchmarking}
 \label{sec:Benchmarking}
@@ -110,16 +111,41 @@ Further to the Computing Performance; Networking Performance is the measured per
 \subsection{Other key findings}
 Whilst the purpose of this project will be primarily to find differences in speed between the two methods, there may be other performance, or even logistical improvements of one over the other. The final output from this research should be a reccomendation to those that might be considering using containers in order to run their infrastructure, so whilst performance might be the key focus of this report, I will ensure to mention in evaluation anything else that could be considered important to those that might be looking to containerisation as a 'step forward' for infrasturcuture. For example, in subsection \ref{subsec:docker} (Docker) I discuss the Docker Hub, which is an public repository of images that anyone can push to or pull from. This system might make the deployment of containers easier than the deployment of virtual machines, so whilst this isn't directly related to the performance of the system itself, it may be worth mentioning as a pssible point of interest.
 \end{itemize}
-%UNFINISHED Find a reference for each of the above^
 
 We can see from exploring these various types of delay on the network, that network delay can be directly tied to Computing Performance in \emph{some} areas. As a result of this, it could be expected that the changes to overhead, and the possibility of streamlining processes as discussed in chapters \ref{chap:virtualisationReview} and \ref{chap:containerisationReview}.
 
+\section{Services to be used and meassured}
+To create a realistic web infrastructure, a number of services will need to be implemented across 
+
+\subsection{Webserver}
+\label{subsec:webserver}
+The network will contain an intranet website in order to best simulate the intranets that are often operated by enterprises of various sizes across many different areas. Intranets are an intergral part of a large number of businesses, as aim to serve as a central node for a large number of operations within businesses. These intranets can often host a number of important services for day-to-day working of a business \citep{jacoby2005critical}, such as time-sheet and clock-in access, information sharing, and policy documentation hosting, to name a few.
+\subsubsection{Apache}
+The Apache HTTP server (Apache) is an open source HTTP server software developed by the apache foundation. It is (as of current) the most widely used HTTP server in the world with 34.5\% of known websites using Apache to host their infrastructure\citep{ApacheUsage}. This makes it the perfect tool for simulating a real-world enterprise network, and should give fairly realistic results from benchmarks.
+
 
 \subsection{DNS}
-%USe BIND9 for opensource DNS config.
-\subsection{Webserver}
+The architecture will require a DNS system in order to resolve hostnames outside of our own control (Recursive DNS), and to to maintain the control over the domains for the intranet discussed in \ref{subsec:webserver}. To create more traffic, and room for delay (making it easier to measure), it may be worth having secondary servers below a primary server.
 
-\subsection{Intranet}
+\subsubsection{BIND}
+As the machines running the network infrastructure will be using Linux, the best fit for DNS architecture will be the use of BIND. This is because BIND is the de-facto standard for DNS on linux, and because it allows us to run the DNS server both as a recursive (for finding DNS queries for the outside network) and an authoritive (for managing the intranet domain) DNS server. BIND is maintained by the ISC \ref{ISCtimeline}, who also maintain a Docker Image for the application in docker hub.
+
+\subsection{DHCP}
+The network will also require a DHCP server in order to allocate IP addresses to clients.
+
+\subsubsection{ISC-DHCP}
+Another ISC solution, this will be used in order to manage DHCP. This service is simply known as ISC-DHCP and is another de-facto service in enterprise environements. These programs are in line with the testing I am doing, as they are used primarily in enterpise scenarios, which is where my research aims to make a difference.
+
+\subsection{MySQL}
+As discussed in \ref{sec:LAMPsystem}, a MySQL will be used in order to host a database. There are a number of reasons an organisation might want to host a database on their internal network, such as storing employee infomration for access on the intranet. Databases can take a lot of resources to maintain, and are often an important part of key infrastructure. Any increase in database performance from virtualisation to containerisation would be a clear success, and a good reason to move over to containers over virtual machines. MySQL has its own Ubuntu Server Package, making the server portion of the installation easy.
+
+\subsection{Clients}
+Whilst not technically a service, the network will have to include at least one client in order to test that the services listed above actually work as intended. These sorts of internal networks are made entirely to serve clients, so without testing performance on the client end, the testing would be somewhat redundant. Ubuntu Client will most likely be used, as it is also open source and can be deployed easily on both systems.
+
+\subsection{Topology Diagram}
+Below is a mockup of what the final topology should look like logically. This will be subject to change throughout the synthesis section of this report, as findings are made and areas are adapted.
+%TODO: Insert image of topology here!
 
 \chapter{How will the system be measured}
-%Talk about benchmarks.
+\section{Benchmarking}
+The system will need to be measured using standardised benchmarks in order to ensure that results are comparable. There is a number of benchmarks available%TODO:Write in the benchmarks you use!
