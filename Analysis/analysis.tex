@@ -127,6 +127,8 @@ The Apache HTTP server (Apache) is an open source HTTP server software developed
 \subsection{DNS}
 The architecture will require a DNS system in order to resolve hostnames outside of our own control (Recursive DNS), and to to maintain the control over the domains for the intranet discussed in \ref{subsec:webserver}. To create more traffic, and room for delay (making it easier to measure), it may be worth having secondary servers below a primary server.
 
+It is important to mention that for the purposes of testing, Reverse DNS (rDNS) will also be configured \citep{rfc1035}. This service essentially converts from IP addresses to hostnames, and is useful for using test commands such as Ping and Traceroute.
+
 \subsubsection{BIND}
 As the machines running the network infrastructure will be using Linux, the best fit for DNS architecture will be the use of BIND. This is because BIND is the de-facto standard for DNS on linux, and because it allows us to run the DNS server both as a recursive (for finding DNS queries for the outside network) and an authoritive (for managing the intranet domain) DNS server. BIND is maintained by the ISC \ref{ISCtimeline}, who also maintain a Docker Image for the application in docker hub.
 
@@ -140,11 +142,18 @@ Another ISC solution, this will be used in order to manage DHCP. This service is
 As discussed in \ref{sec:LAMPsystem}, a MySQL will be used in order to host a database. There are a number of reasons an organisation might want to host a database on their internal network, such as storing employee infomration for access on the intranet. Databases can take a lot of resources to maintain, and are often an important part of key infrastructure. Any increase in database performance from virtualisation to containerisation would be a clear success, and a good reason to move over to containers over virtual machines. MySQL has its own Ubuntu Server Package, making the server portion of the installation easy.
 
 \subsection{Clients}
-Whilst not technically a service, the network will have to include at least one client in order to test that the services listed above actually work as intended. These sorts of internal networks are made entirely to serve clients, so without testing performance on the client end, the testing would be somewhat redundant. Ubuntu Client will most likely be used, as it is also open source and can be deployed easily on both systems.
+Whilst not technically a service, the network will have to include at least one client in order to test that the services listed above actually work as intended. These sorts of internal networks are made entirely to serve clients, so without testing performance on the client end, the testing would be somewhat redundant. Ubuntu Desktop will most likely be used, as it is also open source and can be deployed easily on both systems.
 
 \subsection{Topology Diagram}
-Below is a mockup of what the final topology should look like logically. This will be subject to change throughout the synthesis section of this report, as findings are made and areas are adapted.
-%TODO: Insert image of topology here!
+Figure \ref{fig:Topology} is a mockup of what the final topology should look like logically. This will be subject to change throughout the synthesis section of this report, as findings are made and areas are adapted.
+\begin{figure}[H]
+\caption{}
+\label{fig:Topology}
+\fbox{\includegraphics[width=\textwidth]{./analysis/Topology.PNG}}
+\centering
+\end{figure}
+
+This topology should be replicated in the same way across both systems in order to ensure that the results are measuring exactly what is supposed to be measured.
 
 \chapter{How will the system be measured}
 \section{Benchmarking}

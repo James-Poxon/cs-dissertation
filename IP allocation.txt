@@ -1,0 +1,18 @@
+Internal Domain = intranet.co.uk.
+
+VMware:
+
+DNS1 - 192.168.72.3/24
+DNS2 - 192.168.72.4/24
+DNS3 - 192.168.72.5/24
+
+DHCP - 192.168.72.6/24
+
+www - 192.168.72.150
+222 - 192.168.72.151
+
+Client addresses distrobuted by DHCP:
+192.168.72.50 - 192.168.72.100
+
+Remember NAT auto DHCP has been disabled on VMware.
+Might need to be readded for the Docker System
