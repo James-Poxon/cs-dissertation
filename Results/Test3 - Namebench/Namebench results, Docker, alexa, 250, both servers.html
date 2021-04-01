@@ -1,0 +1,445 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title>namebench: 2021-03-24 13:15:16.618995</title>
+  <style type="text/css">
+    
+body {
+  font-family: Helvetica, Arial, sans-serif;
+  background-color: #bbb;
+  background-image: -moz-linear-gradient(0% 100% 90deg, #e5e5e5, #666, #e5e5e5 99%);
+  background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#e5e5e5), to(#bbb), color-stop(.1,#666));
+}
+
+
+td {
+  font-size: x-small;
+}
+
+
+#container {
+  margin-top: 4px;
+  margin-bottom: 4px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 985px;
+  background-color: #f5f5f5;
+  padding: 0.5em;
+  padding-top: 1px;
+  border: 2px solid #666;
+  border-radius: .6em;
+  -moz-border-radius: .6em;
+  -webkit-border-radius: .6em;
+}
+
+h1 {
+  color: #00CC33;
+  font-size: 75px;
+  text-shadow: 3px 3px #eee;
+  padding-top: 4px;
+  margin: 0;
+}
+
+h2 {
+  padding-top: 1em;
+  clear:  both;
+  font-size: 1em;
+}
+
+h3 {
+  font-size: 0.8em;
+  padding-top:  0;
+  margin: 0;
+}
+
+h4 {
+  margin: 0;
+  padding: 0;
+}
+
+h5.faster {
+  font-size:  30px;
+  font-style: italic;
+  color: #009911;
+  margin: 0;
+  padding-top: 4px;
+}
+
+
+#nsdetails {
+  display: block;
+  background-color:  #C2CFF1;
+  border-radius: .5em;
+  -moz-border-radius: .5em;
+  -webkit-border-radius: .5em;
+  padding-left:  3px;
+  padding-bottom: 3px;
+  padding-right:  3px;
+  margin-left: 0.25em;
+}
+
+table#nstable {
+  width:  100%;
+  border-collapse:  collapse;
+  font-size: small;
+}
+
+#nstable tr {
+  vertical-align:  top;
+}
+
+#nstable td {
+  font-size: small;
+}
+
+#nstable td.name_cell {
+  font-size: x-small;
+}
+
+#nstable td.hostname_cell {
+  font-size: x-small;
+}
+
+
+.ip {
+  margin-left: 1em;
+  font-weight: bold;
+  font-family: monospace;
+  border: 1px solid #999;
+  background-color: #f5f5f5;
+  width: 10em;
+  padding: 1px;
+  color: #000;
+}
+
+ul.warnings {
+  padding:  0;
+  margin:  0;
+  margin-left: 0.em;
+  list-style-position:  inside;
+}
+.warnings li {
+}
+#nstable td {
+  padding:  2px;
+  border-right:  1px solid #C2CFF1;
+}
+
+.even {
+  background-color: #fff
+}
+.odd {
+  background-color: #ebeff9;
+}
+
+.unhealthy_host {
+    background-color: #FFD6D8;
+    border-bottom: 1px solid #990000;
+    border-top: 1px solid #990000;
+}
+
+.primary_row {
+  font-weight: bold;
+  background-color: #FFFFEE;
+  border-top: 1px solid #EEEE00;
+  border-bottom: 1px solid #EEEE00;
+}
+
+.disabled {
+  background-color:  #333;
+  border-bottom: 1px solid #666;
+  color: #fff;
+}
+
+.disabled A { 
+  color: #fff;
+}
+
+.disabled A:visited {
+  color: #e5e5e5;
+}
+
+.greybox {
+  border:  1px solid #999;
+  border-radius: .5em;
+  -moz-border-radius: .5em;
+  -webkit-border-radius: .5em;
+  padding:  1em;
+  height:  11em;
+  background-color:  #fff;
+}
+
+#big_summary {
+  display: inline-table;
+  float:  left;
+  text-align:  center;
+  width: 24em;
+}
+
+#recommended_config {
+  float: right;
+  display:  inline-table;
+}
+
+#recommended_config table {
+  margin-top: 1em;
+}
+
+#recommended_config td {
+  font-size: medium;
+}
+
+.rec_name {
+  margin-left:  8px;
+  display:  inline;
+  color:  #999;
+}
+
+.section {
+  margin-left: 0.25em;
+  padding: 1em;
+  background-color:  #fff;
+  max-width: 910px;
+}
+
+.config {
+  background-color:  #fff;
+}
+.configtable {
+  font-size: 10px;
+}
+
+.configtable tr {
+  border:  9px solid #f00;
+}
+
+#nstable thead td {
+  font-weight:  bold;
+  font-size: x-small;
+}
+
+h2:before {
+  color:  #555;
+  content:  '\25BA';
+  padding-right:  0.25em;
+}
+
+
+input[type=text] {
+  color: #000;
+}
+
+.normal .error_count {
+  background-color: #900;
+  color: #fff;
+}
+
+.version {
+  text-align: right;
+  font-size: x-small;
+  color: #ccc;
+  clear: both;
+}
+
+/* links with tooltips */
+a.info {
+    position:relative;
+    z-index:24;
+    color: #000;
+    text-decoration:none
+}
+.disabled a.info {
+    color: #fff;
+}
+
+a.info:hover {z-index:25; }
+a.info span {display: none}
+a.info:hover span {
+    display:block;
+    position:absolute;
+    top:2em; left:2em; width:15em;
+    border:1px solid #0cf;
+    background-color:#cff; color:#000;
+    text-align: center
+}
+
+#notice {
+  font-size: small;
+  text-align: center;
+  background-color: #ffa;
+  border: 1px solid #cc7;
+}
+  </style>
+</head>
+<body>
+
+<div id="container">
+
+<div class="version">namebench 1.3.1</div>
+
+
+<div id="big_summary" class="greybox">
+	<h4><strong>192.168.72.4</strong> is</h4>
+
+	<h1>Fastest</h1>
+	<h4></h4>
+
+</div>
+
+<div id="recommended_config" class="greybox">
+	<h4>Recommended configuration (fastest + nearest)</h4>
+	<table>
+	
+	<tbody><tr>
+	  <td>Primary Server</td>
+    <td><div class="ip">192.168.72.4</div></td><td class="rec_name"></td>
+	</tr>
+
+	<tr>
+	  <td>Secondary Server</td>
+    <td><div class="ip">192.168.72.5</div></td><td class="rec_name"></td>
+	</tr>
+
+  </tbody></table>
+</div>
+
+
+<h2>Tested DNS Servers</h2>
+
+<div id="nsdetails">
+<table id="nstable">
+<thead>
+<tr>
+  <td nowrap="nowrap">IP</td>
+  <td>Descr.</td>
+  <td nowrap="nowrap">Hostname</td>
+  <td nowrap="nowrap">Avg (ms)</td>
+  <td nowrap="nowrap">Diff</td>
+	<td nowrap="nowrap">Min</td>
+	<td nowrap="nowrap">Max</td>
+  <td nowrap="nowrap">TO</td>
+  <td nowrap="nowrap">NX</td>
+  <td>Notes</td>
+</tr>
+</thead>
+
+
+<tbody><tr class="normal odd ">
+
+  <td class="ip_cell"><a href="http://www.google.com/search?q=192.168.72.4" class="info">192.168.72.4<span>9.16.1-Ubuntu</span></a></td>
+  <td class="name_cell">192.168.72.4</td>
+  <td class="hostname_cell"><a href="http://www.google.com/search?q=192.168.72.4" class="info">192.168.72.4<span>b0c0196f9f85 </span></a></td>
+  <td>359.76</td>
+  <td></td>
+  <td>0.4</td>
+  <td>3500.0</td>
+  <td class="error_count">3</td>
+  <td>6</td>
+  <td class="notes_cell">
+  
+    <ul class="warnings">
+      
+      <li><a href="http://code.google.com/p/namebench/wiki/FAQ#What_does_" incorrect_result_for..."_mean?"="">twitter.com appears incorrect: 104.244.42.129, 104.244.42.193</a></li>
+      
+	</ul>
+  
+  </td>
+</tr>
+
+<tr class="normal even">
+
+  <td class="ip_cell"><a href="http://www.google.com/search?q=192.168.72.5" class="info">192.168.72.5<span>9.16.1-Ubuntu</span></a></td>
+  <td class="name_cell">192.168.72.5</td>
+  <td class="hostname_cell"><a href="http://www.google.com/search?q=192.168.72.5" class="info">192.168.72.5<span>5fc53e3c7926 </span></a></td>
+  <td>405.61</td>
+  <td>-11.3%</td>
+  <td>0.4</td>
+  <td>3510.7</td>
+  <td class="error_count">2</td>
+  <td>6</td>
+  <td class="notes_cell">
+  
+    <ul class="warnings">
+      
+      <li><a href="http://code.google.com/p/namebench/wiki/FAQ#What_does_" incorrect_result_for..."_mean?"="">twitter.com appears incorrect: 104.244.42.1</a></li>
+      
+	</ul>
+  
+  </td>
+</tr>
+
+</tbody></table>
+</div>
+
+
+<h2>Graphs</h2>
+
+<div id="graphs" class="section">
+<h2>Mean Response Duration</h2>
+<img src="Namebench%20results,%20Docker,%20alexa,%20250,%20both%20servers_files/chart_004.png" alt="Mean Duration Graph">
+
+<h3>Fastest Individual Response Duration</h3>
+<img src="Namebench%20results,%20Docker,%20alexa,%20250,%20both%20servers_files/chart_003.png" alt="Fastest Response Graph">
+
+<h3>Response Distribution Chart (First 200ms)</h3>
+
+<img src="Namebench%20results,%20Docker,%20alexa,%20250,%20both%20servers_files/chart.png" alt="Response Distribution Graph (first 200ms)">
+
+<h3>Response Distribution Chart (Full)</h3>
+
+<img src="Namebench%20results,%20Docker,%20alexa,%20250,%20both%20servers_files/chart_002.png" alt="Response Distribution Graph (full)">
+</div>
+
+
+<h2>Query Details</h2>
+
+<div id="details" class="section">
+View the details in <a href="file:///tmp/namebench_2021-03-24_1315.csv">Comma Separated Values (csv)</a> format.
+</div>
+
+
+
+<h2>Configuration</h2>
+
+
+<div id="config" class="section">
+<table id="configtable">
+	<thead><tr><td>Name</td><td>Value</td></tr></thead>
+	
+	  <tbody><tr><td>benchmark_thread_count</td><td>2</td></tr>
+	
+	  <tr><td>enable_censorship_checks</td><td>0</td></tr>
+	
+	  <tr><td>health_thread_count</td><td>40</td></tr>
+	
+	  <tr><td>health_timeout</td><td>3.75</td></tr>
+	
+	  <tr><td>hide_results</td><td>0</td></tr>
+	
+	  <tr><td>input_source</td><td>alexa</td></tr>
+	
+	  <tr><td>num_servers</td><td>11</td></tr>
+	
+	  <tr><td>ping_timeout</td><td>0.5</td></tr>
+	
+	  <tr><td>query_count</td><td>250</td></tr>
+	
+	  <tr><td>run_count</td><td>1</td></tr>
+	
+	  <tr><td>select_mode</td><td>automatic</td></tr>
+	
+	  <tr><td>template</td><td>html</td></tr>
+	
+	  <tr><td>timeout</td><td>3.5</td></tr>
+	
+	  <tr><td>upload_results</td><td>0</td></tr>
+	
+	  <tr><td>version</td><td>1.3.1</td></tr>
+	
+</tbody></table>
+</div>
+
+</div>
+
+
+</body></html>
