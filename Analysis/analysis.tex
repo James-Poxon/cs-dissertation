@@ -77,7 +77,7 @@ When new containers are created, a set of namespaces are created sepcifically fo
 Control groups is another feature of the linux kernal used by Docker. Control groups allow hardware resources to be segrated in a way that limits and further isolates them \citep{corbetControlGroups}. In docker, this is used to segregate parts of memory, logical processors, drive space and network access so that there is no crossover in hardware utilisation between different containers. This is similar to how a hypervisor would segregate resources, but instead this is managed entirely by the kernal.
 
 \chapter{System design and definition}
-
+\label{SystemDesignDefinition}
 
 \section{Maintaining scientific method}
 To ensure that results are scientific, variables must be controlled between both of the systems. The first step in this, is ensuring that the topology and configurations for both systems are the same. This can be done by copying the configuration files from one system to the other, ensuring that the system works in the same way for both systems. As the underlying operating system should be a version of Linux for both the virtual machine and the Docker system, this should be relatively easy.
@@ -86,7 +86,7 @@ To further ensure that variables are controlled, we need to ensure that the same
 
 
 \section{LAMP System}
-\ref{sec:LAMPsystem}
+\label{sec:LAMPsystem}
 I will need to make sure that the test system is as accurate to a real-world system as possible. To do this I will be employing a LAMP topology for both the Docker system and the Virtual Machine system. LAMP is the acronym for Linux, Apache, MySQL and PHP. Whilst this can technically be run all on one system, it is common to separate various functions out onto different machines (logically or physically), this generally makes management of these systems easier.
 
 For the linux section of the LAMP topology, I will be employing Ubunutu Server as it is headless which resulting in a lower overhead, and because Ubuntu is one of the most widely used linux operating systems for website infrastructure as of 2021 \citep{w3techUbuntu}. Ubuntu even has its own images stored officially on Docker hub, which is updated regularly to stay in line with Ubuntu's Long Term Service version \citep{ubuntuDocker}. Some of the images hosted on Docker Hub by Ubuntu \citep{ubuntuDockerProfile} are already configured to contain some of the parts required for the depolyment, such as Apache2 and MySQL. These may be useful when implementing a Docker setup in the synthesis of this report, though for the sake of ensuring a fair-test, I may instead push images to docker that use the exact setup used by my virtual-machine testing. This could remove a possible source of extraneous variables from the testing.
@@ -98,15 +98,16 @@ Benchmarking software and tools are designed to create a standard output measure
 There are a  number of benchmarking tools available, but for this research these can be split in discussion along lines of what they are designed to measure. That being said, the main split for this research is the measuring of computing performance, and of network performance.
 
 \subsection{Computing Performance}
+\label{computingperformance}
 Computing performance in this case relates to the performance as a result of the computers ability to process information, and at what rate. Whilst this is tied directly to the processor, RAM, and other hardware, the overhead of the Operating system can affect these components and as a result, have a large affect on the performance of a system. This effect is known as `operating system overhead'. Based on previous research on containers and virtual machines it can be hypothesised that in this research, the total Operating System overhead for a container-based system will be smaller than that of Virtual Machines \emph{(when using the same operating system)}. This is due to the way that containers utilise one OS for their function (as discussed in subsection \ref{Container Engine}).
 
 \subsection{Network Performance}
 Further to the Computing Performance; Networking Performance is the measured performance on the network between various nodes. These nodes are the servers, clients and other infrastructure that are configured to receive and send traffic on a network. One of the best ways to measure network performance is delay. Compute performance may change the network delay in some areas, but not all. To explore this, we should further break network delay into its four main components:
 \begin{itemize}
   \item Processing Delay: The amount of time it takes for a node (router, server, client, etc) to process the header of a packetz \citep{ProcessingDelay}. This is usually affected by the CPU performance, which is linked to the compute performance as discussed previously.
-  \item Queing Delay: The time spent after being processed or produced by the node, and then actually being pushed onto the line \citep{QueuingDelay}. This is called queing delay, as this delay is most usually due to other data already being pushed out onto the line. As a result, our data is waiting in a 'queue' behind other data, waiting to be pushed onto the line. This is affected by the amount of traffic being sent from a node, along with the speed at which the node can process mutliple packets. This does tie in with Computing performance.
-  \item Transmission Delay: The amount of time it takes for a node to 'push' packets (bit by bit) onto the line \citep[Chapter 7]{chen2005}. This delay is a result of the bandwidth on a line, and as a result, the change in transmission delay between virtualisation and containerisation can't be hypothesised. This is due to differences in the way that both methods manage network traffic. There is no physical line between the servers, so differences in bandwidth are entirely down to the relevant solutution (Containerisation, or virtualisation).
-  \item Propogation Delay: The time it takes for packets to travel over a line/medium (such as copper cable) \citep{PropogationDelay}. This could be affected by the the change from virtualisation to containerisation, however, this would be down to the individual ways that each of the soltutions I choose manage network traffic between logical machines. As such, I can't generate a hypothesis for how this would be affected, much the same as Transmission Delay.
+  \item Queing Delay: The time spent after being processed or produced by the node, and then actually being pushed onto the line \citep{QueuingDelay}. This is called queuing delay, as this delay is most usually due to other data already being pushed out onto the line. As a result, our data is waiting in a 'queue' behind other data, waiting to be pushed onto the line. This is affected by the amount of traffic being sent from a node, along with the speed at which the node can process mutliple packets. This does tie in with Computing performance.
+  \item Transmission Delay: The amount of time it takes for a node to 'push' packets (bit by bit) onto the line \citep[Chapter 7]{chen2005}. This delay is a result of the bandwidth on a line, and as a result, the change in transmission delay between virtualisation and containerisation can't be hypothesised. This is due to differences in the way that both methods manage network traffic. There is no physical line between the servers, so differences in bandwidth are entirely down to the relevant solution (Containerisation, or virtualisation).
+  \item Propagation Delay: The time it takes for packets to travel over a line/medium (such as copper cable) \citep{PropogationDelay}. This could be affected by the the change from virtualisation to containerisation, however, this would be down to the individual ways that each of the soltutions I choose manage network traffic between logical machines. As such, I can't generate a hypothesis for how this would be affected, much the same as Transmission Delay.
 
 \subsection{Other key findings}
 Whilst the purpose of this project will be primarily to find differences in speed between the two methods, there may be other performance, or even logistical improvements of one over the other. The final output from this research should be a reccomendation to those that might be considering using containers in order to run their infrastructure, so whilst performance might be the key focus of this report, I will ensure to mention in evaluation anything else that could be considered important to those that might be looking to containerisation as a 'step forward' for infrasturcuture. For example, in subsection \ref{subsec:docker} (Docker) I discuss the Docker Hub, which is an public repository of images that anyone can push to or pull from. This system might make the deployment of containers easier than the deployment of virtual machines, so whilst this isn't directly related to the performance of the system itself, it may be worth mentioning as a pssible point of interest.
@@ -114,35 +115,41 @@ Whilst the purpose of this project will be primarily to find differences in spee
 
 We can see from exploring these various types of delay on the network, that network delay can be directly tied to Computing Performance in \emph{some} areas. As a result of this, it could be expected that the changes to overhead, and the possibility of streamlining processes as discussed in chapters \ref{chap:virtualisationReview} and \ref{chap:containerisationReview}.
 
-\section{Services to be used and meassured}
+\section{Requirements List: Infrastructure}
+\label{Requirements:infrastructure}
 To create a realistic web infrastructure, a number of services will need to be implemented across 
 
 \subsection{Webserver}
 \label{subsec:webserver}
-The network will contain an intranet website in order to best simulate the intranets that are often operated by enterprises of various sizes across many different areas. Intranets are an intergral part of a large number of businesses, as aim to serve as a central node for a large number of operations within businesses. These intranets can often host a number of important services for day-to-day working of a business \citep{jacoby2005critical}, such as time-sheet and clock-in access, information sharing, and policy documentation hosting, to name a few.
+The network will contain an intranet website in order to best simulate the intranets that are often operated by enterprises of various sizes across many different areas. Intranets are an integral part of a large number of businesses, as aim to serve as a central node for a large number of operations within businesses. These intranets can often host a number of important services for day-to-day working of a business \citep{jacoby2005critical}, such as time-sheet and clock-in access, information sharing, and policy documentation hosting, to name a few.
+
 \subsubsection{Apache}
+\label{apacheserver}
 The Apache HTTP server (Apache) is an open source HTTP server software developed by the apache foundation. It is (as of current) the most widely used HTTP server in the world with 34.5\% of known websites using Apache to host their infrastructure\citep{ApacheUsage}. This makes it the perfect tool for simulating a real-world enterprise network, and should give fairly realistic results from benchmarks.
 
 
 \subsection{DNS}
-The architecture will require a DNS system in order to resolve hostnames outside of our own control (Recursive DNS), and to to maintain the control over the domains for the intranet discussed in \ref{subsec:webserver}. To create more traffic, and room for delay (making it easier to measure), it may be worth having secondary servers below a primary server.
+The architecture will require a DNS system in order to resolve hostnames outside of our own control (Recursive DNS), and to to maintain the control over the domains for the intranet discussed in \ref{subsec:webserver}. Secondary DNS servers will be configured to interact with clients, whilst the primary and authoritative server will be hidden from clients. Having secondary servers acts both as a way to load balance DNS requests from the clients, and to act as a redundancy should one of the servers fail.
 
-It is important to mention that for the purposes of testing, Reverse DNS (rDNS) will also be configured \citep{rfc1035}. This service essentially converts from IP addresses to hostnames, and is useful for using test commands such as Ping and Traceroute.
+It is important to mention that for the purposes of testing, Reverse DNS (rDNS) will also be configured \citep{rfc1035}. This service essentially converts from IP addresses to hostnames, and is useful for using test commands such as Ping and Traceroute. These commands wont appear in the testing, but will be useful for troubleshooting when the systems are being created.
+
+The primary and secondary forwarding addresses for queries unknown to the primary DNS server will be Google's Public DNS servers. (8.8.8.8 and 8.8.4.4).
 
 \subsubsection{BIND}
-As the machines running the network infrastructure will be using Linux, the best fit for DNS architecture will be the use of BIND. This is because BIND is the de-facto standard for DNS on linux, and because it allows us to run the DNS server both as a recursive (for finding DNS queries for the outside network) and an authoritive (for managing the intranet domain) DNS server. BIND is maintained by the ISC \ref{ISCtimeline}, who also maintain a Docker Image for the application in docker hub.
+As the machines running the network infrastructure will be using Linux, the best fit for DNS architecture will be the use of BIND. This is because BIND is the de-facto standard for DNS on linux, and because it allows us to run the DNS server both as a recursive (for finding DNS queries for the outside network) and an authoritative (for managing the intranet domain) DNS server. BIND is maintained by the ISC \citep{ISCtimeline}, who also maintain a Docker Image for the application in docker hub.
 
 \subsection{DHCP}
 The network will also require a DHCP server in order to allocate IP addresses to clients.
 
 \subsubsection{ISC-DHCP}
-Another ISC solution, this will be used in order to manage DHCP. This service is simply known as ISC-DHCP and is another de-facto service in enterprise environements. These programs are in line with the testing I am doing, as they are used primarily in enterpise scenarios, which is where my research aims to make a difference.
+Another ISC solution\citep{ISCtimeline}, this will be used in order to manage DHCP. This service is simply known as ISC-DHCP and is another de-facto service in enterprise environments. These programs are in line with the testing I am doing, as they are commonly used in real world environments, which is where my research aims to replicate and implicate.
 
 \subsection{MySQL}
+\label{MySQL Server}
 As discussed in \ref{sec:LAMPsystem}, a MySQL will be used in order to host a database. There are a number of reasons an organisation might want to host a database on their internal network, such as storing employee infomration for access on the intranet. Databases can take a lot of resources to maintain, and are often an important part of key infrastructure. Any increase in database performance from virtualisation to containerisation would be a clear success, and a good reason to move over to containers over virtual machines. MySQL has its own Ubuntu Server Package, making the server portion of the installation easy.
 
 \subsection{Clients}
-Whilst not technically a service, the network will have to include at least one client in order to test that the services listed above actually work as intended. These sorts of internal networks are made entirely to serve clients, so without testing performance on the client end, the testing would be somewhat redundant. Ubuntu Desktop will most likely be used, as it is also open source and can be deployed easily on both systems.
+Whilst not technically a service, the network will have to include at least one client in order to test that the services listed above actually work as intended. These sorts of internal networks are made entirely to serve clients, so without testing performance on the client end, the testing would be somewhat redundant. Ubuntu Desktop be used, as it is also open source and can be deployed easily on both systems. The client machine used in testing will be a VMware machine so that it can interact with the network setup for testing. The same system resources will be allocated to this client for both testing environments, so whilst there will be an impact on the performance of the machine doing the testing, it should be the same impact across both systems, and shouldn't change the legitimacy of the output.
 
 \subsection{Topology Diagram}
 Figure \ref{fig:Topology} is a mockup of what the final topology should look like logically. This will be subject to change throughout the synthesis section of this report, as findings are made and areas are adapted.
@@ -155,6 +162,41 @@ Figure \ref{fig:Topology} is a mockup of what the final topology should look lik
 
 This topology should be replicated in the same way across both systems in order to ensure that the results are measuring exactly what is supposed to be measured.
 
+The difference in setup here is that Docker containers are run from the command line on the host machine whereas VMware will be using the VMware workstation pro environment to virtualise a new operating system for each instance. 
+
 \chapter{How will the system be measured}
-\section{Benchmarking}
-The system will need to be measured using standardised benchmarks in order to ensure that results are comparable. There is a number of benchmarks available%TODO:Write in the benchmarks you use!
+
+\section{Requirements list: Benchmarks to be used}
+The system will need to be measured using standardised benchmarks in order to ensure that results are comparable.
+
+To ensure that all elements of the system are measured, I will do four tests as follows.
+
+\subsection{Test one - iPerf3}
+iPerf is a tool used for measuring the total bandwidth achiveable over IP networks \citep{iPerf3}. In this test, the throughput will be tested between the client and the Apache server, as realistically, this is the server that would receive the most traffic in a real deployment. It can be expected that any server to client bandwidth would be the same however, given that the connections are all virtual and should work much the same way, regardless of which server is being used.
+
+Measuring throughput for the web server is important because a higher throughput should mean a greater number of users being able to use the website without long wait times for example.
+
+\subsection{Test two - Sysbench MySQL}
+Sysbench is a benchmarking tool that comes with a number of different tests for measuring processing, memory usage, Input/Output speed, and database performance\citep{sysbench}. Whilst the tool is extremely versatile, with tests for a number of different functions, the test that is of interest to this work is the 'oltp\_read\_write' test supplied. This test performs a number of random read and write queries and transactions to a pre-prepared MySQL database using OLTP (Online Transaction Processing), which is a system which facilitates small-scale, multi-user transactions and processes to a database\citep{OLTP}.
+
+This test will be performed on the MySQL server outlined in subsection \ref{MySQL Server}, with the client machine being used to send the queries and initiate reads and writes.
+
+The output from this test should give the number of queries that were successfully performed, along with the total latency for each transaction that takes place. These measurements are important because lower latency and a higher number of transactions in the same amount of time in a real deployment would result in better load times for end users for any web pages that require database manipulation. Even databases that don't face any users could see benefit from increased performance however, as lower latency allows for greater workloads \citep{MySQLlatency}, which would allow heavier, more demanding work to be allocated.
+
+\subsection{Test three - Namebench}
+Namebench is an old and archived, but still fairly standard DNS benchmarking utility developed by Thomas Stromberg as part of Google's 20\% program \citep{Namebench}. The project is using the Apache Open-Source License, and is still available to download and compile for use on Linux.
+
+The tool's original purpose was for testing DNS response times for multiple websites against well-known, public DNS servers. The output from the test was designed to give the user a good idea as to which servers to use as their primary and secondary DNS servers in order to achieve the best response times possible when browsing the web. However, the outputs given can also be extremely useful for testing internal DNS server speeds. For example; the average, maximum and minimum latency given for each server. When this test is done for both deployments (Docker and VMware) the outputs can be compared to determine which DNS architecture gives less latency.
+
+DNS latency directly affects how quickly websites load, as time is needed to resolve the server address from the IP. Overstressed DNS architecture can result in larger query latency\citep{DNSlatency}.
+
+\subsection{Test four - Apache JMeter and Performance measurements using Netdata}
+Apache JMeter is an open-source application provided by the Apache Software Foundation designed to allow load-testing of various servers \citep{ApacheJMeter}. It was initially designed for testing of web-applications, and whilst it can now be used to test a number of different protocols, we will be using it for testing of HTTP/HTTPS.
+
+JMeter is fully user customisable, but under a fairly standard and basic use, it allows for the simulation of a number of clients to a remote server in order to simulate what a different loads would look like if the server were to be in a real deployment\citep{masterjmeter}.
+
+This test will be performed against the Apache server laid out in subsection \ref{apacheserver}, and as with the other tests, the client machine will be used to initiate the test, so that the traffic uses the network environment.
+
+However, JMeter only gives performance results that are perceived by the clients that it simulates, for example, query latency. It doesn't show the impact on performance of the machine itself during these stress tests. So to measure the computing performance (as laid out in subsection \ref{computingperformance}), Netdata will be implemented to run on the host machine in order to monitor the performance metrics.
+
+Netdata is open source software that is designed to pull numerous performance metrics such as CPU and RAM usage in real-time from nodes and end-points, whilst maintaining as small of a footprint on that node as possible \citep{Netdata}. These statistics are displayed in a visual 'dashboard' which display a number of charts showing usage. A key feature of this dashboard is the ability to export and import snapshots \citep{netdatadashboard}. This feature will allow a snapshot to be created for each scenario, allowing for historical access to the exact performance metrics from each test. This allows for in-depth analysis even after the testing has finished.

@@ -8,11 +8,16 @@ DNS3 - 192.168.72.5/24
 
 DHCP - 192.168.72.6/24
 
-www - 192.168.72.150
-222 - 192.168.72.151
+www - 192.168.72.150 (Apache Server)
+MySQL - 192.168.72.151
 
 Client addresses distrobuted by DHCP:
 192.168.72.50 - 192.168.72.100
 
 Remember NAT auto DHCP has been disabled on VMware.
 Might need to be readded for the Docker System
+
+For DNS: /etc/init.d/named start on DNS.
+For DHCP: service isc-dhcp-server start
+For Apache: apachectl –k start (for restart apachectl –k graceful)
+For MySQL: apachectl –k start AND service mysql start

@@ -1,8 +1,50 @@
 %!TeX root=../Dissertation.tex
 %!TeX bibfile=./synthesis.bib
 
-\chapter{System to be created}
+\chapter{System creation}
+\section{Servers}
+\subsection{Operating system}
+Both systems were created from scratch, using the latest LTS versions of Ubuntu Server (20.04, Focal Fossa \citep{Ubuntu20.04Documentation}).
+
+For VMware, the images were downloaded directly from the Ubuntu Website and the virtual machines were created using VMware's workstation Virtual Machine creation wizard, whereas for Docker, the Ubuntu Server image was taken from Ubuntu's official Docker Image, hosted on Docker Hub \citep{UbuntuDockerHub}. Each docker image was then created using a Dockerfile, which lays out which version to use; in this case, ubuntu:latest.
+
+\subsection{Software}
+The servers were created to use the software and topology laid out in the requirements in the analysis, (section \ref{Requirements:infrastructure}).
+
+For both VMware and Docker this meant using the Advanced Package Tool (which is the default package manager on ubuntu) to install the various software needed.
+
+However, for VMware, this was done once each server was installed and booted. On Docker, through the use of Dockerfiles, this can integrated directly into the Docker image, along with configuration files. An example of a Dockerfile for DNS server 1 is shown in figure \ref{fig:dockerfileexample} below.
+%\begin{figure}[h]
+%\caption{}
+%\label{fig:dockerfileexample}
+\begin{minted}{dockerfile}
+FROM ubuntu:latest
+
+RUN apt-get update \
+  && apt-get install -y \
+  bind9 \
+  bind9utils \
+  bind9-doc
+
+
+COPY named.conf.options /etc/bind/
+COPY named.conf.local /etc/bind/
+COPY db.intranet.co.uk /etc/bind/
+COPY db.72.168.192.in-addr.arpa /etc/bind/
+
+CMD ["/bin/bash", "-c", "while :; do sleep 10; done"]
+
+\end{minted}
+
+%\end{figure}
+
+\section{Client}
+\subsection{Operating System}
+
+\subsection{Software}
 
 \chapter{Methods}
 
 \chapter{Testing \& Benchmarks}
+
+%the idle benchmarks didn't have the client machine running!
