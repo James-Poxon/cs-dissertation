@@ -139,6 +139,7 @@ The primary and secondary forwarding addresses for queries unknown to the primar
 As the machines running the network infrastructure will be using Linux, the best fit for DNS architecture will be the use of BIND. This is because BIND is the de-facto standard for DNS on linux, and because it allows us to run the DNS server both as a recursive (for finding DNS queries for the outside network) and an authoritative (for managing the intranet domain) DNS server. BIND is maintained by the ISC \citep{ISCtimeline}, who also maintain a Docker Image for the application in docker hub.
 
 \subsection{DHCP}
+\label{DHCP Spec}
 The network will also require a DHCP server in order to allocate IP addresses to clients.
 
 \subsubsection{ISC-DHCP}
@@ -167,6 +168,7 @@ The difference in setup here is that Docker containers are run from the command 
 \chapter{How will the system be measured}
 
 \section{Requirements list: Benchmarks to be used}
+\label{RequirementsListBench}
 The system will need to be measured using standardised benchmarks in order to ensure that results are comparable.
 
 To ensure that all elements of the system are measured, I will do four tests as follows.

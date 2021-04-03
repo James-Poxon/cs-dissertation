@@ -3,7 +3,12 @@
 
 \chapter{System creation and setup}
 \section{The host machine}
-It was decided as a better test of the ability of Docker to reduce strain on a system, than an older machine with limited resources would be used, over a more modern and very capable machine. This was to better represent the target group of this research; that being SMEs that may have aging hardware, attempting to get the most out of what they currently have available.
+\subsection{Hardware}
+It was decided as a better test of Docker's ability to reduce strain on a system, that an older machine with limited resources would be used rather than a more modern and capable machine. This was to better represent the target group of this research; that being SMEs that may have aging hardware, attempting to get the most out of what they currently have available.
+
+The test machine has %TODO: TO DO state what the specs of the machine are. RAM, CPU, etc
+
+\subsection{Operating System}
 
 \section{Servers}
 \subsection{Operating system}
@@ -12,11 +17,11 @@ Both systems were created from scratch, using the latest LTS versions of Ubuntu 
 For VMware, the images were downloaded directly from the Ubuntu Website and the virtual machines were created using VMware's workstation Virtual Machine creation wizard, whereas for Docker, the Ubuntu Server image was taken from Ubuntu's official Docker Image, hosted on Docker Hub \citep{UbuntuDockerHub}. Each docker image was then created using a Dockerfile, which lays out which version to use; in this case, ubuntu:latest.
 
 \subsection{Software}
-The servers were created to use the software and topology laid out in the requirements in the analysis, (section \ref{Requirements:infrastructure}).
+The servers were created to use the software and topology laid out in the requirements within section \ref{Requirements:infrastructure}.
 
 For both VMware and Docker this meant using the Advanced Package Tool (which is the default package manager on ubuntu) to install the various software needed.
 
-However, for VMware, this was done once each server was installed and booted. On Docker, through the use of Dockerfiles, this can integrated directly into the Docker image, along with configuration files. An example of a Dockerfile for DNS server 1 is shown in figure \ref{fig:dockerfileexample} below. This shows how the base image is selected, along with the addition of the software and tools necessary to make bind9 work. The `COPY' command takes the completed configuration files and places them in the correct folders.
+However, for VMware this was done once each server was installed and booted. On Docker, through the use of Dockerfiles, this can integrated directly into the Docker image, along with any configuration files that may be required, such as local zone files for the primary DNS server (DNS1). An example of a Dockerfile for DNS1 is shown in figure \ref{fig:dockerfileexample} below. This shows how the base image is selected, along with the addition of the software and tools necessary to make bind9 work. The `COPY' command takes the completed configuration files and places them in the correct folders.
 \begin{figure}[h]
 \caption{}
 \label{fig:dockerfileexample}
@@ -43,15 +48,26 @@ CMD ["/bin/bash", "-c", "while :; do sleep 10; done"]
 
 \section{Client}
 \subsection{Operating System}
+\label{ClientOS}
 The client machine was created using VMware workstation pro, using Ubuntu's latest LTS desktop version (20.04, Focal Fossa Desktop \citep{UbuntuDesktopDocumentation})
 
-The same client machine was used for both the VMware system and the Docker System. This was to ensure that the client used the same amount of resources on the host machine for both systems, as in a real environement, the clients would be remote devices on the network. By using the same virtual machine as the client in both tests, any substantial impact to the outputs of the tests should be limited.
+The same client machine was used for both the VMware system and the Docker System. This was to ensure that the client used the same amount of resources (RAM, CPU and Network usage) on the host machine for both the VMware tests and the Docker tests, as in a real environment, the clients would be remote devices on the network. By using the same virtual machine as the client in both tests, any impact to the outputs of the tests should be mitigated.
 
 The Client machine was configured to use up to 4GB of RAM, and up to two cores using VMware Workstation Pro.
 
-\section{The Network}
-
 \subsection{Software}
+The client machine had all the testing and benchmarking software required installed before any testing took place, so that the machine was the same between testing.
+
+The software installed was as described in the requirements list in section \ref{RequirementsListBench}. As mentioned in that section, Netdata is installed on the host machine during the final test, not the client machine. This is to ensure that usage statistics represent the whole machine, not just the client, or the endpoint (in this case, the web server).
+
+\section{The Network}
+%put IP address scheme in here
+
+For both tests, VMware Workstation's NAT networking mode was used \citep{VMwareNAT}. The same network was used for both in order to ensure a fair test. Using the same network provided by VMware's NAT setting ensures that any differences in network performance measured in the tests is due to factors other than the network infrastructure itself; more specifically, the difference between Docker and VMware's core performance in a network setting.
+
+The configuration of this network was edited using VMware's "Virtual Network Settings" \citep{VMwareNetChange} to disable the built in DHCP server, so that it didn't conflict with the DHCP server created for the testing (see subsection \ref{DHCP Spec}).
+
+Setting up VMware Virtual Machines to use the NAT (VMnet8) network is straight-forward. On the contrary, to do the Docker test, more work was required. Firstly, a Custom Docker Network named "CustomNet" was set up using Docker's "macvlan" network driver \citep{DockerMacVlan}. This network driver is designed to be bound to a physical network, similar to the "bridged" mode found in VMware, by giving each Container an individual MAC address. When creating a "macvlan" network, the interface to be used must be specified. This is where VMware's Virtual Network Adapter was used \citep{VMwareNetworkAdapter}, which is designed to allow the host machine to communicate with virtual machines over a virtualised IP interface that installed on the host machine. This allowed the Docker Network "CustomNet" to be bound to the VMnet8 interface, thus allowing the Docker containers to communicate with each other over the VMware network. This also made it possible for the VMware client to be used in the Docker test as explained in subsection \ref{ClientOS}.
 
 \chapter{Methods}
 
