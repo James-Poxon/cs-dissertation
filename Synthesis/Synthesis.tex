@@ -61,16 +61,90 @@ The client machine had all the testing and benchmarking software required instal
 The software installed was as described in the requirements list in section \ref{RequirementsListBench}. As mentioned in that section, Netdata is installed on the host machine during the final test, not the client machine. This is to ensure that usage statistics represent the whole machine, not just the client, or the endpoint (in this case, the web server).
 
 \section{The Network}
-%put IP address scheme in here
-
 For both tests, VMware Workstation's NAT networking mode was used \citep{VMwareNAT}. The same network was used for both in order to ensure a fair test. Using the same network provided by VMware's NAT setting ensures that any differences in network performance measured in the tests is due to factors other than the network infrastructure itself; more specifically, the difference between Docker and VMware's core performance in a network setting.
 
 The configuration of this network was edited using VMware's "Virtual Network Settings" \citep{VMwareNetChange} to disable the built in DHCP server, so that it didn't conflict with the DHCP server created for the testing (see subsection \ref{DHCP Spec}).
 
 Setting up VMware Virtual Machines to use the NAT (VMnet8) network is straight-forward. On the contrary, to do the Docker test, more work was required. Firstly, a Custom Docker Network named "CustomNet" was set up using Docker's "macvlan" network driver \citep{DockerMacVlan}. This network driver is designed to be bound to a physical network, similar to the "bridged" mode found in VMware, by giving each Container an individual MAC address. When creating a "macvlan" network, the interface to be used must be specified. This is where VMware's Virtual Network Adapter was used \citep{VMwareNetworkAdapter}, which is designed to allow the host machine to communicate with virtual machines over a virtualised IP interface that installed on the host machine. This allowed the Docker Network "CustomNet" to be bound to the VMnet8 interface, thus allowing the Docker containers to communicate with each other over the VMware network. This also made it possible for the VMware client to be used in the Docker test as explained in subsection \ref{ClientOS}.
 
+Table \ref{tab:IPaddressing} shows the IP addressing and hostname scheme that was used in both tests.
+
+\begin{table}[H]
+\caption{}
+\label{tab:IPaddressing}
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{|l|l|l|}
+\hline
+ & \textbf{IP Address} & \textbf{DNS Hostname} \\ \hline
+\textbf{DNS1} & 192.168.72.3/24 & No hostname \\ \hline
+\textbf{DNS2} & 192.168.72.4/24 & ns1.intranet.co.uk \\ \hline
+\textbf{DNS3} & 192.168.72.5/24 & ns2.intranet.co.uk \\ \hline
+\textbf{DHCP} & 192.168.72.6/24 & dhcp.intranet.co.uk \\ \hline
+\textbf{Apache} & 192.168.72.150 & www.intranet.co.uk \\ \hline
+\textbf{MySQL} & 192.168.72.151 & mysql.intranet.co.uk \\ \hline
+\textbf{Client Addresses} & 192.168.72.50/24 - 192.168.72.100/24 & No hostname \\ \hline
+\end{tabular}%
+}
+\end{table}
+
+For testing, when a server needed to be specified, the hostname was used over the IP address where applicable so that the process would make use of the DNS infrastructure. For example, 'www.intranet.co.uk' is used in the Jmeter test, instead of '192.168.72.150'.
+
+
+
 \chapter{Methods}
 
-\chapter{Testing \& Benchmarks}
 
+
+\chapter{Testing \& Benchmarks}
+Introductory explanations for each of these tests and benchmarks are included in the requirements in section \ref{RequirementsListBench}.
+
+\section{Test 1 - iPerf3 Throughput}
+\subsection{Test parameters}
+In this test, the throughput is measured between the Apache server and the Client. The listener for iPerf3 was setup on the Apache server using port 5201 (the default port for iPerf3 \citep{iPerf3Documentation}). The client then specifies that is is in-fact running iPerf3 as a client, and tells the server which format to record throughput with. For this testing, the format used was 'M', meaning Megabytes \citep{iPerf3Documentation}.
+
+The test runs for ten seconds, taking measurements of total throughput in a second, resulting in ten points that can be converted into a graph showing the transfer rate (throughput) over time in Megabytes per second. An average can also be taken from this. A separate throughput is calculated on each side of the transaction (at the server, and at the client).
+ 
+\subsection{Results}
+The average throughputs for both tests, and for clients and severs, are shown in table \ref{tab:iperf3average} below.
+
+\begin{table}[H]
+\centering
+\caption{Table showing the average transfer rate in a 10 second period}
+\label{tab:iperf3average}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{|c|c|c|}
+\hline
+x & \textbf{VMware Average (MBytes/s)} & \textbf{Docker Average (MBytes/s)} \\ \hline
+\textbf{Client} & 176.37 & 290.70 \\ \hline
+\textbf{Apache Server} & 172.61 & 290.40 \\ \hline
+\end{tabular}%
+}
+\end{table}
+
+The averages shown in this table clearly show a higher throughput for the Docker system, with an improvement (averaged between the Client and the Apache Server) of 116.06 MegaBytes per Second.
+
+Figure \ref{fig:} shows the transfer rate over time for both Client and Server.
+
+%TODO: TO DO insert the graphs here
+
+This shows that Docker is stable, whilst VMware's throughput result fluctuates far more, this being something that will be explored in more detail in the evaluation part within this report.
+
+\section{Test 2 - Sysbench MySQL Input/Output}
+\subsection{Test parameters}
+This test required a 
+\subsection{Results}
+
+
+\section{Test 3 - iPerf3 Throughput}
+\subsection{Test parameters}
+In this test, 
+\subsection{Results}
+
+
+\section{Test 4 - iPerf3 Throughput}
+\subsection{Test parameters}
 %the idle benchmarks didn't have the client machine running!
+In this test, 
+\subsection{Results}
+

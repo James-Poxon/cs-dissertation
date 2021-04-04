@@ -147,13 +147,13 @@ Another ISC solution\citep{ISCtimeline}, this will be used in order to manage DH
 
 \subsection{MySQL}
 \label{MySQL Server}
-As discussed in \ref{sec:LAMPsystem}, a MySQL will be used in order to host a database. There are a number of reasons an organisation might want to host a database on their internal network, such as storing employee infomration for access on the intranet. Databases can take a lot of resources to maintain, and are often an important part of key infrastructure. Any increase in database performance from virtualisation to containerisation would be a clear success, and a good reason to move over to containers over virtual machines. MySQL has its own Ubuntu Server Package, making the server portion of the installation easy.
+As discussed in \ref{sec:LAMPsystem}, a MySQL will be used in order to host a database. There are a number of reasons an organisation might want to host a database on their internal network, such as storing employee information for access on the intranet. Databases can take a lot of resources to maintain, and are often an important part of key infrastructure. Any increase in database performance from virtualisation to containerisation would be a clear success, and a good reason to move over to containers over virtual machines. MySQL has its own Ubuntu Server Package, making the server portion of the installation easy.
 
 \subsection{Clients}
 Whilst not technically a service, the network will have to include at least one client in order to test that the services listed above actually work as intended. These sorts of internal networks are made entirely to serve clients, so without testing performance on the client end, the testing would be somewhat redundant. Ubuntu Desktop be used, as it is also open source and can be deployed easily on both systems. The client machine used in testing will be a VMware machine so that it can interact with the network setup for testing. The same system resources will be allocated to this client for both testing environments, so whilst there will be an impact on the performance of the machine doing the testing, it should be the same impact across both systems, and shouldn't change the legitimacy of the output.
 
 \subsection{Topology Diagram}
-Figure \ref{fig:Topology} is a mockup of what the final topology should look like logically. This will be subject to change throughout the synthesis section of this report, as findings are made and areas are adapted.
+Figure \ref{fig:Topology} is a mock-up of what the final topology should look like logically. This will be subject to change throughout the synthesis section of this report, as findings are made and areas are adapted.
 \begin{figure}[H]
 \caption{}
 \label{fig:Topology}
@@ -174,7 +174,7 @@ The system will need to be measured using standardised benchmarks in order to en
 To ensure that all elements of the system are measured, I will do four tests as follows.
 
 \subsection{Test one - iPerf3}
-iPerf is a tool used for measuring the total bandwidth achiveable over IP networks \citep{iPerf3}. In this test, the throughput will be tested between the client and the Apache server, as realistically, this is the server that would receive the most traffic in a real deployment. It can be expected that any server to client bandwidth would be the same however, given that the connections are all virtual and should work much the same way, regardless of which server is being used.
+iPerf is a tool used for measuring the total bandwidth achievable over IP networks \citep{iPerf3}. In this test, the throughput will be tested between the client and the Apache server, as realistically, this is the server that would receive the most traffic in a real deployment. It can be expected that any server to client bandwidth would be the same however, given that the connections are all virtual and should work much the same way, regardless of which server is being used.
 
 Measuring throughput for the web server is important because a higher throughput should mean a greater number of users being able to use the website without long wait times for example.
 
