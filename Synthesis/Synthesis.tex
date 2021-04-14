@@ -22,29 +22,29 @@ The servers were created to use the software and topology laid out in the requir
 For both VMware and Docker this meant using the Advanced Package Tool (which is the default package manager on ubuntu) to install the various software needed.
 
 However, for VMware this was done once each server was installed and booted. On Docker, through the use of Dockerfiles, this can integrated directly into the Docker image, along with any configuration files that may be required, such as local zone files for the primary DNS server (DNS1). An example of a Dockerfile for DNS1 is shown in figure \ref{fig:dockerfileexample} below. This shows how the base image is selected, along with the addition of the software and tools necessary to make bind9 work. The `COPY' command takes the completed configuration files and places them in the correct folders.
-\begin{figure}[h]
-\caption{}
-\label{fig:dockerfileexample}
-\begin{minted}{dockerfile}
-FROM ubuntu:latest
-
-RUN apt-get update \
-  && apt-get install -y \
-  bind9 \
-  bind9utils \
-  bind9-doc
-
-
-COPY named.conf.options /etc/bind/
-COPY named.conf.local /etc/bind/
-COPY db.intranet.co.uk /etc/bind/
-COPY db.72.168.192.in-addr.arpa /etc/bind/
-
-CMD ["/bin/bash", "-c", "while :; do sleep 10; done"]
-
-\end{minted}
-
-\end{figure}
+%\begin{figure}[h]
+%\caption{}
+%\label{fig:dockerfileexample}
+%\begin{minted}{dockerfile}
+%FROM ubuntu:latest
+%
+%RUN apt-get update \
+%  && apt-get install -y \
+%  bind9 \
+%  bind9utils \
+%  bind9-doc
+%
+%
+%COPY named.conf.options /etc/bind/
+%COPY named.conf.local /etc/bind/
+%COPY db.intranet.co.uk /etc/bind/
+%COPY db.72.168.192.in-addr.arpa /etc/bind/
+%
+%CMD ["/bin/bash", "-c", "while :; do sleep 10; done"]
+%
+%\end{minted}
+%
+%\end{figure}
 
 \section{Client}
 \subsection{Operating System}
@@ -108,7 +108,7 @@ The test runs for ten seconds, taking measurements of total throughput in a seco
 \subsection{Results}
 The average throughputs for both tests, and for clients and severs, are shown in table \ref{tab:iperf3average} below.
 
-\begin{table}[H]
+\begin{table}[h]
 \centering
 \caption{Table showing the average transfer rate in a 10 second period}
 \label{tab:iperf3average}
@@ -124,27 +124,87 @@ x & \textbf{VMware Average (MBytes/s)} & \textbf{Docker Average (MBytes/s)} \\ \
 
 The averages shown in this table clearly show a higher throughput for the Docker system, with an improvement (averaged between the Client and the Apache Server) of 116.06 MegaBytes per Second.
 
-Figure \ref{fig:} shows the transfer rate over time for both Client and Server.
+Figure \ref{fig:test1graphs} shows the transfer rate over time for both Client and Server.
 
-%TODO: TO DO insert the graphs here
+\begin{figure}[H]
+\caption{}
+\label{fig:test1graphs}
+\fbox{\includegraphics[width=0.8\textwidth]{./synthesis/test1graphs.PNG}}
+\centering
+\end{figure}
 
-This shows that Docker is stable, whilst VMware's throughput result fluctuates far more, this being something that will be explored in more detail in the evaluation part within this report.
+This shows that Docker is stable, whilst VMware's throughput result fluctuates far more. This would suggest that the VMware system is unstable; something we will investigate further in the evaluation section of this report.
 
 \section{Test 2 - Sysbench MySQL Input/Output}
 \subsection{Test parameters}
-This test required a 
+This test required a test database with random data to be created on the MySQL server. Luckily, Sysbench includes a 'prepare' tool, which allows a user to specify parameters of for the table that match the test they want to conduct \citep{sysbench}. Sysbench then creates, or \emph{prepares}, a database that is suitable for said test. A test user account with all permissions was also created for Sysbench to use. When the prepare command is run, it creates the database and tables, and then fills the tables with the amount ant type of data specified.
+
+The database we created for testing had the following parameters:
+\begin{itemize}
+  \item The database had two tables.
+  \item Each table had a size of 500000.
+  \item Table size in sysbench relates to rows. Meaning across the two tables, there was a total of one million rows of data.
+  \item The test was specified as '\texttt{oltp\_read\_write}'.
+\end{itemize}
+
+OLTP is Online Transaction Processing\citep{oltp}, which is a term used to describe online databases that generally have high throughput and connectivity from many users \citep{oracleoltp}. The \texttt{oltp\_read\_write} test attempts to simulate an OLTP workload by performing various different SELECT, DELETE, INSERT and UPDATE queries on the data \citep{sysbenchmarking}.
+
+Once the above table was created, the actual test could be performed. The client machine runs the command that starts the test, and the domain name for the MySQL server (mysql.intranet.co.uk) was used to specify where the server and database were located.
+
+The test was run using the following parameters:
+\begin{itemize}
+  \item The port was set as 3306 (the default for MySQL).
+  \item Two threads were used. This simulates the database being accessed and changed by two different users or programs at the same time.
+  \item 'Time' was set as 300. This is in seconds, meaning the scenario ran for five minutes.
+  \item 'Events' was set as 0. This setting would allow the user to specify that the test should stop after a certain number of events have been reached. By setting this to '0', the test will continue to run until the 'Time' setting is reached.
+\end{itemize}
 \subsection{Results}
 
+Figure \ref{fig:test2fiveminutes} shows the total number of Read, Write and Other queries performed by Sysbench in a 5 minute period. The results for both systems are compared side by side.
 
-\section{Test 3 - iPerf3 Throughput}
+This graph shows a clear win for Docker, with the VMware system managing to perform just over a third of the number of Reads that Docker managed in the same time frame.
+
+\begin{figure}[H]
+\caption{}
+\label{fig:test2fiveminutes}
+\fbox{\includegraphics[width=\textwidth]{./synthesis/test2fivemingraph.png}}
+\centering
+\end{figure}
+
+Figure \ref{fig:test2onesecgraph} shows both the total queries per second, and the total transactions per second for both systems. A query is defined as being a single statement such as SELECT, INSERT or UPDATE\citep{mysqlqueries}; whereas a transaction is a combination of multiple of these statements within one command\citep{mysqltransactions}, typically in order to manipulate multiple rows of data.
+
+This further shows just how much faster the Docker system was at data manipulation.
+
+\begin{figure}[H]
+\caption{}
+\label{fig:test2onesecgraph}
+\fbox{\includegraphics[width=\textwidth]{./synthesis/test2onesecgraph.PNG}}
+\centering
+\end{figure}
+
+The latency between queries was also measured by Sysbench. Figure \ref{test2latencygraph} shows a latency bar graph, with the minimum, average, and 95th percentile latencies in Milliseconds. The 95th percentile was rather than the maximum, because both tests experienced a maximum latency that would have dwarfed the other results. These maximum latencies were also most likely errors (which were to be expected with such a high number of queries being performed \citep{oltp}).
+
+\begin{figure}[H]
+\caption{}
+\label{test2latencygraph}
+\fbox{\includegraphics[width=0.90\textwidth]{./synthesis/test2latencygraph.PNG}}
+\centering
+\end{figure}
+
+We can see from these results, that Docker far out performs VMware in terms of latency, to such an extreme extent that Dockers' top 95th percentile results are lower than VMware's average latency.
+
+\section{Test 3 - Namebench}
 \subsection{Test parameters}
 In this test, 
+
 \subsection{Results}
 
 
-\section{Test 4 - iPerf3 Throughput}
+
+\section{Test 4 - Apache JMeter and Performance measurements using Netdata}
 \subsection{Test parameters}
 %the idle benchmarks didn't have the client machine running!
 In this test, 
+
 \subsection{Results}
 
