@@ -195,8 +195,15 @@ We can see from these results, that Docker far out performs VMware in terms of l
 
 \section{Test 3 - Namebench}
 \subsection{Test parameters}
-In this test, 
+This test compares the performance of the DNS servers and their ability to perform DNS queries for various websites.
 
+Namebench works by going through a list (specified by the user) of websites and recording the latency for the DNS server to perform the query. Before the test commenced, the caches on all of the DNS servers in our infrastructure were wiped to ensure a fair test between the two systems. In our testing, the following parameters were set:
+\begin{itemize}
+  \item The list to be used was specified as 'alexa'. This option uses Amazon's Alexa Top Sites website \citep{alexainternet}. Around 38,000 different website addresses were tested. Having a high number of tests is important because it gives a good average.
+  \item Both DNS2 and DNS3 were specified (using their domain names: ns1.intranet.co.uk and ns2.intranet.co.uk respectively) to be tested. DNS1 is a primary server, and is hidden in the network topology, only to be used as the master for the 'intranet.co.uk' domain, so it isn't tested here.
+  \item 
+  \item 
+\end{itemize}
 \subsection{Results}
 
 
