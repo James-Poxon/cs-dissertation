@@ -159,6 +159,7 @@ The test was run using the following parameters:
   \item 'Events' was set as 0. This setting would allow the user to specify that the test should stop after a certain number of events have been reached. By setting this to '0', the test will continue to run until the 'Time' setting is reached.
 \end{itemize}
 \subsection{Results}
+\label{test2results}
 
 Figure \ref{fig:test2fiveminutes} shows the total number of Read, Write and Other queries performed by Sysbench in a 5 minute period. The results for both systems are compared side by side.
 
@@ -197,21 +198,44 @@ We can see from these results, that Docker far out performs VMware in terms of l
 \subsection{Test parameters}
 This test compares the performance of the DNS servers and their ability to perform DNS queries for various websites.
 
-Namebench works by going through a list (specified by the user) of websites and recording the latency for the DNS server to perform the query. Before the test commenced, the caches on all of the DNS servers in our infrastructure were wiped to ensure a fair test between the two systems. In our testing, the following parameters were set:
+Namebench works by going through a list (specified by the user) of websites and recording the latency for the DNS server to perform the query\citep{Namebench}. Before the test commenced, the caches on all of the DNS servers in our infrastructure were wiped to ensure a fair test between the two systems. In our testing, the following parameters were set:
 \begin{itemize}
-  \item The list to be used was specified as 'alexa'. This option uses Amazon's Alexa Top Sites website \citep{alexainternet}. Around 38,000 different website addresses were tested. Having a high number of tests is important because it gives a good average.
+  \item The list to be used was specified as 'alexa'. This option uses Amazon's Alexa Top Sites list \citep{alexainternet}. Around 38,000 different website addresses were tested. Having a high number of tests is important because it gives a good average.
   \item Both DNS2 and DNS3 were specified (using their domain names: ns1.intranet.co.uk and ns2.intranet.co.uk respectively) to be tested. DNS1 is a primary server, and is hidden in the network topology, only to be used as the master for the 'intranet.co.uk' domain, so it isn't tested here.
-  \item 
-  \item 
 \end{itemize}
+
 \subsection{Results}
+Figure \ref{fig:test3graphaverage} shows a graph of the average DNS response times. We can see from this graph that Docker has smaller average DNS response when compared to VMware. An interesting, but unrelated behaviour here is that DNS2 in both tests out performed DNS3; this is unexpected given that both servers share exactly the same configuration. Perhaps this is a characteristic of the way that BIND9 handles secondary DNS servers?
 
+\begin{figure}[H]
+\caption{}
+\label{fig:test3graphaverage}
+\fbox{\includegraphics[width=0.8\textwidth]{./synthesis/test3graphaverage.PNG}}
+\centering
+\end{figure}
 
+We can see the minimum latency response in figure \ref{fig:test3graphmin}. Here, Docker takes the win again, with a similar relative margin between results as with the average latency shown above. Here we can see that the latency for each server is the same within the same system; this helps us to rule out an element of chance to the results (ie, the results are more likely to be genuine given that they are the same across the two severs for the same system).
+
+\begin{figure}[H]
+\caption{}
+\label{fig:test3graphmin}
+\fbox{\includegraphics[width=0.8\textwidth]{./synthesis/test3graphmin.PNG}}
+\centering
+\end{figure}
+
+No maximum latency is given in a graph as in both tests, certain requests hit their maximum wait time for a response (3500ms). This is most likely due to an error with authoritative servers outside of our control. Furthermore, 95th percentile data could not be used (such as in our last test in subsection \ref{test2results}) because Namebench compiles the the minimum, average and maximum data itself, without allowing the user to access raw data. (Most likely because the domain name list provided by Alexa \citep{alexainternet} is propriety, so providing access to this data could be a breach of Alexa's agreements.
 
 \section{Test 4 - Apache JMeter and Performance measurements using Netdata}
 \subsection{Test parameters}
 %the idle benchmarks didn't have the client machine running!
-In this test, 
+This test is slightly different, in that the data we get back from the workload isn't the most important piece of data we receive by doing the test. Instead, we are using the workload that is generated using JMeter \citep{ApacheJMeter}, in order to measure the stress on the machine. The three areas of Computing performance we will be looking into here are the CPU usage, RAM usage and the 'Load' on the machine. These were measured using Netdata\citep{Netdata}, so that the data could be monitored on another PC without affecting the performance of the PC running the Containers and Virtual Machines. Netdata also creates real-time graphs that can can then be saved in snapshots, so that we can investigate the results in depth.
+
+
+
+Idle data was also
 
 \subsection{Results}
+\subsubsection{Jmeter}
 
+\subsubsection{Netdata}
+Whilst CPU and RAM usage are self explanatory, 'load' may seem more vague. Load, as measured and defined by Netdata is 
