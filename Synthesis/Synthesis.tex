@@ -106,6 +106,7 @@ In this test, the throughput is measured between the Apache server and the Clien
 The test runs for ten seconds, taking measurements of total throughput in a second, resulting in ten points that can be converted into a graph showing the transfer rate (throughput) over time in Megabytes per second. An average can also be taken from this. A separate throughput is calculated on each side of the transaction (at the server, and at the client).
  
 \subsection{Results}
+\label{test1results}
 The average throughputs for both tests, and for clients and severs, are shown in table \ref{tab:iperf3average} below.
 
 \begin{table}[h]
@@ -227,6 +228,7 @@ No maximum latency is given in a graph as in both tests, certain requests hit th
 
 \section{Test 4 - Apache JMeter and Performance measurements using Netdata}
 \subsection{Test parameters}
+\label{Test4TestParameters}
 %the idle benchmarks didn't have the client machine running!
 This test is slightly different, in that the data we get back from the workload (JMeter) isn't the most important piece of data we receive by doing the test. Instead, we are using the workload that is generated using JMeter \citep{ApacheJMeter}, in order to measure the stress on the machine (though we do still look at the data JMeter found). The three areas of Computing performance we will be looking into here are the CPU usage, RAM usage and the 'Load' on the machine. These were measured using Netdata\citep{Netdata}, so that the data could be monitored on another PC without affecting the performance of the PC running the Containers and Virtual Machines. Netdata also creates real-time graphs that can can then be saved in snapshots, so that we can investigate the results in depth.
 
@@ -242,6 +244,109 @@ JMeter was used to test the Apache server, and the JMeter tool was installed and
 
 \subsection{Results}
 \subsubsection{JMeter}
+Table \ref{tab:Test4Average} shows the average latency for both the Docker System and the VMware system. We can see that Docker has a reduced average when compared to VMware; further strengthening support for the Docker system.
+
+\begin{table}[H]
+\centering
+\caption{}
+\label{tab:Test4Average}
+\resizebox{0.5\textwidth}{!}{%
+\begin{tabular}{|c|c|}
+\hline
+\multicolumn{2}{|c|}{AVERAGE   LATENCY (ms)} \\ \hline
+Docker                & Vmware               \\ \hline
+5.85                  & 8.88                 \\ \hline
+\end{tabular}%
+}
+\end{table}
+
+The parameters we set gave us an output that had the latency for 1000 HTTP request transactions. To better illustrate the spread of latency, Figure \ref{fig:Test4JMeterGraph} shows the frequency of these latencies. Frequency relates to the number of times a certain latency (in ms) was recorded. A latency of 0ms means the system took less than 1ms to process the HTTP request. Some latencies have been grouped together as they became less frequent.
+
+\begin{figure}[H]
+\caption{}
+\label{fig:Test4JMeterGraph}
+\fbox{\includegraphics[width=\textwidth]{./synthesis/Test4JMeterGraph.PNG}}
+\centering
+\end{figure}
+
+Firstly, we can see that Docker had far more response times in the 0ms category. This suggests the Docker system often didn't have a backlog of requests due to be being saturated meaning it was still able to give almost instant replies. Moving to the next category, we can see that both Docker and VMware have similar numbers of requests in the 1ms range, however, Docker is still slightly ahead. Moving on to the 2ms range, we can see than VMware starts to take over as having more counts of this latency. Moving past this latency we can see that VMware has far more responses in the higher latency ranges, with 36 counts in 9ms+ range, compared to only 7 counts for Docker.
 
 \subsubsection{Netdata}
+\textbf{CPU Usage:}
+First, we will look at idle CPU usage. Important to remember, in subsection \ref{Test4TestParameters} we discussed that the idle usages were taken without the client running. This means that the idle usages are reflective of the usage we would see in a live environment on this hardware, if the system was receiving no traffic.
+
+Figure \ref{fig:DockerCPUIdle} shows Docker's CPU usage at idle
+\begin{figure}[H]
+\caption{Docker Idle CPU}
+\label{fig:DockerCPUIdle}
+\fbox{\includegraphics[width=\textwidth]{./synthesis/Test4dcpuidle.PNG}}
+\centering
+\end{figure}
+
+
+Figure\ref{fig:VMwareCPUIdle} shows VMware's CPU usage at idle.
+\begin{figure}[H]
+\caption{VMware Idle CPU}
+\label{fig:VMwareCPUIdle}
+\fbox{\includegraphics[width=\textwidth]{./synthesis/Test4vmcpuidle.PNG}}
+\centering
+\end{figure}
+
+Already we can see that VMware is using far more resources from the CPU when idle compared to Docker.
+Figure \ref{fig:DockerCPUwork} shows the CPU usage of the Docker system for when the JMeter test was being performed.
+\begin{figure}[H]
+\caption{Docker JMeter Workload CPU}
+\label{fig:DockerCPUwork}
+\fbox{\includegraphics[width=\textwidth]{./synthesis/Test4dcpuwork.PNG}}
+\centering
+\end{figure}
+
+Figure \ref{fig:VMwareCPUwork} shows the CPU usage of the VMware system whilst under stress from the JMeter test.
+\begin{figure}[H]
+\caption{VMware JMeter Workload CPU}
+\label{fig:VMwareCPUwork}
+\fbox{\includegraphics[width=\textwidth]{./synthesis/Test4vmcpuwork.PNG}}
+\centering
+\end{figure}
+
+Whilst the difference during a workload is less noticeable, it is still clear that VMware's CPU usage is more than Dockers. Interestingly, we can see that the Docker's usage ramps up at the start of the test, but begins to drop once the test has been running for some time. This might suggest that Docker manages consistent workloads more efficiently.
+
+\textbf{RAM Usage:}
+Here we will investigate the RAM usage on the system. To start, Figure \ref{fig:DockerRAMidle} shows the machine's RAM usage whilst running the Docker system idle. We can see from this, that when idle, the docker system takes up very little RAM on the host machine
+
+\begin{figure}[H]
+\caption{Docker Idle RAM}
+\label{fig:DockerRAMidle}
+\fbox{\includegraphics[width=\textwidth]{./synthesis/Test4dramidle.PNG}}
+\centering
+\end{figure}
+
+Figure \ref{fig:VMwareRAMidle} shows the RAM usage on the host machine when the VMware system is running in idle. We can see that there is a very tiny amount of free RAM, which could be a considerable bottleneck to the system, or cause it thrash \citep{thrashing}. However, the portion of RAM actively being 'used' is also fairly small (still more than the Docker system, but not unreasonable). Instead most of the RAM is is cached. This is most probably due to the way that VMware partitions away sections of RAM for its virtual machines. The ram we see cached is most likely being used to host each individual virtual machine .
+
+\begin{figure}[H]
+\caption{VMware Idle RAM}
+\label{fig:VMwareRAMidle}
+\fbox{\includegraphics[width=\textwidth]{./synthesis/Test4vmramidle.PNG}}
+\centering
+\end{figure}
+
+Moving onto Docker under a load from the JMeter test (Figure \ref{fig:DockerRAMwork}), we see that there is a slight increase in 'used' RAM, and considerably more ram being cached. There is still a healthy amount of RAM left free for the system to use, so no thrashing should take place.
+
+\begin{figure}[H]
+\caption{Docker JMeter Workload RAM}
+\label{fig:DockerRAMwork}
+\fbox{\includegraphics[width=\textwidth]{./synthesis/Test4dramwork.PNG}}
+\centering
+\end{figure}
+
+Figure \ref{fig:VMwareRAMwork} shows the RAM for the host machine whilst under a workload from the JMeter test. There is very little change between the usage here and the usage at idle (Figure {fig:VMwareRAMidle}), other than the RAM buffers being slightly reduced. This is because even at idle, the system is already fully committed; there is no free ram for the machine to move into. This might explain why some of our previous results for VMware, such as in subsection \ref{test1results} (Test 1 Results), are unstable.
+
+\begin{figure}[H]
+\caption{VMware JMeter Workload RAM}
+\label{fig:VMwareRAMwork}
+\fbox{\includegraphics[width=\textwidth]{./synthesis/Test4vmramwork.PNG}}
+\centering
+\end{figure}
+
+\textbf{Load:}
 Whilst CPU and RAM usage are self explanatory, 'load' may seem more vague. Load, as measured and defined by Netdata is 
