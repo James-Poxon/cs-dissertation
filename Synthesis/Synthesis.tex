@@ -349,4 +349,42 @@ Figure \ref{fig:VMwareRAMwork} shows the RAM for the host machine whilst under a
 \end{figure}
 
 \textbf{Load:}
-Whilst CPU and RAM usage are self explanatory, 'load' may seem more vague. Load, as measured and defined by Netdata is 
+Whilst CPU and RAM usage are self explanatory, 'load' may seem more vague. Load as measured by Netdata, is defined in the same way that Ferrari et al. defines load, whereby load is based on the number of tasks using the CPU and I/O along with those that are waiting in a queue\citep{loadferrari}. This is as opposed just using CPU utilisation on its own, as this combined approach gives better results as to the actual extended load of the system. By measuring load in this way, we are also tying in other parts of the hardware, as load could increase with little CPU utilisation, if for example the machine was waiting for memory resources to be clear. Netadata access this data by using linux's built in "\texttt{/proc/loadavg}" file \citep{systemload}.
+
+By looking at load in this way, we effectively tie the two measurements above (CPU and RAM) with other hardware (for example; the disk) to see what the combined affect is to the machine.
+
+Figure \ref{fig:Dockerloadidle} shows the Netdata load graph for Docker whilst idle. In this graph, 'load1', 'load5' and 'load15' refer to the number of of tasks waiting on over one, five and fifteen minute averages respectively. Generally low results across the board is best, however, we can see in this graph that 'load1' has a few spikes, however the scale of this graph is actually designed to show load at all times. If we look at the y axis, we can see that the axis is actually showing 0.70 as the highest number, which relatively speaking means less than one task a second is taking 5 minutes in the queue.
+
+\begin{figure}[H]
+\caption{Docker Idle Load}
+\label{fig:Dockerloadidle}
+\fbox{\includegraphics[width=\textwidth]{./synthesis/Test4dloadidle.PNG}}
+\centering
+\end{figure}
+
+Figure \ref{fig:VMwareloadidle} shows the idle load for VMware. Here, we can see just how much of an affect on task completion times having multiple virtual machines running has on the system. Again, notice the y axis goes much higher here, and that there are more tasks waiting 15 minutes, than there are 5 or 1. Around three and a half tasks are waiting more than fifteen minutes to be processed.
+
+\begin{figure}[H]
+\caption{VMware Idle Load}
+\label{fig:VMwareloadidle}
+\fbox{\includegraphics[width=\textwidth]{./synthesis/Test4vmloadidle.PNG}}
+\centering
+\end{figure}
+
+Figure \ref{fig:Dockerloadwork} shows the Load on the host machine when docker was under stress from the JMeter test. We can see from the Y axis that around two tasks are waiting more than a minute to be completed at peak. %you were here todo
+
+\begin{figure}[H]
+\caption{Docker Workload Load}
+\label{fig:Dockerloadwork}
+\fbox{\includegraphics[width=\textwidth]{./synthesis/Test4vmloadidle.PNG}}
+\centering
+\end{figure}
+
+
+
+\begin{figure}[H]
+\caption{VMware Workload Load}
+\label{fig:VMwareloadidle}
+\fbox{\includegraphics[width=\textwidth]{./synthesis/Test4vmloadidle.PNG}}
+\centering
+\end{figure}
