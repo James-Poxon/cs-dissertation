@@ -371,20 +371,20 @@ Figure \ref{fig:VMwareloadidle} shows the idle load for VMware. Here, we can see
 \centering
 \end{figure}
 
-Figure \ref{fig:Dockerloadwork} shows the Load on the host machine when docker was under stress from the JMeter test. We can see from the Y axis that around two tasks are waiting more than a minute to be completed at peak. %you were here todo
+Figure \ref{fig:Dockerloadwork} shows the Load on the host machine when docker was under stress from the JMeter test. We can see from the Y axis that around two tasks are waiting more than a minute to be completed at peak. There is around one task at worst waiting 15 minutes.
 
 \begin{figure}[H]
 \caption{Docker Workload Load}
 \label{fig:Dockerloadwork}
-\fbox{\includegraphics[width=\textwidth]{./synthesis/Test4vmloadidle.PNG}}
+\fbox{\includegraphics[width=\textwidth]{./synthesis/Test4dloadwork.PNG}}
 \centering
 \end{figure}
 
-
+Figure \ref{fig:VMwareloadwork} displays the Load during the same JMeter test, but on the VMware system. We can see here that more tasks are taking longer than 15 minutes than otherwise. Looking at the y axis, we can also see that the bars are sitting far higher than the previous graphs. Interestingly, we can see that load is on a downwards slope even during a workload. So whilst load here may be very high, we could maybe hypothesise that should the load continue long enough, that the machine may reach some sort of equilibrium.
 
 \begin{figure}[H]
 \caption{VMware Workload Load}
-\label{fig:VMwareloadidle}
-\fbox{\includegraphics[width=\textwidth]{./synthesis/Test4vmloadidle.PNG}}
+\label{fig:VMwareloadwork}
+\fbox{\includegraphics[width=\textwidth]{./synthesis/Test4vmloadwork.PNG}}
 \centering
 \end{figure}
