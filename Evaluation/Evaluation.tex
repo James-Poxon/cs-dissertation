@@ -1,19 +1,27 @@
 %!TeX root=../Dissertation.tex
 %!TeX bibfile=./synthesis.bib
 
-\chapter{Evaluation of the produced systems (Product)}
-\section{Virtual Machines and Containers}%evaluate the system as it stands created. Talk about the quality of the system itself, not the stuff that could affect the testing necessarily, as we are mentioning that further down.
-Both systems (The VMware system and the Docker system) do exactly what was described in the analysis. The network topology for both of the systems is exactly the same, and matches the topology that was designed during the analysis section. Configuration for matching services  across the two systems (ie. DHCP on VMware, DHCP on Docker) are identical.
+%------
 
-\section{Hardware Limitations}%talk about ram being bottlenecked, using an old system, what would you have liked to have done?
+\chapter{Evaluation of the produced systems (Product)}
+\section{Successes}%evaluate the system as it stands created. Talk about the quality of the system itself, not the stuff that could affect the testing necessarily, as we are mentioning that further down.
+Both systems (The VMware system and the Docker system) do exactly what was described in the analysis. The network topology for both of the real systems is exactly the same, with both of these networks matching the topology that was designed during the analysis section (Figure \ref{fig:Topology}, in subsection \ref{subsec:TopologyDiagram}). The system maintained a LAMP topology, as was specified, along with the various other components of the system such as DHCP and DNS. This is an important part of the research because it demonstrates that this kind of system can be supported by containers, and not just virtual machines, as is done historically. Furthermore, the configuration for matching services across the two systems (ie. DHCP on VMware; DHCP on Docker) are identical, ensuring that results remained comparable.
+
+Separately, the VMware system is not particularly impressive, or groundbreaking, whilst the container based system on the other hand \emph{is} impressive, and potentially groundbreaking. This is because there are not many examples of systems such as this one being built for use outside of small scale development operations (whereby the network infrastructure couldn't be supported on a real LAN). Together, the two systems combine to form an important base for research that could potentially impact the current paradigm of virtualisation in which we currently find ourselves in. The actual results, and their impact will be discussed further in Chapter \ref{chap:EvaluationTestResults}, but without the work that was conducted to ensure that both systems worked exactly as designed, those results wouldn't have been useful. This is due to the fact that the testing was a direct comparison of systems; should there have been any disparity between the VMware network and the Docker network, the results would not be a fair comparison.
+
+This required a level of perseverance when it came to finding something within the Docker system that was difficult. For example, getting phpMyAdmin to work on the Docker system wasn't as easy as the rest of the build (as mentioned in section \ref{subsec:softwaresynth}), but a workaround was found to make it work, even though there was probably an alternative system that could have been implemented easier. Had the Docker system been the only system being built, and that had been the project basis, then using an alternative method would have been acceptable, and this could have been worked into the synthesis, but with both systems needing to be identical, this was just not an option. In the long run, I think this has made the project more of a success, because it has proven that taking systems that already exist within virtual environments, and converting them to container environments is an option without compromise for those that are in positions to make this move.
+
+\section{Limitations}%talk about ram being bottlenecked, using an old system, what would you have liked to have done?
 \label{HardwareLimitations}
 This project took place over what became a bizarre year for academia. Due to the Coronavirus pandemic, there was limited ability to access network labs and University infrastructure, so this project had to be scaled in a way that was reasonable for me to complete with my own personal hardware.
 
 \subsection{RAM and CPU usage}
 \label{RAMCPU}
-The computer that was used was a desktop PC, and as a result, the hardware reflects that of what would be reasonable in a typical desktop machine. I think it would have been interesting, and possibly more reflective of the area I am trying to influence with this research, if the testing could have been done on a purpose built server machine, that may have had more than 16GB of RAM, and possibly a more server focused processor. For example; AMD have recently written a paper showing the use of their new EPYC line-up of server CPUs for hosting containers \citep{amdcontainers}.
+The computer that was used was a desktop PC, and as a result, the hardware reflects that of what is reasonable in a typical desktop machine. I think it would have been interesting, and possibly more reflective of the area I am trying to influence with this research, if the testing could have been done on a purpose built server machine, that may have had more than 16GB of RAM, and possibly a more server focused processor. For example; AMD have recently written a paper showing the use of their new EPYC line-up of server CPUs for hosting containers \citep{amdcontainers}.
 
-However, if we are looking to make recommendations for users that may still use old server hardware, I believe the use of older desktop hardware in this test may actually be \emph{more} compelling to them, as the results may offer those users an alternative should they be using 
+However, if we are looking to make recommendations for users that may still use old server hardware, I believe the use of older desktop hardware in this test may actually be \emph{more} compelling to them, as the results may offer those users an alternative should they already be using virtualisation, and looking to get a little bit more usage out of the hardware before an upgrade.
+
+Perhaps if the test was done over a few different systems, we could have compared the usefulness of containers and virtual machines across these systems. This however, would have made the project much larger, and would have been outside the scope of what could be considered a reasonable amount of work.
 
 \subsection{The Client}
 \label{ClientHardwareLimitation}
@@ -23,7 +31,15 @@ As already discussed, access to hardware switches, and with that, the ability to
 
 Despite the aforementioned concerns with the product, the scalability of the system we have created is very good. During development the system was actually entirely designed and created on a separate machine and then moved over to the testing machine after the fact with a fresh installation of Ubuntu. Setting the whole system up on a fresh machine was simple, and there was minimal hitches in the process. This suggests that both the containers and virtual machines were designed and created in an efficient manner. I would suggest that scaling up the number of machines, or adding new functions to the system later, would be an easy task.
 
+
+
+
+%-------------------------
+
+
+
 \chapter{Evaluation of the test results}
+\label{chap:EvaluationTestResults}
 
 \section{Important results}%What is interesting? What has the most impact? Mention that there is lots of data that tests all parts of the system, not just one part.
 
@@ -40,7 +56,7 @@ Part of the way through the design process, it was decided that to ensure that t
 
 
 
-
+%---------------------------
 
 
 \chapter{Evaluation of the project and process}%What has the project done for me, what have i learned, what have i struggled with?
