@@ -1,0 +1,52 @@
+%!TeX root=../Dissertation.tex
+%!TeX bibfile=./synthesis.bib
+
+\chapter{Evaluation of the produced systems (Product)}
+\section{Virtual Machines and Containers}%evaluate the system as it stands created. Talk about the quality of the system itself, not the stuff that could affect the testing necessarily, as we are mentioning that further down.
+Both systems (The VMware system and the Docker system) do exactly what was described in the analysis. The network topology for both of the systems is exactly the same, and matches the topology that was designed during the analysis section. Configuration for matching services  across the two systems (ie. DHCP on VMware, DHCP on Docker) are identical.
+
+\section{Hardware Limitations}%talk about ram being bottlenecked, using an old system, what would you have liked to have done?
+\label{HardwareLimitations}
+This project took place over what became a bizarre year for academia. Due to the Coronavirus pandemic, there was limited ability to access network labs and University infrastructure, so this project had to be scaled in a way that was reasonable for me to complete with my own personal hardware.
+
+\subsection{RAM and CPU usage}
+\label{RAMCPU}
+The computer that was used was a desktop PC, and as a result, the hardware reflects that of what would be reasonable in a typical desktop machine. I think it would have been interesting, and possibly more reflective of the area I am trying to influence with this research, if the testing could have been done on a purpose built server machine, that may have had more than 16GB of RAM, and possibly a more server focused processor. For example; AMD have recently written a paper showing the use of their new EPYC line-up of server CPUs for hosting containers \citep{amdcontainers}.
+
+However, if we are looking to make recommendations for users that may still use old server hardware, I believe the use of older desktop hardware in this test may actually be \emph{more} compelling to them, as the results may offer those users an alternative should they be using 
+
+\subsection{The Client}
+\label{ClientHardwareLimitation}
+As already discussed, access to hardware switches, and with that, the ability to run the network infrastructure outside of a virtual network was not possible. This meant the client within the network had to be hosted on the same hardware as the rest of the network. Obviously, in a real-world environment we would expect a number of clients to be on the same network, but on separate host hardware. Mitigations to this fact were made in an attempt to counteract any affect this would have on the results, which is explored in more detail in subsection \ref{compr:client}, when we look at the results.
+
+\section{Flexibility of the system}
+
+Despite the aforementioned concerns with the product, the scalability of the system we have created is very good. During development the system was actually entirely designed and created on a separate machine and then moved over to the testing machine after the fact with a fresh installation of Ubuntu. Setting the whole system up on a fresh machine was simple, and there was minimal hitches in the process. This suggests that both the containers and virtual machines were designed and created in an efficient manner. I would suggest that scaling up the number of machines, or adding new functions to the system later, would be an easy task.
+
+\chapter{Evaluation of the test results}
+
+\section{Important results}%What is interesting? What has the most impact? Mention that there is lots of data that tests all parts of the system, not just one part.
+
+\section{Possible compromises}
+
+\subsection{Using a virtual machine as the client}%Talk about virtual machine being used on the host machine.
+\label{compr:client}
+As a mentioned in subsection \ref{ClientHardwareLimitation} the client had to be 
+
+Part of the way through the design process, it was decided that to ensure that there was no run-off affect on the results
+
+
+\subsection{Using VMware's VMnet8 Adapter}%Mention it would have been better to use a real network with a switch etc.
+
+
+
+
+
+
+\chapter{Evaluation of the project and process}%What has the project done for me, what have i learned, what have i struggled with?
+
+\section{Developed understanding of VMware's Networking}
+
+\section{Learning Docker}
+
+\section{Personal Evaluation}%Talk about your personal achievements, struggles, etc. Ability to time keep! Covid pandemic?

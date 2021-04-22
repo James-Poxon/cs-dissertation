@@ -1,0 +1,117 @@
+%!TeX root=TermsOfReference.tex
+
+% A lot of the settings here are tuned to fit a landscape gantt chart into
+% an A4 piece of paper.
+\begin{ganttchart}[
+time slot format=little-endian,
+calendar week text=\currentweek,
+x unit=2.4pt,
+y unit chart=12pt,
+y unit title=10pt,
+title label font=\scriptsize,
+bar top shift=.15,
+bar height=0.9,
+milestone label font = \small,
+bar label font = \small,
+group label font = {\tiny\bfseries},
+group inline label node/.append style=centered,
+hgrid=true,vgrid={*6{draw=none},dotted},
+region/.style={inline,group peaks width=2,
+  group peaks height=0.25, group height=0.5,
+  group top shift=0.2 ,group/.append style={fill=#1}},
+milestone left shift=0,
+milestone right shift=1,
+ms/.style={inline,
+    milestone inline label node/.append style={#1=0pt}}
+]%
+% For semester dates see
+% https://www.northumbria.ac.uk/about-us/university-services/academic-registry/registry-records-and-returns/academic-calendars/
+{21/9/20}{28/05/21} %<- Dates Gantt Chart runs from and to
+
+\gantttitlecalendar{year,month,week=1}\\
+
+% Highlight Smesters and Vactions
+\ganttgroup[region=blue!20]{Semester 1}{21/9/20}{22/1/21}
+\ganttgroup[region=blue!50]{Semester 2}{18/1/21}{28/5/21}\\
+
+\ganttgroup[region=red!50]{Christmas}{21/12/20}{8/1/21}
+\ganttgroup[region=green!25]{Easter}{29/3/21}{16/4/21}\\
+
+% Project Deadlines (from the Project Handbook)
+\ganttmilestone[ms=left]{PID}{12/10/20}
+\ganttmilestone[ms=left]{final \bfseries TOR}{16/11/20}
+\ganttmilestone[ms=right]{Draft Analysis}{30/11/20}
+\ganttmilestone[ms=left]{Viva}{21/5/21}
+\ganttmilestone[ms=left]{Project Work Finished}{22/3/21}
+\ganttmilestone[ms=left,milestone/.append style={fill=red}]{\bfseries Submit}{29/4/21}
+\ganttnewline[thick]
+
+% --Tasks go here
+
+
+\ganttbar{TOR}{28/9/20}{26/10/20}
+\ganttbar[inline]{\emph{revise}}{28/10/20}{16/11/20}\\
+
+%Analysis
+\ganttbar{Analysis}{10/11/15}{30/11/15}
+\ganttbar[inline]{\emph{research}}{10/10/20}{8/11/20}
+\ganttbar[inline]{\emph{Revise}} {2/12/20}{14/12/20}\\
+\ganttbar[]{\emph{Virtualisation}}{10/11/20}{20/11/20}\\  %Not sure if these can be made to sit on one line whilst still being comprehensible.
+\ganttbar[]{\emph{Containerisation}}{20/11/20}{30/11/20}\\
+\ganttmilestone[ms=left]{Problem Domain (Obj \ref{itm:problemdomain})}{17/11/20}
+\ganttmilestone[ms=right]{Methods Explained (Obj \ref{itm:explainmethods})}{26/11/20}\\
+
+
+
+
+%Design
+
+\ganttgroup{Design}{31/10/20}{1/1/21}\\
+\ganttbar[]{\emph{Hardware}} {31/10/20}{15/11/20}\\
+\ganttbar[]{\emph{Software}} {15/11/20}{1/12/20}\\
+\ganttbar[]{\emph{Benchmark design}} {2/12/20}{1/1/21}\\
+\ganttmilestone[ms=left]{Determine benchmarks (Obj \ref{itm:determinemethod})}{29/12/20}\\
+
+
+%Learning
+\ganttgroup{Learning}{10/11/20}{10/12/20}\\
+\ganttbar[]{\emph{Learn Docker}}{10/11/20}{10/12/20}\\
+\ganttbar[]{\emph{Troubleshooting}}{1/2/21}{8/3/21}\\
+\ganttmilestone[ms=right]{Learn about network benchmarks}{4/12/20}\\
+\ganttmilestone[ms=right]{Learned Docker (Obj \ref{itm:learndocker})}{8/12/20}\\
+
+%Synthesis
+\ganttmilestone[ms=left]{Benchmark Virtual Machines}{2/3/21}
+\ganttmilestone[ms=right]{Benchmark Containers}{8/3/21}\\
+\ganttgroup{Synthesis}{18/1/21}{18/3/21}\\
+\ganttbar[]{\emph{Build VMs}}{18/1/21}{01/02/21}\\
+\ganttbar[]{\emph{Build Containers}}{1/2/21}{30/2/21}\\
+\ganttbar[]{\emph{Benchmarking}}{2/3/21}{18/3/21}\\
+
+\ganttmilestone[ms=left]{Virtual Machine Built (Obj \ref{itm:buildvirtual})}{1/2/21}
+\ganttmilestone[ms=right]{Container System Built (Obj \ref{itm:buildcontainer})}{28/2/21}\\
+\ganttmilestone[ms=right]{Make Measurements (Obj \ref{itm:measure})}{15/3/21}\\
+
+%Evaluation
+\ganttgroup{Evaluation}{30/02/21}{8/04/21}\\
+\ganttbar[]{\emph{Evaluate}}{2/3/21}{18/3/21}\\
+\ganttbar[]{\emph{Comparisons}}{18/3/21}{8/04/21}\\
+\ganttmilestone[ms=right]{Make comparisons (Obj \ref{itm:comparison})}{25/3/21}\\
+
+%Conclusion
+\ganttgroup{Conclusion}{15/03/21}{17/04/21}\\
+\ganttbar[]{\emph{Conclusions}}{15/03/21}{1/04/21}\\
+\ganttbar[]{\emph{Introduction}}{1/04/21}{17/04/21}\\
+\ganttmilestone[ms=left]{Make recommendation (Obj \ref{itm:conclusion})}{25/3/21}\\
+
+%Abstract
+\ganttbar{Abstract}{16/04/21}{20/04/21}\\
+
+%Vivas
+\ganttbar{Vivas}{3/5/21}{21/5/21}
+\ganttbar[inline]{\emph{Do Viva}}{3/5/21}{21/5/21}
+\ganttbar[inline]{\emph{prep}}{18/4/21}{1/5/21}\\
+
+
+\end{ganttchart}
+
