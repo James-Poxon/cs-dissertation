@@ -110,6 +110,7 @@ Even after the Docker containers were saved to .tar files, and then reloaded ont
 Introductory explanations for each of these tests and benchmarks are included in the requirements in section \ref{RequirementsListBench}.
 
 \section{Test 1 - iPerf3 Throughput}
+\label{sec:Test1}
 \subsection{Test parameters}
 In this test, the throughput is measured between the Apache server and the Client. The listener for iPerf3 was setup on the Apache server using port 5201 (the default port for iPerf3 \citep{iPerf3Documentation}). The client then specifies that is is in-fact running iPerf3 as a client, and tells the server which format to record throughput with. For this testing, the format used was 'M', meaning Megabytes \citep{iPerf3Documentation}.
 
@@ -147,6 +148,7 @@ Figure \ref{fig:test1graphs} shows the transfer rate over time for both Client a
 This shows that Docker is stable, whilst VMware's throughput result fluctuates far more. This would suggest that the VMware system is unstable; something we will investigate further in the evaluation section of this report.
 
 \section{Test 2 - Sysbench MySQL Input/Output}
+\label{sec:Test2}
 \subsection{Test parameters}
 This test required a test database with random data to be created on the MySQL server. Luckily, Sysbench includes a 'prepare' tool, which allows a user to specify parameters of for the table that match the test they want to conduct \citep{sysbench}. Sysbench then creates, or \emph{prepares}, a database that is suitable for said test. A test user account with all permissions was also created for Sysbench to use. When the prepare command is run, it creates the database and tables, and then fills the tables with the amount ant type of data specified.
 
@@ -206,6 +208,7 @@ The latency between queries was also measured by Sysbench. Figure \ref{test2late
 We can see from these results, that Docker far out performs VMware in terms of latency, to such an extreme extent that Dockers' top 95th percentile results are lower than VMware's average latency.
 
 \section{Test 3 - Namebench}
+\label{sec:Test3}
 \subsection{Test parameters}
 This test compares the performance of the DNS servers and their ability to perform DNS queries for various websites.
 
@@ -237,6 +240,7 @@ We can see the minimum latency response in figure \ref{fig:test3graphmin}. Here,
 No maximum latency is given in a graph as in both tests, certain requests hit their maximum wait time for a response (3500ms). This is most likely due to an error with authoritative servers outside of our control. Furthermore, 95th percentile data could not be used (such as in our last test in subsection \ref{test2results}) because Namebench compiles the the minimum, average and maximum data itself, without allowing the user to access raw data. (Most likely because the domain name list provided by Alexa \citep{alexainternet} is propriety, so providing access to this data could be a breach of Alexa's agreements.
 
 \section{Test 4 - Apache JMeter and Performance measurements using Netdata}
+\label{sec:Test4}
 \subsection{Test parameters}
 \label{Test4TestParameters}
 %the idle benchmarks didn't have the client machine running!
