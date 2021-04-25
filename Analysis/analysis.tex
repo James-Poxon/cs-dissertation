@@ -1,5 +1,6 @@
 %!TeX root=../Dissertation.tex
 %!TeX bibfile=./analysis.bib
+%!TeX bibfile=../synthesis/synthesis.bib
 
 \chapter{Review of Virtualisation}
 \label{chap:virtualisationReview}
@@ -213,7 +214,7 @@ iPerf is a tool used for measuring the total bandwidth achievable over IP networ
 Measuring throughput for the web server is important because a higher throughput should mean a greater number of users being able to use the website without long wait times for example.
 
 \subsection{Test two - Sysbench MySQL}
-Sysbench is a benchmarking tool that comes with a number of different tests for measuring processing, memory usage, Input/Output speed, and database performance\citep{sysbench}. Whilst the tool is extremely versatile, with tests for a number of different functions, the test that is of interest to this work is the 'oltp\_read\_write' test supplied. This test performs a number of random read and write queries and transactions to a pre-prepared MySQL database using OLTP (Online Transaction Processing), which is a system which facilitates small-scale, multi-user transactions and processes to a database\citep{OLTP}.
+Sysbench is a benchmarking tool that comes with a number of different tests for measuring processing, memory usage, Input/Output speed, and database performance\citep{sysbench}. Whilst the tool is extremely versatile, with tests for a number of different functions, the test that is of interest to this work is the 'oltp\_read\_write' test supplied. This test performs a number of random read and write queries and transactions to a pre-prepared MySQL database using OLTP (Online Transaction Processing), which is a system which facilitates small-scale, multi-user transactions and processes to a database\citep{oltpbenchmarking}.
 
 This test will be performed on the MySQL server outlined in subsection \ref{MySQL Server}, with the client machine being used to send the queries and initiate reads and writes.
 
