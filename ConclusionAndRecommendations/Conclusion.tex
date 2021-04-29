@@ -2,28 +2,41 @@
 %!TeX bibfile=./synthesis.bib
 \chapter{Conclusions}
 %MAIN THING HERE IS COMPARING TO THE AIMS
+\section{Main Test Result Conclusions}
 The primary aim of this research was to measure performance between Containerised and Virtualised network infrastructure, with the hope of generating recommendations to either those that already use virtual machine infrastructure, or to those that are creating new headless servers and wondering which option to use.
 With that in mind, I can confidently say that the total output from this work has been a success. A number of in-depth tests have been done to generate a solid set of results. These key and conclusive results are as follows:
 \begin{itemize}
   \item Docker, when being used to run headless servers, performs faster than the same servers perform on a VMware machine.
   \item Docker can provide in most cases, over double the performance output when compared to VMware for the same workload.
   \item Docker uses far less system resources when compared directly with VMware.
+  \item Docker's performance is more stable and reliable than VMware under load.
 \end{itemize}
 
+\section{Secondary Points of Interest}
 %Talk about the ways that Docker is managed, and the ways that VMware is managed.
-Other interesting points of discussion are also relevant, but less important than the main discovered laid out above. One of these discussion points sits with the way that Docker and VMware are both managed. These two different methods are not exclusive to containerisation or virtualisation respectively, but when making recommendations based on the work done in this research, these points are still important to mention.
+Other interesting points of discussion are also relevant, but less important than the main discoveries that are laid out above. One of these discussion points sits with the way that Docker and VMware are both managed. These two different methods are not exclusive to containerisation or virtualisation respectively, but when making recommendations based on the work done in this research, these points are still important to mention.
 \begin{itemize}
-  \item Docker is managed firstly from the command line. Dockerfiles can be written to quickly create new Docker Images, or, Images can be pulled directly from Dockerhub, or a private repository. Images that are already created can be saved to .Tar files, or can be pushed to a repository. Multiple containers can use the same image, as IP addressing is done when launching a container. Networks which bridge to real interfaces must be created and defined by the user, using Docker's macvlan network driver. Macvlan is not the primary, or most supported network option provided by VMware.
-  \item VMware is managed using VMware's workstation software. Virtual machines must either be created using the setup wizard using a real OS image file, cloned from another machine (If the original machine is deleted or lost, the clone will fail), or a direct copy of the VM can be created (by manually copying the Virtual Machine files). VMware comes ready with a `bridged' network, along with virtual networks that can connect with other services via adapters. THe bridged network is well supported by VMware.
+  \item Docker is managed firstly from the command line. Dockerfiles can be written to quickly create new Docker Images, or, Images can be pulled directly from Dockerhub or a private repository. Images that are already created can be saved to .Tar files, or can be pushed to a repository. Multiple containers can use the same image, as IP addressing is done when launching a container. Networks which bridge to real interfaces must be created and defined by the user, using Docker's macvlan network driver. Macvlan is not the primary, or most supported network option provided by Docker.
+  \item VMware is managed using VMware's workstation software. Virtual machines must either be created using the setup wizard using a real OS image file, cloned from another machine (If the original machine is deleted or lost, the clone will fail), or a direct copy of the VM can be created (by manually copying the Virtual Machine files). VMware comes ready with a `bridged' network, along with virtual networks that can connect with other services via adapters. The bridged network option is well supported by VMware.
 \end{itemize}
 
-I believe these are important points to mention as they should be considered by anyone that is planning on using this research to form an opinion about which technology to use. Neither of these methods is the right or wrong way of managing containers and virtual machines, but as they are different, it may still be an important basis for that persons decision making. For example, Docker's command line interface could for some end users such as network administrators be a feature they prefer over VMware's GUI interface. On the other hand, those with less technical knowledge might find VMware more user friendly. This point is less quantitative, and more qualitative it is entirely up to the end user as to what matches their needs.
+I believe these are important points to mention as they should be considered by anyone that is planning on using this research to form an opinion about which technology to use. Neither of these methods is the right or wrong way of managing containers and virtual machines, but as they are different, it may still be an important basis for that persons decision making. For example, Docker's command line interface could for some end users such as network administrators be a feature they prefer over VMware's GUI interface. On the other hand, those with less technical knowledge might find VMware more user friendly. Another example is the way that Containers and Virtual Machines are stored. Both allow ample opportunity for backups, and rapid redeployment of server solutions should the need arise (though it could be argued that Docker is faster). These points are less quantitative, and more qualitative it is entirely up to the end user as to what matches their needs.
 
-That being said, I do think that VMware's solution is more user friendly, even if hardcore IT users may prefer a CLI over a more clunky GUI.
+That being said, I do think that VMware's solution is more user friendly even if hardcore IT users may prefer a CLI over a more GUI. Someone with CLI knowledge may prefer that as an option, but they certainly wouldn't struggle to use VMware. The same could not be said the other way around. Docker is first and foremost a low resource solution, and as such should be used from the Command Line. Docker does have a `Docker Desktop' version that works on Windows and Mac, but this version uses different techniques to simulate the containers (for example, on windows it uses Windows Subsystem for Linux \citep{DockerWindows}), and as such we can't make recommendations for these versions of Docker, as there may be other constraints on container performance.
 
-%talk about the points above in detail, critique which one is better in each situation. for example, storage, mention why it is good that you can upload to repository etc. Mention why dockers network interface isnt as good.
+It is also important to talk here about the way that Networks are managed in both solutions. Docker's networks are generally configured by the user (a default virtual network is provided but not recommended). For containers to face a real network, the macvlan driver is used. This network mode isn't the most supported network option, and there can be problems regarding the handling of some IP traffic. This is evidenced by the issues around DHCP that we experienced in subsection \ref{Difficulties with Docker and DHCP}. When looking at VMware, the network management is far more robust. The systems that VMware uses to bridge virtual machines to real networks are far better supported, and for all intents and purposes, function exactly like a real machine would.
+
 
 %Most of the issues come from having the hostmachine being one PC, results of covid and not having access to infrastructure at university. I was to do it again the most important step would be to run the test on a server machine on a real network. This test more a simulation than real life.
+
+\section{Rounded Conclusion}
+
+To sum up, Docker is a far better option than VMware when looking solely at performance metrics and resource usage. VMware was far slower, and as a result of it's high resource utilisation, it suffered fluctuation making it less reliable under load. However, Docker isn't designed around this kind of use, and as a result can suffer from being less straight and operable. VMware provides a more robust system for managing its instances. VMware's Bridged network mode is also more desirable than Docker's macvlan mode. 
+
+It is clear that more work needs to be done to provide a suitable base for containerised networking specifically. The performance benefits to using Containers over Virtual Machines is a one that should be utilised, but Docker, as it stands now, probably isn't the best way forward. Should Docker want to provide this as a part of their platform in the future, they need to work on better ways to implement containers with real networks.
+
+I am sure that once these issues are ironed out, that container based networking will be the future. I would hypothesise that we will start to see less and less virtualised infrastructure in favour of containers simply due to being able to get the same performance out of lesser hardware (something that will save costs).
+%Actual conclusion is: Docker performs better than VMware, uses less resources, but there is still work to be done to make Docker more accessible, and to make it integrate with networks better. Once these issues are ironed out, containers will be the future.
 
 \chapter{Recommendations}
 
@@ -36,3 +49,5 @@ Another interesting point to mention here is cost of applications. VMware Pro (w
 %Need to talk about the fact that other things come into play when making recommendations other than just networking performance, such as security/isolation etc. These are areas of concern in other research.
 
 \section{Suggestions for further research}
+
+%Most of the issues come from having the hostmachine being one PC (you have talked about this above, this is just the recommendation, nothing else.
