@@ -45,30 +45,46 @@ I am sure that once these issues are ironed out, that container based networking
 \label{sec:RecSMEs}
 This section will comprise of information and recommendations to those that may want to use this research as part of their decision making process about moving to Containers to support their network infrastructure. Whether that be moving from virtual machines to container on an already existing machine, or whether it be part of a decision as to which technology a new system should be using.
 
-The performance results in this report speak for themselves. Docker \emph{is} the superior choice if performance and reliability is the only metric that matters to you or your organisation. If there are no other considerations for your use-case, then the recommendation here would be that containerisation is absolutely the correct choice. However, it would be very unlikely that these are the only considerations. Security, Cost, Ease of Use, and Management Options are all important aspects to consider when deciding how to host network infrastructure. A common way of looking at this host of issues, it splitting them into the CIA triad (Confidentiality, Integrity, Availability).
-\subsection{CIA Triad Comparison}
-Lets split both the technologies (Docker and VMware), along with the results we have collected, into the CIA triad, and see how they compare.
+The performance results in this report speak for themselves. Docker \emph{is} the superior choice if performance and reliability is the only metric that matters to you or your organisation. If there are no other considerations for your use-case, then the recommendation here would be that containerisation is absolutely the correct choice. However, it would be very unlikely that these are the only considerations. Security, Cost, Ease of Use, and Management Options are all important aspects to consider when deciding how to host network infrastructure.
+\subsection{Security}
+Security in computing is often split into the CIA triad (Confidentiality, Integrity, Availability). Lets split both the technologies (Docker and VMware), along with the results we have collected, into the CIA triad, and see how they compare.
 \subsubsection{Docker}
 Confidentiality is something we didn't investigate during this research, but it has been suggested by other research that isolation is a problem with Docker. I would strongly recommend anyone planning on moving to Containers to read the paper by \citeauthor{watanda19} ``Emerging Trends, Techniques and Open Issues of
-Containerization: A Review'' \citeyear{watanda19}. This paper covers security and isolation concerns with containerisation which are important but outside of the scope of this research.
+Containerization: A Review'' (\citeyear{watanda19}). This paper covers security and isolation concerns with containerisation which are important but outside of the scope of this research.
 
 When we move to Integrity, we can comfortably say that this research tested this well, and we find that Docker's integrity stands up under scrutiny. The servers and services hosted via Docker were reliable and stable, and could hold up even when under heavy loads and stress testing.
 
 Availability was also tested during this research. All the systems stayed up and running at reasonable levels throughout testing, with only minor hiccups that we would expect to see in any operational system anyway.
 
 \subsubsection{VMware}
-Again, we didn't mention Confidentiality in our study
+Again, we haven't touched on Confidentiality in our study as it was outside of our scope. However, VMware's isolation from the host machine, and between virtual machines is very well documented. For example; \citeauthor{VMwareIsolation} discusses this in their ``Survey of security isolation of virtualization, containers, and unikernels'' (\citeyear{VMwareIsolation}).
 
+Where our research does interject is when looking at Integrity of data. The processing we saw in our tests, namely the database test (where important data would most likely be exchanged in a real system) showed that we had scattered results where we would observe very high latencies. As discussed in our evaluation, these were probably due to errors. The number of these errors we noticed was significantly more than that of Docker. So if you are planning on using VMware to host mission critical infrastructure, we would remind you that VMware may introduce these hitches that could be detrimental to the integrity of your data.
 
-Another interesting point to mention here is cost of applications. VMware Pro (which is required to use the network manager) is paid software, whereas everything we did in our tests was possible using Docker's free plan. It is more than possible that, however, that businesses using Docker may want private repositories, or other features that are only provided in Docker's paid plans It is also possible, that an organisation using VMware, may not require access to the network manager, as bridged connections shouldn't require much (if any at all) configuration. The cost difference's between the two technologies at this point then simply comes down to the preference and requirements of the organisation setting out to use either of the technologies.
+Availability is another area affected by VMware observed performance hits. The fluctuation caused by this lack of performance in our tests could result in end users sometimes not having access to systems during peak times, as sudden drops in performance happening quite often. This is not acceptable for any system that need to be used by a number of users. 
 
-%Need to talk about the fact that other things come into play when making recommendations other than just networking performance, such as security/isolation etc. These are areas of concern in other research.
+\subsubsection{Recommendation based on security}
+Our recommendation, then, would be that should Confidentiality be the main priority of your system, Docker is probably not the solution for you. If Integrity and Availability of your data is more important to you though, then we would recommend Docker over VMware.
+
+\subsection{Costing}
+Another interesting point to mention here is cost of applications. VMware Pro (which is required to use the network manager) is part of a paid software package, whereas everything we did in our tests was possible using Docker's free plan. It is more than possible that however that businesses using Docker may want private repositories or other features that are only provided in Docker's paid plans. It is also possible, that an organisation using VMware, may not require access to the network manager, as bridged connections shouldn't require much (if any at all) configuration. The cost difference's between the two technologies at this point then simply comes down to the preference and requirements of the organisation setting out to use either of the technologies.
+
+\subsection{Concluding recommendation}
+From what is discussed in the sections above we can see that the use of VMware or Docker isn't clean-cut. It entirely comes down to the individual needs and requirements of the entity that is requiring a network solution. So whilst our study does a lot to prove the efficiency and performance benefits of containers, it cannot be used as the sole indicator of whether you should used Containers over Virtual Machines.
+
+This moves us onto our next, and final section.
 
 \section{Suggestions for further research and development}
+
+%Recommendation up here first, then development opportunities (already written some of it) below that.
+%Most of the issues come from having the hostmachine being one PC (you have talked about this above, this is just the recommendation, nothing else.
+
 As discussed in the section above (Section \ref{sec:RecSMEs}), there are multiple reasons other than performance that come into the adoption of a new technology. Someone could develop the fastest database system in the world, but there would be very little uptake on the technology if it was also the least secure database system. End users need the reassurance that the systems they implement are right for them, and I don't yet feel fully confident in recommending container based networking, as I feel there are still issues that need to be addressed.
 
-%Write more on this bit below
-Firstly, if Docker wants people to consider their technology solution for this kind of application, they need to do more work to offer flexibility in working on real networks. The technology to host servers and containers is already there, it just needs to be polished in a way that created a better overall package for end users. Docker also need to consider the security of their system. Virtualisation is still popular because it allows full isolation of systems. If Docker could offer the same, with minimal impact on performance, I could see a mass shift to containerisation possible.
+For full recommendation of Docker as a tool to host and run networks, it is clear there is work to be done. Firstly, Docker needs to do more work to offer flexibility in it's networking solutions. The macvlan adapter support is simply not good enough, or reliable enough to recommend as a long-term solution on a real network. Secondly, Docker should look to implement a more top-down management view of their containers, that allows end-users mass control over container networks in a similar way as is already possible on Virtualised networks. Furthermore, a deeper focus on the security implications would give end-users the confidence they need when hosting critical servers. Should these few sticking points be straightened I would be able to not only offer Docker as a better alternative in all ways to VMware, I would happily suggest that moving away from Virtualisation and into a new paradigm of Containerisation is inevitable. In-fact, despite the issues listed here, I am almost sure that containers are the future of single-machine networking.
 
-
-%Most of the issues come from having the hostmachine being one PC (you have talked about this above, this is just the recommendation, nothing else.
+Maybe the issue is that Docker was never designed to be the tool we are trying to turn it into. Docker was created firstly as a way for developers to easily host their applications for testing. It wasn't designed to be used as a permanent networking solution. With that in mind, I would recommend that this kind of container based solution does need to be developed. I believe that a purpose-built containerised network solution, that addressed the issues discussed in this paper such as real world network cross-over, or security and isolation, would find themselves as a new leading industry standard. I also have no doubt that various Virtualisation and Containerisation solution providers are already working on these kinds of solutions. We are already starting to see uptake of containerisation in areas such as %FINISH THIS TODO.
+%FINISH THE BIT ABOVE
+%FINISH THE BIT ABOVE
+%FINISH THE BIT ABOVE
+%FINISH THE BIT ABOVE
