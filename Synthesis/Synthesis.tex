@@ -4,12 +4,29 @@
 \chapter{System creation and setup}
 \section{The host machine}
 \subsection{Hardware}
-It was decided as a better test of Docker's ability to reduce strain on a system, that an older machine with limited resources would be used rather than a more modern and capable machine. This was to better represent the target group of this research; that being SMEs that may have aging hardware, attempting to get the most out of what they currently have available.
+To do the testing, an older desktop machine with limited resources will be used rather than a modern server machine. This should better represent one of the target groups of this research; that being SMEs that may have aging hardware, attempting to get the most out of what they currently have available.
 
-The test machine has %TODO: TO DO state what the specs of the machine are. RAM, CPU, etc
+The specification of the machine is as follows:
+
+\begin{itemize}
+  \item Processor: Intel(R) Core(TM) i5-4670 CPU @ 3.40GHz
+  \item RAM: Corsair Vengeance 2x8GB DDR3 @ 1600Mhz (CAS latency of 10 clocks)
+  \item Motherboard: Gigabyte H81M-S2PV (Dual Channel Memory)
+  \item Graphics Card: NVIDIA GeForce GTX 1060 (3GB VRAM)
+\end{itemize}
+
+This processor has four cores, and is single threaded; it was released in 2013 and support from Intel discontinued in 2017 \citep{IntelCPU}. Nevertheless, it is still a fairly decent CPU and is reflective of what we might see is some legacy servers running in some real-world systems.
+
+This motherboard supports up to a maximum of 16GB of RAM, and a frequency of 1600Mhz in dual channel which we are taking full advantage of with two 8GB sticks of 1600Mhz RAM. The CAS latency is important here too. CAS means ``Column Address Strobe'', and means the number of times the memory clock cycles between the `read' command and the data actually being read \citep{CASlatency}. Generally the lower the CAS latency, the better for sheer speed. The intricacies of memory profiles and CAS latencies is far beyond the scope of this report, but it is important to mention in the event someone wants to check the results of this study with their own research in the future. As with any benchmarking test, small changes in hardware can big consequences on results, so being as transparent as possible with regards to the hardware specification is within our best interest. CAS latency can make a noticeable difference in real-world speed of RAM, so even if two RAM sticks are the same Frequency, having different CAS latencies could shift results.
+
+The graphics card should little difference to the results, but is worth mentioning nonetheless.
 
 \subsection{Operating System}
-%TODO: To do talk about the host machines' operating system
+The Host Machine will be using a fresh installation of Ubuntu LTS 20.4 Desktop \citep{UbuntuDesktopDocumentation}. Using a fresh installation is important to ensure that results are as close to stock as is possible.
+
+Ubuntu is being used because the infrastructure that we will be building uses solely Linux-based solutions (BIND9, ISC-DHCP, Apache, etc). Though this can be supported for containers on Windows, it can only be done using Windows Subsystem for Linux 2 (WSL 2). The decision was made to avoid WSL 2 as whilst WSL 2 does load a real Linux kernel \citep{WSL2Explain} (making it have less overhead than a traditional Virtual Machine), it still runs that kernel through a windows environment, so there's no guarantee that this wouldn't be detriment to the performance of the containers. Using Ubuntu as the base operating system ensures the containers we run interface directly with our base operating system as explained in the Analysis, see Figure \ref{fig:ContainerDiagram}.
+
+When considering VMWare, having the host machine's operating system as ubuntu is acceptable, as VMware Workstation supports Linux as a host operating system \citep{VMwareOnLinux}.
 
 \section{Servers}
 \subsection{Operating system}
