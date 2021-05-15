@@ -1,6 +1,6 @@
 %!TeX root=../Dissertation.tex
 %!TeX bibfile=./analysis.bib
-%!TeX bibfile=../synthesis/synthesis.bib
+%!TeX bibfile=./synthesis.bib
 
 \chapter{Review of Virtualisation}
 \label{chap:virtualisationReview}
@@ -15,31 +15,37 @@ Each of these individual logical (as opposed to physical) devices is called a `v
 
 \subsection{Hardware Virtualisation}
 \label{subsec:HardwareVirtualisation}
-There are a number of different types of virtualisation. This can open the scope for what can and can not be considered as a virtual machine. For the purpose of this report the term `virtualisation' will refer specifically to `hardware based virtualisation', whereby a `virtual machine' is an operating system running on top of another operating system, with the virtualisation task itself being controlled by a `hypervisor' (This is explained in more detail in the next subsection: \ref{subsec:hypervisor}).
+There are a number of different types of virtualisation. This can open the scope for what can and can not be considered virtualisation, so we must be firm on our definition here. For the purpose of this report the term `virtualisation' will refer specifically to `hardware based virtualisation', whereby a `virtual machine' is an operating system running on top of another operating system, with the virtualisation tasks being controlled by a `hypervisor' (This is explained in more detail in the next subsection: \ref{subsec:hypervisor}).
 
-This is an important definition to clarify, as often times containerisation (Chapter \ref{chap:containerisationReview}) can be viewed as a type of virtualisation, and other times not. For the purposes of this report, the two definitions must be distinguished as separate things, much like in the report ``Autonomic Orchestration of Containers: Problem Definition and Research Challenges'' \citep{casalicchio2016}, where a clear and defined difference between Hardware Virtualisation and Containerisation is made.
+This is an important definition to clarify, as sometimes containerisation (Chapter \ref{chap:containerisationReview}) can be viewed as a type of virtualisation (due to the similarities of what they provide). For the purposes of this report, the two definitions must be distinguished as separate things, much like in the report ``Autonomic Orchestration of Containers: Problem Definition and Research Challenges'' \citep{casalicchio2016}, where a clear and defined difference between Hardware Virtualisation and Containerisation is made. In the following sections we shall provide more in-depth description of what a virtualisation is, and what containerisation is, so as to reduce any possible confusion.
+
+\subsection{Host Machine}
+Though this applies to containerisation also, it is important to define the host-machine here. The host-machine is the bare-metal physical machine that runs instances (whether that be virtual machines or containers). The host-machine Operating System (OS) is the OS that is installed at the lowest level on the hardware.
 
 \subsection{Hypervisor}
 \label{subsec:hypervisor}
-Hardware Virtualisation relies on an underlying software that runs on the already existing OS in order to manage each instance/OS. This software can have a number of different names depending on the origin of the work, and the context. In early work on virtualisation, this software was often referred to simply as a ``control program'' \citep{creasy1981}, but for the purposes of this research, this software will be referred to as a `Hypervisor'. This term is often preferred in practical settings, such as in VMware's online Glossary \citep{vmwareHypervisor}, or in Red Hat's ``What is a hypervisor'' \citep{redhat2021}.
+Hardware Virtualisation relies on an underlying software that runs on the host-machine's Operating System in order to manage each instance/OS. This software can have a number of different names depending on the origin of the work, and the context. In early work on virtualisation, this software was often referred to simply as a ``control program'' \citep{creasy1981}, but for the purposes of this research, this software will be referred to as a `Hypervisor'. This term is often preferred in practical settings, such as in VMware's online Glossary \citep{vmwareHypervisor}, or in Red Hat's ``What is a hypervisor'' \citep{redhat2021}, and has become the de-facto term for this type of software environment.
 
-The hypervisor manages things such as logically splitting up hardware on the host machine so that virtual machines can make use of it, such as RAM, CPU cores, Disk space, network management or more\citep{fragni2010evaluating}. It is also usually responsible for user interface into the operating system, whether that be through a graphical input, or other means.
+The hypervisor acts as a "manager" for virtual machines, performing tasks like logically splitting up hardware on the host machine so that virtual machines can make use of it, such as RAM, CPU cores, Disk space, network management or more \citep{fragni2010evaluating}. It is also usually responsible for managing user interface into the operating system, whether that be through a graphical input, or other means.
 
+Some hypervisors also offer different abilities. One example is network interface and management that allow multiple virtual machines to communicate with each other \citep{VMwareNetChange}.
 
 \section{The workings of virtualisation}
-Virtualisation can work in a number of ways, and as mentioned by Thiruvathukal, et al. there could be whole reports looking into exactly what virtualisation is \citep{VMwareWorking} and how it works on different machines, or operating systems. However, most virtual machines follow some version of what will now be described. Firstly, the primary operating system (installed on the host machine) provides interface to the hardware of the machine. Then, a hypervisor (as discussed above in subsection \ref{subsec:hypervisor}) bridges the gap between the host machine's operating system, and the the operating systems that are going to be virtualised\citep{fragni2010evaluating}.
+Virtualisation can work in a number of ways, and as mentioned by Thiruvathukal, et al. there could be whole reports looking into the intricate details of exactly what virtualisation is \citep{VMwareWorking} and how it works on different machines, or operating systems. However, most virtual machines (and the one's we will be using later in our research) follow some version of what will now be described. Firstly, the host operating system (installed on the host machine) provides interface to the hardware of the machine. Then, a hypervisor (as discussed above in subsection \ref{subsec:hypervisor}) bridges the gap between the host machine's operating system, and the the operating systems that are going to be virtualised \citep{fragni2010evaluating}.
 
-Figure \ref{fig:VirtualisationDiagram} shows a diagram to better illustrate the layers that go into creating a virtual machine. This diagram shows a hypervisor that is supporting three virtual machines. The layers start from the bottom and move up the diagram. The 'Libs/Bins' part of the diagram is the binaries and libraries that are required to allow certain applications to run on operating systems.
+Figure \ref{fig:VirtualisationDiagram} shows a diagram to better illustrate the layers that go into creating a virtual machine. This diagram shows a hypervisor that is supporting three virtual machines. The layers start from the bottom and move up the diagram. The 'Libs/Bins' part of the diagram is the binaries \citep{binlinux} and libraries \citep{liblinux} that are required to allow certain applications to run on operating systems.
 \begin{figure}[H]
-\caption{Diagram basis taken from Alaasam, et al. \citep{binsandlibs}}.
+\caption{Diagram basis taken from Alaasam, et al. \citep{binsandlibs}}
 \label{fig:VirtualisationDiagram}
-\fbox{\includegraphics[width=\textwidth]{./analysis/VMdiagram.PNG}}
+\fbox{\includegraphics[width=0.95\textwidth]{./analysis/VMdiagram.PNG}}
 \centering
 \end{figure}
 
 \section{VMware}
 \subsection{Why VMware?}
-In order to provide virtual machines for testing in this research we will be using VMware Workstation Pro \citep{VMwareWorkstationPro}. This choice comes because it is one of the leading virtual machine hypervisors for the desktop environment \citep{BestVirtualisationSoftware}. This choice also comes because VMware provides hypervisor technology for a number of different applications, including server infrastructure. The core hypervisor technology across these different versions however, is the same\citep{VMwareProductGuide}, so results we get from this research in relation to VMware Workstation Pro, should be applicable to other VMware applications, such as those in real server infrastructure.
+There are a number of different hypervisors available for the practical work we will be doing in this project. Each one has different benefits and compromises. With this in mind, we have gone through a process of deciding which technology we want to use to support our infrastructure. It is important to pick a virtualisation platform that is used in the industry I am targetting (SMEs with internal server infrastructure).
+
+With the above in mind, in order to provide virtual machines for testing in this research we will be using VMware Workstation Pro \citep{VMwareWorkstationPro}. This choice comes because it is one of the leading virtual machine hypervisors for the desktop environment \citep{BestVirtualisationSoftware}. This choice also comes because VMware provides hypervisor technology for a number of different applications, including server infrastructure. The core hypervisor technology across these different versions however, is the same \citep{VMwareProductGuide}, so results we get from this research in relation to VMware Workstation Pro, should be applicable to other VMware applications, such as those in real server infrastructure. This crossover between server variants and the desktop variant of VMware gives us a unique advantage as we can easily create and manage virtual machines in our desktop testing environment, whilst not damaging the credibility of our results.
 
 \chapter{Review of Containerisation}
 \label{chap:containerisationReview}
@@ -48,15 +54,19 @@ In order to provide virtual machines for testing in this research we will be usi
 
 \subsection{Containerisation}
 \label{sec:containerisation}
-Containerisation has become the de-facto term to describe what could also be described as OS-level virtualisation. For the purposes of this report, I will be referring to this technology only as Containerisation, and each individual instance as a container (instead of virtual machine). This is the same approach towards defining containers as taken by Dua et al \citep{dua14} when they have made their own distinction between Containers and Virtual Machines.
+Containerisation has become the de-facto term to describe what has also been described as OS-level virtualisation \citep{hogg_2014}. For the purposes of this report, I will be referring to this technology only as Containerisation, and each individual instance shall be referred to as a container (instead of virtual machine). This is the same approach towards defining containers as taken by Dua et al \citep{dua14} who have made their own distinction between Containers and Virtual Machines in much the same way that we have.
+
+The next sections will cover what containerisation is, and how it works. This is important so that the difference between virtualisation and containerisation is fully realised.
 
 \subsection{Container Engine}
 \label{Container Engine}
-What a hypervisor is to a virtual machine, a container engine is to a container. A container engine sits on the base operating system, much the same as a hypervisor. Where a difference is found however, is in the way it interacts with the base operating system.
+What a hypervisor is to a virtual machine, a container engine is to a container. A container engine sits on the base operating system, much the same as a hypervisor. Where a difference is found however, is in the way it interacts with said base operating system.
 
-Whilst a hypervisor works by running a full operating system on top of the existing one, a container engine works without that upper operating system by using the base operating system as the OS component for each container. Segregation of containers and resource allocation is simply managed by the container engine, so that each container is allocated resources. This can be done dynamically or be static, depending on the use-case.
+Whilst a hypervisor works by running a full operating system on top of the existing one, and then managing the transfer and allocation of resources from there, a container engine works without that upper operating system by using the host machine's operating system as the OS component for each container. Segregation of containers and resource allocation is still managed by the container engine, so that each container is allocated separate and isolated resources. This can be done dynamically or be static, depending on the use-case (much the same as virtualisation).
 
-Figure \ref{fig:ContainerDiagram} shows diagram that illustrates how the containers and container engine work in relation to the host machine. When compared with the diagram in figure \ref{fig:VirtualisationDiagram}, it is easy to see that containers have far less overheads in comparison to virtual machines.
+This effectively removes part of the overhead that was previously required for each virtual machine. In theory, this should allow for improved performance over Virtual Machines, especially when system resources are scarce or under a large load.
+
+Figure \ref{fig:ContainerDiagram} shows diagram that illustrates how the containers and container engine work in relation to the host machine. When compared with the diagram in figure \ref{fig:VirtualisationDiagram}, we can see that containers have far less overheads in comparison to virtual machines.
 
 \begin{figure}[H]
 \caption{Diagram basis taken from Jenny Fong (Docker Blog)\citep{ContainerDiagram}}.
@@ -69,7 +79,8 @@ Figure \ref{fig:ContainerDiagram} shows diagram that illustrates how the contain
 
 \subsection{Docker}
 \label{subsec:docker}
-An ever more popular implementation of container technology is a software known as Docker. This software is primarily used by (and aimed at) developers, who can use the platform to quickly create and deploy applications for testing. The use of containers is supposed to make managing these applications much easier, and ensures compatibility along the whole development process.
+An increasingly more popular implementation of container technology is a software known as Docker. This software is primarily used by (and aimed at) developers, who can use the platform to quickly create and deploy applications in container environments for testing. The use of containers is supposed to make managing these applications much easier, as it ensures compatibility along the whole development process. For example; a developer can code a program, then pass their code \emph{and} container onto QA who can test the code in exactly the same environment \citep{whydocker}.
+
 Datanyze (a technology market usage group) report that Docker is currently the second most used Containerisation platform, with 25.34\% market share in Containerisation \citep{datanyze}. 
 
 Docker's Container engine is aptly named Docker Engine, and utilises a client-server architecture \citep[Section: Docker architecture]{DockerOverview}. The server portion of the Docker System is known as the `docker daemon', the Client uses a command line interface to interact with one or more docker daemons. The client and daemon communicate using a `REST API' \citep[Section: The Docker daemon]{DockerOverview}. REST (Representational State Transfer) provides an architecture for web services \citep{W3Architecture2004} that allows them to communicate over HTTP. The protocols within REST are stateless, this means there is no set `state' or session control within the protocol; each command sent to a daemon can be understood as it is, without the need for any outside context to the command being sent.
