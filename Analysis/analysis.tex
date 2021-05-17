@@ -41,10 +41,25 @@ Figure \ref{fig:VirtualisationDiagram} shows a diagram to better illustrate the 
 \centering
 \end{figure}
 
+\section{Choosing a Virtualisation Platform}
+There are a number of different hypervisors available for the practical work we will be doing in this project. Each one has different benefits and compromises. With this in mind, we must go through a process of deciding which technology we want to use to support our infrastructure. It is important to pick a virtualisation platform that is used in the industry I am aiming my research towards (that being SMEs with a need to host servers internally).
+
+\subsection{VirtualBox}
+VirtualBox is a popular virtualisation platform provided by Oracle \citep{VirtualBoxOracle}. It includes virtual network cards that allow virtual machines to communicate with each other \citep[1.3. Features Overview]{VirtualBoxManual}, which is beneficial to us when hosting inter-connected servers. It also offers various networking options that allow for internal networks, as well as forwarding data onto a real interface \citep[6.2. Introduction to Networking Modes]{VirtualBoxManual}. This means servers could be connected in a virtual network, or could forward their traffic to a hardware network interface card, which means we can do our testing, and also apply the findings to real-world networks.
+
+However, VirtualBox has recently come under scrutiny for a reduction in stability of their virtual machines, with some users reporting crashes, and slow-downs in operation \citep{bradford_2020}. When wanting to find a good contender for a comparative piece of research, it is important to stay away from something that could result in unfair results. As using VirtualBox may lead to slow-downs that are not a result of the Virtualisation technology itself, it wouldn't be a fair comparison to compare VirtualBox Virtualisation with a Containerisation, as differences in results could actually stem from something other than purely the raw performance we would expect to see on a virtual machine. VirtualBox is also considered a desktop-virtualisation package primarily, and doesn't offer any server-specific virtualisation packages, which also seems unfair given the great number of other virtualisation options available that \emph{do} have server-oriented versions.
+
+\subsection{Hyper-V}
+Hyper-V is a hypervisor product developed by Microsoft. It %here
+
+On the contrary to VirtualBox, with its lack of server-oriented packages, Hyper-V has two primary versions (Though there a sub-versions within these), one is a server-specific version designed to work on windows server, and the other is a stand-alone version designed to work on most windows %and here
+
+
+\subsection{VMware}
+%Mention the network manager and adapters along with bridged mode for linking to real networks. Mention that is has server-oriented packages.
+
 \section{VMware}
 \subsection{Why VMware?}
-There are a number of different hypervisors available for the practical work we will be doing in this project. Each one has different benefits and compromises. With this in mind, we have gone through a process of deciding which technology we want to use to support our infrastructure. It is important to pick a virtualisation platform that is used in the industry I am targetting (SMEs with internal server infrastructure).
-
 With the above in mind, in order to provide virtual machines for testing in this research we will be using VMware Workstation Pro \citep{VMwareWorkstationPro}. This choice comes because it is one of the leading virtual machine hypervisors for the desktop environment \citep{BestVirtualisationSoftware}. This choice also comes because VMware provides hypervisor technology for a number of different applications, including server infrastructure. The core hypervisor technology across these different versions however, is the same \citep{VMwareProductGuide}, so results we get from this research in relation to VMware Workstation Pro, should be applicable to other VMware applications, such as those in real server infrastructure. This crossover between server variants and the desktop variant of VMware gives us a unique advantage as we can easily create and manage virtual machines in our desktop testing environment, whilst not damaging the credibility of our results.
 
 \chapter{Review of Containerisation}
@@ -75,21 +90,21 @@ Figure \ref{fig:ContainerDiagram} shows diagram that illustrates how the contain
 \centering
 \end{figure}
 
-\section{Developments in containerisation technology}
-
-\subsection{Docker}
-\label{subsec:docker}
+\section{Choosing a Containerisation Platform}
+\subsection{Docker}%NEED TO ADD MORE CONTAINER ALTERNATIVES HERE, MENTION JAILS WHICH ARE SIMILAR
 An increasingly more popular implementation of container technology is a software known as Docker. This software is primarily used by (and aimed at) developers, who can use the platform to quickly create and deploy applications in container environments for testing. The use of containers is supposed to make managing these applications much easier, as it ensures compatibility along the whole development process. For example; a developer can code a program, then pass their code \emph{and} container onto QA who can test the code in exactly the same environment \citep{whydocker}.
 
 Datanyze (a technology market usage group) report that Docker is currently the second most used Containerisation platform, with 25.34\% market share in Containerisation \citep{datanyze}. 
-
+\section{Using Docker}
+\subsection{How Docker works}
+\label{subsec:docker}
 Docker's Container engine is aptly named Docker Engine, and utilises a client-server architecture \citep[Section: Docker architecture]{DockerOverview}. The server portion of the Docker System is known as the `docker daemon', the Client uses a command line interface to interact with one or more docker daemons. The client and daemon communicate using a `REST API' \citep[Section: The Docker daemon]{DockerOverview}. REST (Representational State Transfer) provides an architecture for web services \citep{W3Architecture2004} that allows them to communicate over HTTP. The protocols within REST are stateless, this means there is no set `state' or session control within the protocol; each command sent to a daemon can be understood as it is, without the need for any outside context to the command being sent.
 
 The Docker Daemon manages `Objects' \citep[Section: Docker objects]{DockerOverview} required for a full Docker system. 'Objects' refers to the containers, the images (Docker images are the instruction sets for Docker containers, not to be confused with OS images, though often the Docker images will include which OS image is to be used).
 
 Docker images are stored in a Docker Registry \citep[Section: Docker registries]{DockerOverview}. By default, the registry is configured to use "Docker Hub" which is a public, open registry that already contains a large number of complete images for use. This registry can be changed however, to point to any location. This behaviour allows a registry to be setup part of a network, and the images can then be 'pulled' or 'run' from the registry using the "docker pull" and "docker run" commands\citep[Section: Docker registries]{DockerOverview}. An image can also be configured on a live container, and then that image pushed to the registry using the "docker push" command \citep[Section: Docker registries]{DockerOverview}.
 
-\subsection{How Docker works}
+
 Docker is written using the 'Go Programming language' \citep[Section: The underlying technology]{DockerOverview}. Go is developed and maintained by Google on an open source liscense, and is roughly based on the C programming language\citep{GoAncestors}. Being based on C gives the programming language the same benefits of any other low level language, being able to make use of functions that are integral to the kernal and operating system. Where go differs is that it is also designed to be be more intuitive and "clutter free" \citep{GoPrinciples}.
 
 \subsubsection{Namespaces}
