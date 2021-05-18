@@ -50,17 +50,23 @@ VirtualBox is a popular virtualisation platform provided by Oracle \citep{Virtua
 However, VirtualBox has recently come under scrutiny for a reduction in stability of their virtual machines, with some users reporting crashes, and slow-downs in operation \citep{bradford_2020}. When wanting to find a good contender for a comparative piece of research, it is important to stay away from something that could result in unfair results. As using VirtualBox may lead to slow-downs that are not a result of the Virtualisation technology itself, it wouldn't be a fair comparison to compare VirtualBox Virtualisation with a Containerisation, as differences in results could actually stem from something other than purely the raw performance we would expect to see on a virtual machine. VirtualBox is also considered a desktop-virtualisation package primarily, and doesn't offer any server-specific virtualisation packages, which also seems unfair given the great number of other virtualisation options available that \emph{do} have server-oriented versions.
 
 \subsection{Hyper-V}
-Hyper-V is a hypervisor product developed by Microsoft. It %here
+Hyper-V is a hypervisor product developed by Microsoft. Unlike VirtualBox with its lack of server-oriented packages, Hyper-V has two primary versions (Though there are sub-versions within these), one is a server-specific version designed to work on windows server, and the other is a stand-alone version designed to work on windows desktop environments (Like windows 10) \citep{HyperVIntro}.
 
-On the contrary to VirtualBox, with its lack of server-oriented packages, Hyper-V has two primary versions (Though there a sub-versions within these), one is a server-specific version designed to work on windows server, and the other is a stand-alone version designed to work on most windows %and here
+Hyper-V also supports three different virtual switch methods, those being ``Private'' (traffic can flow between VMs only), ``Internal'' (traffic can flow between VMs and the host, alternatively NAT can also be configured to allow access to the internet), and ``External'' (traffic is bound to a physical NIC and forwarded onto a real-world network) \citep{HyperVSwitches}. For our testing, we would be able to use the internal switch with NAT so that our VMs could access the internet. Results could then be applied to real world networks using the external switch.
 
+Like VirtualBox it supports multiple Operating Systems, including Linux (which we will need for our testing, see Section \ref{sec:LAMPsystem}). However, wider Operating System support isn't one of Hyper-Vs strong points \citep{HyperVVMwareComparison}, and this support for `Linux' is actually only actually full support for specific Linux operating systems, such as Ubuntu, Debian or CentOS \citep{LinuxHyperVSupport}. Whilst this wouldn't necessarily be a problem for \emph{our} tests, it does somewhat damage our ability to use it as a recommended system, as some end users and organisations might not be able to make use of it due to requiring specialist operating systems that are simply not supported within Hyper-V.
 
 \subsection{VMware}
-%Mention the network manager and adapters along with bridged mode for linking to real networks. Mention that is has server-oriented packages.
+VMware is a well-known virtualisation package and hypervisor. Whilst Hyper-V had a relatively small guest OS support; VMware has a relatively huge support base for various different Operating Systems \citep{HyperVVMwareComparison} \citep{VMwareCompatabilityGuide}. This is important because it ensures that if relevant organisations want to use this research, they have a greater chance of being able to move over \emph{other} server functions that aren't necessarily covered in this report.
 
-\section{VMware}
-\subsection{Why VMware?}
-With the above in mind, in order to provide virtual machines for testing in this research we will be using VMware Workstation Pro \citep{VMwareWorkstationPro}. This choice comes because it is one of the leading virtual machine hypervisors for the desktop environment \citep{BestVirtualisationSoftware}. This choice also comes because VMware provides hypervisor technology for a number of different applications, including server infrastructure. The core hypervisor technology across these different versions however, is the same \citep{VMwareProductGuide}, so results we get from this research in relation to VMware Workstation Pro, should be applicable to other VMware applications, such as those in real server infrastructure. This crossover between server variants and the desktop variant of VMware gives us a unique advantage as we can easily create and manage virtual machines in our desktop testing environment, whilst not damaging the credibility of our results.
+VMware provides hypervisor technology for a number of different applications, including server infrastructure virtualisation and desktop virtualisation. The core hypervisor technology across these different versions however, remains much the same \citep{VMwareProductGuide}.
+
+The other key issue picked up with other virtualisation packages (namely VirtualBox) was stability. VMware on the other hand, is considered very stable \citep{pavlik2012supervisory}, and is certainly more stable than VirtualBox \citep{bradford_2020}. This ensures that our results are reflective of virtual machine performance, and not shifted by hitches in the hypervisor programme.
+
+\subsection{Decision}
+With the above in mind, in order to provide virtual machines for testing in this research we will be using VMware Workstation Pro \citep{VMwareWorkstationPro}. This choice comes for a number of reasons, one being because it is one of the leading virtual machine hypervisors for the desktop environment \citep{BestVirtualisationSoftware}, which makes application to real-world server infrastructure much easier. Another main reason we decided to use VMware is because of its many versions despite using the same technology across said versions. As a result, data we get from this research in relation to VMware Workstation Pro, should be applicable to other VMware applications, such as VMware ESXi which is used in enterprise server applications \citep{esxivmware}. This crossover between server variants and the desktop variant of VMware gives us a unique advantage as we can easily create and manage virtual machines in our desktop testing environment, whilst not damaging the credibility of our results.
+
+VMware also provides us the exact network options we require, whilst also giving us the ability to alter and change networks using the built-in network manager \citep{VMwareNetChange} (this is important for section \ref{TheNetworkSynthesis} later in this report).
 
 \chapter{Review of Containerisation}
 \label{chap:containerisationReview}
@@ -91,6 +97,20 @@ Figure \ref{fig:ContainerDiagram} shows diagram that illustrates how the contain
 \end{figure}
 
 \section{Choosing a Containerisation Platform}
+Whilst containerisation is still relatively new, there are still a few options for us when deciding which containerisation package to use. Similarly to how we decided which virtualisation package we are using, we need to do a little bit of analysis into the various alternatives available to us, and decide which one is best for our own uses.
+
+
+\subsection{FreeBSD Jails}
+FreeBSD is an operating system that descended from the Unix family, much the same way that Linux did. BSD relates to ``Berkley Software Distribution'' which was a (now defunct) Operating System. When BSD stopped being supported in 1995, a number of organisations continued developing their own versions of BSD. By 2005, FreeBSD was the most popular by far \citep{BSDSurvey}, and remains one of the most popular versions today.
+
+FreeBSD has been used to produce systems for a number of different use cases, but of those, server infrastructure is the one that would make most sense to our research. FreeBSD can support a number of different server functions, such as DNS, Web and FTP servers \citep[Section 1.2.1.]{FreeBSDHandbook}.
+
+Whilst not named ``containers'' by the FreeBSD team, what FreeBSD calls Jails \emph{are} a form of OS-level virtualization (which for our research, we are considering to be containerisation, as discussed in subsection \ref{sec:containerisation}). Jails 
+
+%However, to make use of this containerisation, we must move to freebsd cant use linux or other lalalalal
+
+\subsection{LXC}
+
 \subsection{Docker}%NEED TO ADD MORE CONTAINER ALTERNATIVES HERE, MENTION JAILS WHICH ARE SIMILAR
 An increasingly more popular implementation of container technology is a software known as Docker. This software is primarily used by (and aimed at) developers, who can use the platform to quickly create and deploy applications in container environments for testing. The use of containers is supposed to make managing these applications much easier, as it ensures compatibility along the whole development process. For example; a developer can code a program, then pass their code \emph{and} container onto QA who can test the code in exactly the same environment \citep{whydocker}.
 

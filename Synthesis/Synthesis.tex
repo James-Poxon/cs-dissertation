@@ -86,6 +86,7 @@ The client machine had all the testing and benchmarking software required instal
 The software installed was as described in the requirements list in section \ref{RequirementsListBench}. As mentioned in that section, Netdata is installed on the host machine during the final test, not the client machine. This is to ensure that usage statistics represent the whole machine, not just the client, or the endpoint (in this case, the web server).
 
 \section{The Network}
+\label{TheNetworkSynthesis}
 For both tests, VMware Workstation's NAT networking mode was used \citep{VMwareNAT}. The same network was used for both in order to ensure a fair test. Using the same network provided by VMware's NAT setting ensures that any differences in network performance measured in the tests is due to factors other than the network infrastructure itself; more specifically, the difference between Docker and VMware's core performance in a network setting.
 
 The configuration of this network was edited using VMware's "Virtual Network Settings" \citep{VMwareNetChange} to disable the built in DHCP server, so that it didn't conflict with the DHCP server created for the testing (see subsection \ref{DHCP Spec}).
