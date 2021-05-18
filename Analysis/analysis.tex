@@ -105,11 +105,12 @@ FreeBSD is an operating system that descended from the Unix family, much the sam
 
 FreeBSD has been used to produce systems for a number of different use cases, but of those, server infrastructure is the one that would make most sense to our research. FreeBSD can support a number of different server functions, such as DNS, Web and FTP servers \citep[Section 1.2.1.]{FreeBSDHandbook}.
 
-Whilst not named ``containers'' by the FreeBSD team, what FreeBSD calls Jails \emph{are} a form of OS-level virtualization (which for our research, we are considering to be containerisation, as discussed in subsection \ref{sec:containerisation}). Jails 
+Whilst not named ``containers'' by the FreeBSD team, what FreeBSD calls Jails \emph{are} a form of OS-level virtualization (which for our research, we are considering to be containerisation, as discussed in subsection \ref{sec:containerisation}). Jails segregate functions logically, but still use the base kernel and Operating System in order to function. A unique benefit to FreeBSD jails is benefit that a long history of support provides. FreeBSD Jails were first introduced in 2000 \citep{FreeBSDJailRelease}, and have received continuos updates and development cycles, making it one of the most sturdy container systems to date.
 
-%However, to make use of this containerisation, we must move to freebsd cant use linux or other lalalalal
+However, to make use of FreeBSD Jails, it is a hard-requirement that the Operating System and Kernal \emph{must} be FreeBSD. There is no way of supporting FreeBSD Jails on anything other that FreeBSD as it is baked into the FreeBSD environment itself. This takes away from the autonomy of businesses that may want to use the product, as they can't choose to use a different operating system (such as windows or Linux). This could also be a problem as an organisation might see the outcome of this research and decide they want to move to a container-based system, only to be stopped in their tracks due to being unable to integrate the FreeBSD Operating System in their current system.
 
 \subsection{LXC}
+Another option is LXC, also known simply as `Linux Containers', it was released in 2008. LXC makes use of Linux 
 
 \subsection{Docker}%NEED TO ADD MORE CONTAINER ALTERNATIVES HERE, MENTION JAILS WHICH ARE SIMILAR
 An increasingly more popular implementation of container technology is a software known as Docker. This software is primarily used by (and aimed at) developers, who can use the platform to quickly create and deploy applications in container environments for testing. The use of containers is supposed to make managing these applications much easier, as it ensures compatibility along the whole development process. For example; a developer can code a program, then pass their code \emph{and} container onto QA who can test the code in exactly the same environment \citep{whydocker}.
